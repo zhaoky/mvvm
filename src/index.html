@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>mvvm test</title>
+    <link rel="shortcut icon" type="image/ico" href="data:;" />
+    <style>
+      .a {
+        color: #ff0000;
+      }
+      .header {
+        color: yellow;
+      }
+      .main {
+        color: #000;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1 v-text="title"></h1>
+      <h2
+        style="color:red"
+        class="header"
+        v-style="style"
+        v-class="class"
+        v-src="src"
+        v-href="img"
+      >
+        sss
+      </h2>
+      <h2 v-text="info.title"></h2>
+      <h3 v-text="info.he.asd"></h3>
+      <div>
+        <div v-for="item in infoList">
+          <div v-text="item.name"></div>
+          <div v-text="item.age"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
