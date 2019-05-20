@@ -3,11 +3,6 @@ language: node_js
 node_js:
   - "9"
 
-
-
 jobs:
   include:
-    - stage: test
-      script: yarn run test
-    - stage: build
     script: yarn run build
