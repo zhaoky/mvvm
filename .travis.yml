@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-  - "10"
+  - "9"
 
 stages:
   - test
@@ -12,6 +12,6 @@ stages:
 jobs:
   include:
     - stage: test
-      script: yarn run test
+    - script: yarn run test
     - stage: build
-      script: yarn run build
+    - script: yarn run build
