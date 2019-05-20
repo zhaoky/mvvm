@@ -5,5 +5,3 @@
 <p>
 
 # A simple mvvm library
-
-待补充
