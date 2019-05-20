@@ -11,9 +11,7 @@ stages:
 
 jobs:
   include:
-    - stage:test
-      script:
-        - yarn run test
-    - stage:build
-      script:
-        - yarn run build
+    - stage: test
+      script: yarn run test
+    - stage: build
+      script: yarn run build
