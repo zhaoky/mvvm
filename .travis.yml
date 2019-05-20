@@ -1,17 +1,8 @@
 language: node_js
-
 node_js:
   - "9"
-
-stages:
-  - test
-    if: NOT tag =~ /^v\d+\.\d+$/
-  - build
-    if: branch = master AND tag = /^v\d+\.\d+$/
-
-jobs:
-  include:
-    - stage: test
-    - script: yarn run test
-    - stage: build
-    - script: yarn run build
+branches:
+  only:
+    - master
+after_script:
+  - npm run dev
