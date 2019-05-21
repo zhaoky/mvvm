@@ -1,6 +1,6 @@
 /**
  * 是否为数组
- * @param {*} array
+ * @param {Array} array
  * @return {Boolean}
  */
 function isArray(array) {
@@ -8,7 +8,7 @@ function isArray(array) {
 }
 /**
  * 是否为对象
- * @param {*} obj
+ * @param {Obejct} obj
  * @return {Boolean}
  */
 function isObject(obj) {
@@ -17,7 +17,7 @@ function isObject(obj) {
 /**
  * 是否是元素节点
  *
- * @param {*} element
+ * @param {Element} element
  * @return {Boolean}
  */
 function isElement(element) {
@@ -55,7 +55,7 @@ function getAttr(node, name) {
  * @param  {Element}  node
  * @param  {String}   name
  * @param  {String}   value
- * @return {undefined}
+ * @return {*}
  */
 function setAttr(node, name, value) {
   // 设为 null/undefined 和 false 移除该属性
@@ -80,7 +80,6 @@ function setAttr(node, name, value) {
  *
  * @param {Element} node
  * @param {String} name
- * @return {undefined}
  */
 function removeAttr(node, name) {
   node.removeAttribute(name);
@@ -105,7 +104,6 @@ function hasClass(node, classname) {
  * 节点添加 classname
  * @param  {Element}  node
  * @param  {String}   classname
- * @return {undefined}
  */
 function addClass(node, classname) {
   let current;
@@ -129,7 +127,6 @@ function addClass(node, classname) {
  * 节点删除 classname
  * @param  {Element}  node
  * @param  {String}   classname
- * @return {undefined}
  */
 function removeClass(node, classname) {
   let current;
@@ -157,7 +154,7 @@ function removeClass(node, classname) {
 /**
  * 属性值是否是指令
  *
- * @param {attribute} directive
+ * @param {Attribute} directive
  * @return {Boolean}
  */
 function isDirective(directive) {
@@ -166,7 +163,7 @@ function isDirective(directive) {
 /**
  * 节点是否含有指令
  *
- * @param {node} node
+ * @param {Element} node
  * @return {Boolean}
  */
 function hasDirective(node) {
@@ -185,7 +182,7 @@ function hasDirective(node) {
 /**
  * 是否含有延迟编译的节点
  *
- * @param {*} node
+ * @param {Element} node
  * @return {Boolean}
  */
 function hasLateCompileChilds(node) {
@@ -202,7 +199,7 @@ function _toString(value) {
 /**
  * 结构化克隆算法
  *
- * @param {*} obj
+ * @param {Object} obj
  * @return {Object}
  */
 function structuralClone(obj) {
@@ -215,7 +212,7 @@ function structuralClone(obj) {
 /**
  * 生成文档片段
  *
- * @param {node} element
+ * @param {Element} element
  * @return {Object}
  */
 function nodeToFragment(element) {
@@ -230,7 +227,7 @@ function nodeToFragment(element) {
  * 处理 styleObject, 批量更新元素 style
  * @param  {Element}  element
  * @param  {String}   styleObject
- * @return {Object}
+ * @return {*}
  */
 function updateStyle(element, styleObject) {
   const style = element.style;
@@ -245,8 +242,9 @@ function updateStyle(element, styleObject) {
     }
   });
 }
-
 // --------------------------------------
+// --------------------------------------
+
 let curWatcher = null;
 let dependId = 0;
 /**
@@ -257,8 +255,8 @@ let dependId = 0;
  */
 export class MVVM {
   /**
-   *Creates an instance of MVVM.
-   * @param {*} option
+   * Creates an instance of MVVM.
+   * @param {Obejct} option
    * @memberof MVVM
    */
   constructor(option) {
@@ -271,7 +269,8 @@ export class MVVM {
     if (!option.model || (!!option.model && !isObject(option.model))) {
       throw Error("data.model must be object.");
     }
-    new Compiler(option); // 进入编译主程序
+
+    new Compiler(option);
   }
 }
 /**
@@ -281,8 +280,8 @@ export class MVVM {
  */
 class Compiler {
   /**
-   *Creates an instance of Compiler.
-   * @param {*} option
+   * Creates an instance of Compiler.
+   * @param {Object} option
    * @memberof Compiler
    */
   constructor(option) {
@@ -290,7 +289,7 @@ class Compiler {
     this.$element = option.view; // 缓存根节点
     this.$data = option.model; // 数据模型对象
     this.$context = this; // 保存当前环境
-    this.$done = false; // 是否完成标记位
+    this.$done = false; // 是否完成编译标记位
 
     Observer.createObserver(this.$data); //* ** 这里进入数据监听模块 ***/
 
@@ -302,7 +301,7 @@ class Compiler {
    * 收集节点所有需要编译的指令
    * 并在收集完成后编译指令列表
    * @param {Object} element [要收集指令的dom节点]
-   * @param {*} root [是否是根节点]
+   * @param {Boolean} root [是否是根节点]
    * @param {Object} scope [v-for作用域]
    * @memberof Compiler
    */
@@ -340,7 +339,7 @@ class Compiler {
   /**
    * 编译收集到的每一个节点
    * 提取指令交给不同的编译器编译
-   * @param {*} item
+   * @param {Array} item
    * @memberof Compiler
    */
   compileNode(item) {
@@ -381,13 +380,12 @@ class Compiler {
    * @memberof Compiler
    */
   parseAttr(node, attr, scope) {
-    // args: undefined attr: "v-text" directive: "v-text" expression: "title"
     const { name, value: dirValue } = attr;
-    const dir = name.substr(2);
+    const dirName = name.substr(2);
 
     removeAttr(node, name);
 
-    const parser = this.selectParsers(dir, node, dirValue, this);
+    const parser = this.selectParsers(dirName, node, dirValue, this);
 
     const watcher = new Watcher(parser, scope);
 
@@ -400,7 +398,6 @@ class Compiler {
    * @param {Element} node
    * @param {Object} scope
    * @memberof Compiler
-   * @return {undefined}
    */
   parseText(node, scope) {
     // TODO
@@ -409,17 +406,17 @@ class Compiler {
   /**
    * 根据dir不同选择不同的解析器
    *
-   * @param {*} dir
-   * @param {*} node
-   * @param {*} dirValue
-   * @param {*} compilerScope
+   * @param {String} dirName
+   * @param {Element} node
+   * @param {String} dirValue
+   * @param {Object} compilerScope
    * @memberof Compiler
-   * @return {object}
+   * @return {Object}
    */
-  selectParsers(dir, node, dirValue, compilerScope) {
+  selectParsers(dirName, node, dirValue, compilerScope) {
     let parser;
 
-    switch (dir) {
+    switch (dirName) {
       case "text":
         parser = new TextParser(node, dirValue, compilerScope);
         break;
@@ -443,7 +440,6 @@ class Compiler {
    * 收集、编译，解析完成后
    *
    * @memberof Compiler
-   * @return {undefined}
    */
   completed() {
     if (this.$done) {
@@ -456,16 +452,16 @@ class Compiler {
   }
 }
 /**
- *
+ * 基类
  *
  * @class BaseParser
  */
 class BaseParser {
   /**
-   *Creates an instance of BaseParser.
-   * @param {*} node
-   * @param {*} dirValue
-   * @param {*} compilerScope
+   * Creates an instance of BaseParser.
+   * @param {Element} node
+   * @param {String} dirValue
+   * @param {Obejct} compilerScope
    * @memberof BaseParser
    */
   constructor(node, dirValue, compilerScope) {
@@ -473,36 +469,28 @@ class BaseParser {
     this.vm = compilerScope;
     this.dirValue = dirValue;
   }
-  /**
-   *
-   *
-   * @memberof BaseParser
-   */
-  update() {
-    // TODO
-  }
 }
 /**
- *
+ * 派生类 TextParser
  *
  * @class TextParser
  * @extends {BaseParser}
  */
 class TextParser extends BaseParser {
   /**
-   *Creates an instance of TextParser.
-   * @param {*} node
-   * @param {*} dirValue
-   * @param {*} compilerScope
+   * Creates an instance of TextParser.
+   * @param {Element} node
+   * @param {String} dirValue
+   * @param {Obejct} compilerScope
    * @memberof TextParser
    */
   constructor(node, dirValue, compilerScope) {
     super(node, dirValue, compilerScope);
   }
   /**
+   * text刷新视图函数
    *
-   *
-   * @param {*} newValue
+   * @param {String} newValue
    * @memberof TextParser
    */
   update(newValue) {
@@ -510,28 +498,27 @@ class TextParser extends BaseParser {
   }
 }
 /**
- *
+ * 派生类 StyleParser
  *
  * @class StyleParser
  * @extends {BaseParser}
  */
 class StyleParser extends BaseParser {
   /**
-   *Creates an instance of StyleParser.
-   * @param {*} node
-   * @param {*} dirValue
-   * @param {*} compilerScope
+   * Creates an instance of StyleParser.
+   * @param {Element} node
+   * @param {String} dirValue
+   * @param {Object} compilerScope
    * @memberof StyleParser
    */
   constructor(node, dirValue, compilerScope) {
     super(node, dirValue, compilerScope);
   }
   /**
+   * style刷新视图函数
    *
-   *
-   * @param {*} newValue
-   * @param {*} oldValue
-   * @return {undefined}
+   * @param {Object} newValue
+   * @param {Object} oldValue
    * @memberof StyleParser
    */
   update(newValue, oldValue) {
@@ -540,34 +527,32 @@ class StyleParser extends BaseParser {
       keys.map(item => {
         keys[item] = "";
       });
-      updateStyle(this.el, newValue);
-      return;
     }
     updateStyle(this.el, newValue);
   }
 }
 /**
- *
+ * 派生类 ClassParser
  *
  * @class ClassParser
  * @extends {BaseParser}
  */
 class ClassParser extends BaseParser {
   /**
-   *Creates an instance of ClassParser.
-   * @param {*} node
-   * @param {*} dirValue
-   * @param {*} compilerScope
+   * Creates an instance of ClassParser.
+   * @param {Element} node
+   * @param {String} dirValue
+   * @param {Object} compilerScope
    * @memberof ClassParser
    */
   constructor(node, dirValue, compilerScope) {
     super(node, dirValue, compilerScope);
   }
   /**
+   * class刷新视图函数
    *
-   *
-   * @param {*} newValue
-   * @param {*} oldValue
+   * @param {String} newValue
+   * @param {String} oldValue
    * @memberof ClassParser
    */
   update(newValue, oldValue) {
@@ -584,17 +569,17 @@ class ClassParser extends BaseParser {
   }
 }
 /**
- *
+ * 派生类 ForParser
  *
  * @class ForParser
  * @extends {BaseParser}
  */
 class ForParser extends BaseParser {
   /**
-   *Creates an instance of ForParser.
-   * @param {*} node
-   * @param {*} dirValue
-   * @param {*} compilerScope
+   * Creates an instance of ForParser.
+   * @param {Element} node
+   * @param {String} dirValue
+   * @param {Object} compilerScope
    * @memberof ForParser
    */
   constructor(node, dirValue, compilerScope) {
@@ -608,11 +593,11 @@ class ForParser extends BaseParser {
     this.dirValue = match[2];
   }
   /**
+   * for刷新视图函数
    *
-   *
-   * @param {*} newValue
-   * @param {*} oldValue
-   * @param {*} args
+   * @param {Array} newValue
+   * @param {Array} oldValue
+   * @param {Object} args
    * @memberof ForParser
    */
   update(newValue, oldValue, args) {
@@ -630,11 +615,11 @@ class ForParser extends BaseParser {
     }
   }
   /**
+   * 构建数组
    *
-   *
-   * @param {*} newArray
-   * @param {*} startIndex
-   * @return {object}
+   * @param {Array} newArray
+   * @param {Number} startIndex
+   * @return {Object}
    * @memberof ForParser
    */
   buildList(newArray, startIndex) {
@@ -654,10 +639,10 @@ class ForParser extends BaseParser {
     return listFragment;
   }
   /**
+   * 数组部分更新
    *
-   *
-   * @param {*} newArray
-   * @param {*} args
+   * @param {Array} newArray
+   * @param {Object} args
    * @memberof ForParser
    */
   updatePartly(newArray, args) {
@@ -665,9 +650,9 @@ class ForParser extends BaseParser {
     this[args.method].call(this, newArray, args.args);
   }
   /**
+   * 整体重建数组
    *
-   *
-   * @param {*} newArray
+   * @param {Array} newArray
    * @memberof ForParser
    */
   recompileList(newArray) {
@@ -681,10 +666,10 @@ class ForParser extends BaseParser {
     parent.insertBefore(listFragment, this.end);
   }
   /**
+   * 列表数组操作 push
    *
-   *
-   * @param {*} newArray
-   * @param {*} args
+   * @param {Array} newArray
+   * @param {Object} args
    * @memberof ForParser
    */
   push(newArray, args) {
@@ -692,10 +677,10 @@ class ForParser extends BaseParser {
     this.parent.insertBefore(item, this.end);
   }
   /**
+   * 列表数组操作 unshift
    *
-   *
-   * @param {*} newArray
-   * @param {*} args
+   * @param {Array} newArray
+   * @param {Object} args
    * @memberof ForParser
    */
   unshift(newArray, args) {
@@ -703,7 +688,7 @@ class ForParser extends BaseParser {
     this.parent.insertBefore(item, this.start);
   }
   /**
-   *
+   * 列表数组操作 pop
    *
    * @memberof ForParser
    */
@@ -711,7 +696,7 @@ class ForParser extends BaseParser {
     this.removeChild(this.end.previousSibling);
   }
   /**
-   *
+   * 列表数组操作 shift
    *
    * @memberof ForParser
    */
@@ -719,16 +704,16 @@ class ForParser extends BaseParser {
     this.removeChild(this.start.nextSibling);
   }
   /**
-   *
+   * 列表数组操作 spilce
    *
    * @memberof ForParser
    */
   spilce() {
-    // todo
+    // TODO
   }
 }
 /**
- *
+ * 派生类 OtherParser
  *
  * @class OtherParser
  * @extends {BaseParser}
@@ -736,18 +721,18 @@ class ForParser extends BaseParser {
 class OtherParser extends BaseParser {
   /**
    *Creates an instance of OtherParser.
-   * @param {*} node
-   * @param {*} dirValue
-   * @param {*} compilerScope
+   * @param {Element} node
+   * @param {String} dirValue
+   * @param {Obeject} compilerScope
    * @memberof OtherParser
    */
   constructor(node, dirValue, compilerScope) {
     super(node, dirValue, compilerScope);
   }
   /**
+   *  other更新函数
    *
-   *
-   * @param {*} newValue
+   * @param {String} newValue
    * @memberof OtherParser
    */
   update(newValue) {
@@ -755,15 +740,15 @@ class OtherParser extends BaseParser {
   }
 }
 /**
- *
+ * 给监听属性添加watcher
  *
  * @class Watcher
  */
 class Watcher {
   /**
    *Creates an instance of Watcher.
-   * @param {*} parser
-   * @param {*} scope
+   * @param {Object} parser
+   * @param {Object} scope
    * @memberof Watcher
    */
   constructor(parser, scope) {
@@ -779,29 +764,31 @@ class Watcher {
     this.value = this.get();
   }
   /**
-   *
+   * 获取当前属性值
    *
    * @return {*}
    * @memberof Watcher
    */
   get() {
     curWatcher = this;
+
     const value = this._getter(this.dirValue)(this.scope || this.vm.$data);
+
     curWatcher = null;
     return value;
   }
   /**
+   * _getter实现
    *
-   *
-   * @param {*} expression
-   * @return {*}
+   * @param {String} expression
+   * @return {Function}
    * @memberof Watcher
    */
   _getter(expression) {
     return new Function("scope", "return scope." + expression + ";");
   }
   /**
-   *
+   * 更新值之前
    *
    * @memberof Watcher
    */
@@ -809,30 +796,33 @@ class Watcher {
     this.oldVal = structuralClone(this.value);
   }
   /**
-   *
-   *
-   * @param {*} args
+   * 更新值之后
+   * 触发回调列表
+   * @param {Obejct} args
    * @memberof Watcher
    */
   update(args) {
     const newVal = (this.value = this.get());
+
     this.callback.call(this.parser, newVal, this.oldVal, args);
   }
 }
 /**
- *
+ * 监测数据模型
  *
  * @class Observer
  */
 class Observer {
   /**
-   *Creates an instance of Observer.
-   * @param {*} target
+   * Creates an instance of Observer.
+   * @param {Object} target
    * @memberof Observer
    */
   constructor(target) {
     this.dependList = [];
+
     isArray(target) ? this.observeArray(target) : this.observeObject(target);
+
     Object.defineProperty(target, "__ob__", {
       value: this,
       writable: true,
@@ -841,34 +831,36 @@ class Observer {
     });
   }
   /**
+   * 监测对象
    *
-   *
-   * @param {*} obj
+   * @param {Object} obj
    * @memberof Observer
    */
   observeObject(obj) {
     const keys = Object.keys(obj);
+
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
       Observer.observe(obj, key, obj[key]);
     }
   }
   /**
+   * 监测数组
    *
-   *
-   * @param {*} arr
+   * @param {Array} arr
    * @memberof Observer
    */
   observeArray(arr) {
     this.extendArrayProto(arr);
+
     arr.map(item => {
       Observer.createObserver(item);
     });
   }
   /**
+   * 数组方法扩展
    *
-   *
-   * @param {*} arr
+   * @param {Array} arr
    * @memberof Observer
    */
   extendArrayProto(arr) {
@@ -884,6 +876,7 @@ class Observer {
     const arrayProto = Array.prototype;
     const extendProto = Object.create(arrayProto);
     const _this = this;
+
     arrayMethods.map(method => {
       Object.defineProperty(extendProto, method, {
         value(...args) {
@@ -918,21 +911,23 @@ class Observer {
         configurable: true
       });
     });
+
     arr.__proto__ = extendProto;
   }
   /**
-   *
+   * 监测对象
    *
    * @static
-   * @param {*} obj
-   * @param {*} key
-   * @param {*} value
+   * @param {Object} obj
+   * @param {String} key
+   * @param {String} value
    * @memberof Observer
    */
   static observe(obj, key, value) {
     const dependList = [];
     const curId = dependId++;
     const childOb = Observer.createObserver(value);
+
     Object.defineProperty(obj, key, {
       get: () => {
         if (curWatcher && curWatcher.depIds.indexOf(curId) < 0) {
@@ -942,8 +937,10 @@ class Observer {
             childOb.dependList.push(curWatcher);
           }
         }
+
         return value;
       },
+
       set: newValue => {
         if (newValue === value) {
           return;
@@ -954,6 +951,7 @@ class Observer {
         value = newValue;
 
         Observer.createObserver(newValue);
+
         dependList.map(item => {
           item.update();
         });
@@ -961,11 +959,11 @@ class Observer {
     });
   }
   /**
-   *
+   * 创建监测对象
    *
    * @static
-   * @param {*} target
-   * @return {*}
+   * @param {Object} target
+   * @return {Object}
    * @memberof Observer
    */
   static createObserver(target) {
