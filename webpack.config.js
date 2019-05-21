@@ -3,9 +3,9 @@ const webpack = require("webpack");
 const packageJson = require("./package.json");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const _DEV_ = process.env.NODE_ENV === "development";
+
 const config = {
   mode: process.env.NODE_ENV || "production",
-  stats: "errors-only",
   entry: _DEV_
     ? path.resolve(__dirname, "./src/index.js")
     : path.resolve(__dirname, "./src/lib/mvvm.js"),
@@ -44,4 +44,5 @@ if (_DEV_) {
     })
   );
 }
+
 module.exports = config;
