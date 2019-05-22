@@ -36,9 +36,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zhaoky/flqin/mvvm.git"
+    "url": "https://github.com/zhaoky/mvvm.git"
   },
-  "bugs": "https://github.com/zhaoky/flqin/mvvm/issues",
+  "bugs": "https://github.com/zhaoky/mvvm/issues",
   "author": "Korey <keyu.zhao@foxmail.com>",
   "license": "MIT",
   "devDependencies": {
