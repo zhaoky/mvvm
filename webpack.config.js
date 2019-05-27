@@ -11,7 +11,7 @@ const config = {
     : path.resolve(__dirname, "./src/lib/mvvm.js"),
   output: {
     path: path.resolve(__dirname, "./dist"),
-    filename: "index.js",
+    filename: "mvvm.js",
     library: "mvvm",
     libraryTarget: "umd"
   },
