@@ -15,7 +15,7 @@ const config = {
     library: "mvvm",
     libraryTarget: "umd"
   },
-  devtool: _DEV_ ? "cheap-eval-source-map" : "",
+  devtool: _DEV_ ? "cheap-eval-source-map" : "eval-source-map",
   resolve: {
     extensions: [".js"]
   },
