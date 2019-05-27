@@ -36,7 +36,7 @@
       <h3 v-text="info.he.asd"></h3>
       <div>
         <div v-for="item in infoList">
-          <div v-text="item.name"></div>
+          <div v-text="item.name" v-class='$index===1?"a":"b"'></div>
           <div v-text="item.age"></div>
         </div>
       </div>

@@ -591,6 +591,8 @@ class ForParser extends BaseParser {
     const match = dirValue.match(/(.*) (?:in|of) (.*)/);
     this.alias = match[1];
     this.dirValue = match[2];
+    this.scopes = [];
+    this.partlyNewArray = [];
   }
   /**
    * for刷新视图函数
@@ -619,20 +621,30 @@ class ForParser extends BaseParser {
    *
    * @param {Array} newArray
    * @param {Number} startIndex
+   * @param {Boolean} isPartly 是否是部分更新
    * @return {Object}
    * @memberof ForParser
    */
-  buildList(newArray, startIndex) {
+  buildList(newArray, startIndex, isPartly) {
     const listFragment = document.createDocumentFragment();
     const start = startIndex || 0;
     const tpl = this.el.cloneNode(true);
+
     newArray.map((item, i) => {
       const frag = tpl.cloneNode(true);
       const index = start + i;
       const scope = Object.create(this.vm.$data);
       const alias = this.alias;
+
       Observer.observe(scope, alias, item);
       Observer.observe(scope, "$index", index);
+
+      if (isPartly) {
+        this.partlyNewArray.push(scope);
+      } else {
+        this.scopes.push(scope);
+      }
+
       this.vm.collectDir(frag, true, scope);
       listFragment.appendChild(frag);
     });
@@ -648,6 +660,13 @@ class ForParser extends BaseParser {
   updatePartly(newArray, args) {
     // 更新处理 DOM 片段
     this[args.method].call(this, newArray, args.args);
+
+    this.scopes[args.method](...this.partlyNewArray);
+    this.partlyNewArray.length = 0;
+
+    this.scopes.map((item, index) => {
+      item.$index = index;
+    });
   }
   /**
    * 整体重建数组
@@ -662,6 +681,9 @@ class ForParser extends BaseParser {
       parent.removeChild(childs[i]);
       i--;
     }
+
+    this.scopes.length = 0;
+
     const listFragment = this.buildList(newArray);
     parent.insertBefore(listFragment, this.end);
   }
@@ -673,8 +695,9 @@ class ForParser extends BaseParser {
    * @memberof ForParser
    */
   push(newArray, args) {
-    const item = this.buildList(args, newArray.length - 1);
-    this.parent.insertBefore(item, this.end);
+    const newPartArray = this.buildList(args, newArray.length - 1, true);
+
+    this.parent.insertBefore(newPartArray, this.end);
   }
   /**
    * 列表数组操作 unshift
@@ -684,8 +707,8 @@ class ForParser extends BaseParser {
    * @memberof ForParser
    */
   unshift(newArray, args) {
-    const item = this.buildList(args, 0);
-    this.parent.insertBefore(item, this.start);
+    const newPartArray = this.buildList(args, 0, true);
+    this.parent.insertBefore(newPartArray, this.start);
   }
   /**
    * 列表数组操作 pop
