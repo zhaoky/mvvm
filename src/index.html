@@ -27,15 +27,15 @@
         class="header"
         v-style="style"
         v-class="class1"
-        v-src="src"
+        v-src="src1"
         v-href="img"
       >
         sss
       </h2>
-      <h2 v-text="info.title"></h2>
-      <h3 v-text="info.he.asd"></h3>
+      <h3 v-text="info.title"></h2>
+      <h4 v-text="info.he.asd"></h3>
       <div>
-        <div v-for="item in infoList">
+        <div v-for="item in infoList" v-link="$index">
           <div v-text="item.name" v-class='$index===1?"a":"b"'></div>
           <div v-text="item.age"></div>
         </div>

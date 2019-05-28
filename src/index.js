@@ -9,7 +9,7 @@ const data = {
       color: "#999"
     },
     class1: "main",
-    src: "www.baidu.com",
+    src1: "www.baidu.com",
     img: "666.png",
     infoList: [{ name: "li", age: "12" }, { name: "wang", age: "24" }],
     pageIndex: 1,

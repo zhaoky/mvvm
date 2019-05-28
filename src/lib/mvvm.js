@@ -329,9 +329,11 @@ class Compiler {
     }
 
     if (root) {
-      this.$queue.map(item => {
-        this.compileNode(item);
-      });
+      for (let i = 0; i < this.$queue.length; i++) {
+        this.compileNode(this.$queue[i]);
+        this.$queue.splice(i, 1);
+        i--;
+      }
       this.completed();
     }
   }
@@ -418,19 +420,19 @@ class Compiler {
 
     switch (dirName) {
       case "text":
-        parser = new TextParser(node, dirValue, compilerScope);
+        parser = new TextParser({ node, dirValue, compilerScope });
         break;
       case "style":
-        parser = new StyleParser(node, dirValue, compilerScope);
+        parser = new StyleParser({ node, dirValue, compilerScope });
         break;
       case "class":
-        parser = new ClassParser(node, dirValue, compilerScope);
+        parser = new ClassParser({ node, dirValue, compilerScope });
         break;
       case "for":
-        parser = new ForParser(node, dirValue, compilerScope);
+        parser = new ForParser({ node, dirValue, compilerScope });
         break;
       default:
-        parser = new OtherParser(node, dirValue, compilerScope);
+        parser = new OtherParser({ node, dirName, dirValue, compilerScope });
     }
 
     return parser;
@@ -460,14 +462,22 @@ class BaseParser {
   /**
    * Creates an instance of BaseParser.
    * @param {Element} node
+   * @param {String} dirName
    * @param {String} dirValue
    * @param {Obejct} compilerScope
    * @memberof BaseParser
    */
-  constructor(node, dirValue, compilerScope) {
+  constructor({ node, dirName, dirValue, compilerScope }) {
     this.el = node;
-    this.vm = compilerScope;
-    this.dirValue = dirValue;
+    if (dirName) {
+      this.dirName = dirName;
+    }
+    if (dirValue) {
+      this.dirValue = dirValue;
+    }
+    if (compilerScope) {
+      this.vm = compilerScope;
+    }
   }
 }
 /**
@@ -484,8 +494,8 @@ class TextParser extends BaseParser {
    * @param {Obejct} compilerScope
    * @memberof TextParser
    */
-  constructor(node, dirValue, compilerScope) {
-    super(node, dirValue, compilerScope);
+  constructor({ node, dirValue, compilerScope }) {
+    super({ node, dirValue, compilerScope });
   }
   /**
    * text刷新视图函数
@@ -511,8 +521,8 @@ class StyleParser extends BaseParser {
    * @param {Object} compilerScope
    * @memberof StyleParser
    */
-  constructor(node, dirValue, compilerScope) {
-    super(node, dirValue, compilerScope);
+  constructor({ node, dirValue, compilerScope }) {
+    super({ node, dirValue, compilerScope });
   }
   /**
    * style刷新视图函数
@@ -545,8 +555,8 @@ class ClassParser extends BaseParser {
    * @param {Object} compilerScope
    * @memberof ClassParser
    */
-  constructor(node, dirValue, compilerScope) {
-    super(node, dirValue, compilerScope);
+  constructor({ node, dirValue, compilerScope }) {
+    super({ node, dirValue, compilerScope });
   }
   /**
    * class刷新视图函数
@@ -582,8 +592,8 @@ class ForParser extends BaseParser {
    * @param {Object} compilerScope
    * @memberof ForParser
    */
-  constructor(node, dirValue, compilerScope) {
-    super(node, dirValue, compilerScope);
+  constructor({ node, dirValue, compilerScope }) {
+    super({ node, dirValue, compilerScope });
     this.init = true;
     this.parent = node.parentNode;
     this.end = node.nextSibling;
@@ -643,6 +653,16 @@ class ForParser extends BaseParser {
         this.partlyNewArray.push(scope);
       } else {
         this.scopes.push(scope);
+      }
+
+      if (this.init) {
+        const $queue = this.vm.$queue;
+        $queue.find((item, index) => {
+          if (item[0] === this.el) {
+            $queue.splice(index, 1);
+            return true;
+          }
+        });
       }
 
       this.vm.collectDir(frag, true, scope);
@@ -745,12 +765,11 @@ class OtherParser extends BaseParser {
   /**
    *Creates an instance of OtherParser.
    * @param {Element} node
-   * @param {String} dirValue
-   * @param {Obeject} compilerScope
+   * @param {String} dirName
    * @memberof OtherParser
    */
-  constructor(node, dirValue, compilerScope) {
-    super(node, dirValue, compilerScope);
+  constructor({ node, dirName, dirValue, compilerScope }) {
+    super({ node, dirName, dirValue, compilerScope });
   }
   /**
    *  other更新函数
@@ -759,7 +778,7 @@ class OtherParser extends BaseParser {
    * @memberof OtherParser
    */
   update(newValue) {
-    setAttr(this.el, this.dirValue, newValue);
+    setAttr(this.el, this.dirName, newValue);
   }
 }
 /**
