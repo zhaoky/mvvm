@@ -808,7 +808,11 @@ class Watcher {
    * @memberof Watcher
    */
   _getter(expression) {
-    return new Function("scope", "return scope." + expression + ";");
+    try {
+      return new Function("scope", `with(scope){return ${expression}};`);
+    } catch {
+      throw Error(`The attribute value:'${expression}' must be not keyword.`);
+    }
   }
   /**
    * 更新值之前

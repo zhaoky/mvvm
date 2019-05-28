@@ -8,10 +8,11 @@ const data = {
       "font-size": "24px",
       color: "#999"
     },
-    class: "main",
+    class1: "main",
     src: "www.baidu.com",
     img: "666.png",
     infoList: [{ name: "li", age: "12" }, { name: "wang", age: "24" }],
+    pageIndex: 1,
     info: {
       title: "title的标题",
       he: {
