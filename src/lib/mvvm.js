@@ -270,6 +270,17 @@ export class MVVM {
       throw Error("data.model must be object.");
     }
 
+    if (isObject(option.methods)) {
+      const _eventHandler = (option.model["_eventHandler"] = {});
+      const methods = option.methods;
+
+      const keys = Object.keys(methods);
+
+      keys.forEach(key => {
+        _eventHandler[key] = methods[key];
+      });
+    }
+
     new Compiler(option);
   }
 }
@@ -389,6 +400,10 @@ class Compiler {
 
     const parser = this.selectParsers(dirName, node, dirValue, this);
 
+    if (/^on:.+$/.test(dirName)) {
+      parser.parseEvent(scope);
+      return;
+    }
     const watcher = new Watcher(parser, scope);
 
     parser.update(watcher.value);
@@ -417,8 +432,11 @@ class Compiler {
    */
   selectParsers(dirName, node, dirValue, compilerScope) {
     let parser;
-
-    switch (dirName) {
+    let name = dirName;
+    if (/^on:.+$/.test(name)) {
+      name = "on";
+    }
+    switch (name) {
       case "text":
         parser = new TextParser({ node, dirValue, compilerScope });
         break;
@@ -430,6 +448,9 @@ class Compiler {
         break;
       case "for":
         parser = new ForParser({ node, dirValue, compilerScope });
+        break;
+      case "on":
+        parser = new OnParser({ node, dirName, dirValue, compilerScope });
         break;
       default:
         parser = new OtherParser({ node, dirName, dirValue, compilerScope });
@@ -753,6 +774,85 @@ class ForParser extends BaseParser {
    */
   spilce() {
     // TODO
+  }
+}
+/**
+ * 派生类 OnParser
+ *
+ * @class OnParser
+ * @extends {BaseParser}
+ */
+class OnParser extends BaseParser {
+  /**
+   *Creates an instance of OnParser.
+   * @param {Element} node
+   * @param {String} dirName
+   * @memberof OnParser
+   */
+  constructor({ node, dirName, dirValue, compilerScope }) {
+    super({ node, dirName, dirValue, compilerScope });
+  }
+  /**
+   *  解析事件绑定函数
+   *
+   * @param {Object} scope
+   * @memberof OnParser
+   */
+  parseEvent(scope) {
+    this.scope = scope;
+    // const scope1 = this.scope || this.vm.$data;
+    this.handlerType = this.dirName.substr(3);
+
+    this.handlerFn = this.getHandler(this.dirValue);
+
+    this.addEvent();
+  }
+  /**
+   * 生成事件处理函数
+   *
+   * @param {String} expression
+   * @return {*}
+   * @memberof OnParser
+   */
+  getHandler(expression) {
+    expression = expression.trim();
+
+    if (/^(\S+?)\(.*\)$/g.test(expression)) {
+      expression = expression.replace(
+        /^(\S+?)(?=\()/,
+        "scope._eventHandler.$1"
+      );
+    } else {
+      expression = `scope._eventHandler.${expression}()`;
+    }
+
+    expression = expression.replace(/(?<=[(,])(\S+?)(?=[,)])/g, (match, $1) => {
+      if ($1 === "$event") {
+        return $1;
+      }
+      return `scope.${$1}`;
+    });
+
+    try {
+      return new Function("scope,$event", `${expression}`);
+    } catch {
+      throw Error(`Check the expression for errors`);
+    }
+  }
+  /**
+   * 绑定事件
+   *
+   * @memberof OnParser
+   */
+  addEvent() {
+    const el = this.el;
+    const handlerType = this.handlerType;
+    const handlerFn = this.handlerFn;
+    const scope = this.scope || this.vm.$data;
+
+    el.addEventListener(handlerType, e => {
+      handlerFn(scope, e);
+    });
   }
 }
 /**

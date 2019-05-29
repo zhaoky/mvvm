@@ -19,6 +19,14 @@ const data = {
         asd: "好好"
       }
     }
+  },
+  methods: {
+    handler: function(e, title) {
+      console.log(e, title);
+    },
+    getIndex: function(index) {
+      console.log(index);
+    }
   }
 };
 new MVVM(data);
