@@ -830,7 +830,7 @@ class OnParser extends BaseParser {
     this.handlerType = this.dirName.substr(3);
 
     if (this.handlerType === "click" && !isPC()) {
-      this.handlerType = "ontouchstart";
+      this.handlerType = "touchstart";
     }
 
     this.handlerFn = this.getHandler(this.dirValue);
