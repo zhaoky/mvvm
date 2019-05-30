@@ -24,8 +24,8 @@ const data = {
     handler: function(e, title) {
       console.log(e, title);
     },
-    getIndex: function(index) {
-      console.log(index);
+    getIndex: function(index, e) {
+      console.log(index, e);
     }
   }
 };

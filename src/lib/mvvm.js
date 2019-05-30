@@ -242,6 +242,32 @@ function updateStyle(element, styleObject) {
     }
   });
 }
+/**
+ * 判断是否为PC
+ *
+ * @return {Boolean}
+ */
+function isPC() {
+  const u = navigator.userAgent;
+  const Agents = [
+    "Android",
+    "iPhone",
+    "webOS",
+    "BlackBerry",
+    "SymbianOS",
+    "Windows Phone",
+    "iPad",
+    "iPod"
+  ];
+  let flag = true;
+  for (let i = 0; i < Agents.length; i++) {
+    if (u.indexOf(Agents[i]) > 0) {
+      flag = false;
+      break;
+    }
+  }
+  return flag;
+}
 // --------------------------------------
 // --------------------------------------
 
@@ -802,6 +828,10 @@ class OnParser extends BaseParser {
     this.scope = scope;
     // const scope1 = this.scope || this.vm.$data;
     this.handlerType = this.dirName.substr(3);
+
+    if (this.handlerType === "click" && !isPC()) {
+      this.handlerType = "ontouchstart";
+    }
 
     this.handlerFn = this.getHandler(this.dirValue);
 
