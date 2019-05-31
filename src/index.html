@@ -21,7 +21,7 @@
   </head>
   <body>
     <div id="app">
-      <h1 v-text="infoList[pageIndex].name"></h1>
+      <!-- <h1 v-text="infoList[pageIndex].name"></h1>
       <h2
         style="color:red"
         class="header"
@@ -33,15 +33,14 @@
         sss
       </h2>
       <h3 v-text="info.title"></h2>
-      <h4 v-text="info.he.asd"></h3>
-      <div>
+      <h4 v-text="info.he.asd" v-on:click="test"></h3> -->
+      <div a="1">
         <div v-for="item in infoList" v-link="$index">
           <div v-text="item.name" v-class='$index===1?"a":"b"'></div>
           <div v-text="item.age" v-on:click="getIndex($index,$event)"></div>
         </div>
       </div>
-      <h3 v-text="title" v-on:click="handler">888</h3>
+      <!-- <h3 v-text="title" v-on:click="handler">888</h3> -->
     </div>
-
   </body>
 </html>

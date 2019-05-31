@@ -296,17 +296,6 @@ export class MVVM {
       throw Error("data.model must be object.");
     }
 
-    if (isObject(option.methods)) {
-      const _eventHandler = (option.model["_eventHandler"] = {});
-      const methods = option.methods;
-
-      const keys = Object.keys(methods);
-
-      keys.forEach(key => {
-        _eventHandler[key] = methods[key];
-      });
-    }
-
     new Compiler(option);
   }
 }
@@ -329,6 +318,17 @@ class Compiler {
     this.$done = false; // 是否完成编译标记位
 
     Observer.createObserver(this.$data); //* ** 这里进入数据监听模块 ***/
+
+    if (isObject(option.methods)) {
+      const _eventHandler = (option.model["_eventHandler"] = {});
+      const methods = option.methods;
+
+      const keys = Object.keys(methods);
+
+      keys.forEach(key => {
+        _eventHandler[key] = methods[key];
+      });
+    }
 
     this.$fragment = nodeToFragment(this.$element);
     this.collectDir(this.$fragment, true);
@@ -712,6 +712,13 @@ class ForParser extends BaseParser {
         });
       }
 
+      Object.defineProperty(frag, "__vfor__", {
+        value: alias,
+        writable: true,
+        enumerable: false,
+        configurable: true
+      });
+
       this.vm.collectDir(frag, true, scope);
       listFragment.appendChild(frag);
     });
@@ -744,9 +751,12 @@ class ForParser extends BaseParser {
   recompileList(newArray) {
     const parent = this.parent;
     const childs = parent.childNodes;
+
     for (let i = 0; i < childs.length; i++) {
-      parent.removeChild(childs[i]);
-      i--;
+      if (childs[i]["__vfor__"] == this.alias) {
+        parent.removeChild(childs[i]);
+        i--;
+      }
     }
 
     this.scopes.length = 0;
@@ -826,7 +836,7 @@ class OnParser extends BaseParser {
    */
   parseEvent(scope) {
     this.scope = scope;
-    // const scope1 = this.scope || this.vm.$data;
+
     this.handlerType = this.dirName.substr(3);
 
     if (this.handlerType === "click" && !isPC()) {
@@ -942,7 +952,7 @@ class Watcher {
    * @memberof Watcher
    */
   get() {
-    curWatcher = this;
+    curWatcher = this; // 当前节点装到watcher里,然后放到对应属性的通知列表里。
 
     const value = this._getter(this.dirValue)(this.scope || this.vm.$data);
 
@@ -1100,14 +1110,15 @@ class Observer {
    * @memberof Observer
    */
   static observe(obj, key, value) {
-    const dependList = [];
-    const curId = dependId++;
+    const dependList = []; // 该属性收集到的需要通知的watcher（节点）列表
+    const curId = ++dependId;
     const childOb = Observer.createObserver(value);
 
     Object.defineProperty(obj, key, {
       get: () => {
+        console.log(obj, key);
         if (curWatcher && curWatcher.depIds.indexOf(curId) < 0) {
-          curWatcher.depIds.push(curId);
+          curWatcher.depIds.push(curId); // 一个节点被xx个属性同时监听
           dependList.push(curWatcher);
           if (childOb) {
             childOb.dependList.push(curWatcher);
@@ -1118,6 +1129,7 @@ class Observer {
       },
 
       set: newValue => {
+        console.log(obj, key);
         if (newValue === value) {
           return;
         }
