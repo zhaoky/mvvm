@@ -323,7 +323,6 @@ class Compiler {
     this.$element = option.view; // 缓存根节点
     this.$data = option.model; // 数据模型对象
     this.$context = this; // 保存当前环境
-    this.$done = false; // 是否完成编译标记位
     this.$mounted = option.mounted;
 
     Observer.createObserver(this.$data); //* ** 这里进入数据监听模块 ***/
@@ -501,11 +500,10 @@ class Compiler {
    * @memberof Compiler
    */
   completed(scope) {
-    if (this.$done) {
+    if (!!scope) {
       return;
     }
 
-    this.$done = true;
     this.$element.appendChild(this.$fragment);
     delete this.$fragment;
 
@@ -1130,7 +1128,6 @@ class Observer {
 
     Object.defineProperty(obj, key, {
       get: () => {
-        console.log(obj, key);
         if (curWatcher && curWatcher.depIds.indexOf(curId) < 0) {
           curWatcher.depIds.push(curId); // 一个节点被xx个属性同时监听
           dependList.push(curWatcher);
@@ -1143,7 +1140,6 @@ class Observer {
       },
 
       set: newValue => {
-        console.log(obj, key);
         if (newValue === value) {
           return;
         }

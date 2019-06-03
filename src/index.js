@@ -11,7 +11,7 @@ const data = {
     // class1: "main",
     // src1: "www.baidu.com",
     // img: "666.png",
-    // infoList: [{ name: "li", age: "12" }, { name: "wang", age: "24" }]
+    infoList: [{ name: "li", age: "12" }, { name: "wang", age: "24" }],
     // pageIndex: 1,
     info: {
       he: {
