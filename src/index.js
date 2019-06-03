@@ -11,14 +11,20 @@ const data = {
     // class1: "main",
     // src1: "www.baidu.com",
     // img: "666.png",
-    infoList: [{ name: "li", age: "12" }, { name: "wang", age: "24" }]
+    // infoList: [{ name: "li", age: "12" }, { name: "wang", age: "24" }]
     // pageIndex: 1,
-    // info: {
-    //   title: "title的标题",
-    //   he: {
-    //     asd: "好好"
-    //   }
-    // }
+    info: {
+      he: {
+        body: {
+          name: "好好啊"
+        }
+      },
+      she: {
+        body: {
+          name: "好好额"
+        }
+      }
+    }
   },
   methods: {
     // handler: function(e, title) {
@@ -30,6 +36,9 @@ const data = {
     // test: function() {
     //   console.log(666);
     // }
+  },
+  mounted() {
+    console.log("主程编译完成");
   }
 };
 new MVVM(data);
@@ -52,5 +61,20 @@ setTimeout(() => {
   // data.model.info.he = {
   //   asd: "哈哈哈哈"
   // };
-  data.model.infoList = [{ name: "zhao", age: "27" }];
-}, 3000);
+  // setTimeout(() => {
+  //   data.model.info.he = {
+  //     asd: "哈哈哈哈1"
+  //   };
+  // }, 4000);
+  data.model.info = {
+    he: {
+      body: {
+        name: 111
+      }
+    }
+  };
+  setTimeout(() => {
+    data.model.info.he.body.name = 222;
+  }, 4000);
+  // data.model.infoList = [{ name: "zhao", age: "27" }];
+}, 4000);

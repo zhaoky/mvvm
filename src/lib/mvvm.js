@@ -15,6 +15,14 @@ function isObject(obj) {
   return Object.prototype.toString.call(obj) === "[object Object]";
 }
 /**
+ * 是否为函数
+ * @param {Obejct} obj
+ * @return {Boolean}
+ */
+function isFunction(obj) {
+  return Object.prototype.toString.call(obj) === "[object Function]";
+}
+/**
  * 是否是元素节点
  *
  * @param {Element} element
@@ -316,6 +324,7 @@ class Compiler {
     this.$data = option.model; // 数据模型对象
     this.$context = this; // 保存当前环境
     this.$done = false; // 是否完成编译标记位
+    this.$mounted = option.mounted;
 
     Observer.createObserver(this.$data); //* ** 这里进入数据监听模块 ***/
 
@@ -371,7 +380,7 @@ class Compiler {
         this.$queue.splice(i, 1);
         i--;
       }
-      this.completed();
+      this.completed(scope);
     }
   }
 
@@ -488,9 +497,10 @@ class Compiler {
   /**
    * 收集、编译，解析完成后
    *
+   * @param {Object} scope
    * @memberof Compiler
    */
-  completed() {
+  completed(scope) {
     if (this.$done) {
       return;
     }
@@ -498,6 +508,10 @@ class Compiler {
     this.$done = true;
     this.$element.appendChild(this.$fragment);
     delete this.$fragment;
+
+    if (!scope && isFunction(this.$mounted)) {
+      this.$mounted();
+    }
   }
 }
 /**
