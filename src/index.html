@@ -33,15 +33,27 @@
         sss
       </h2>
       <h3 v-text="info.title"></h2> -->
-      <h4 v-text="info.he.body.name" v-on:click="test"></h4>
+      <!-- <h4 v-text="info.he.body.name" v-on:click="test"></h4> -->
       <!-- <h4 v-text="info.sex.she.asd.d" v-on:click="test"></h4> -->
-      <div a="1">
+      <!-- <div a="1">
         <div v-for="item in infoList" v-link="$index">
           <div v-text="item.name" v-class='$index===1?"a":"b"'></div>
           <div v-text="item.age" v-on:click="getIndex($index,$event)"></div>
         </div>
-      </div>
+      </div> -->
       <!-- <h3 v-text="title" v-on:click="handler">888</h3> -->
+      <div id="b">
+        <h4 v-if="v">
+          <div>你好</div>
+          <ul>
+            <li v-for="item in infoList" v-text="item.name"></li>
+          </ul>
+        </h4>
+      </div>
+      <!-- <div v-src="v">1</div>
+      <h3 v-show="v">显示</h3>
+      <h3 v-hide="v">隐藏</h3> -->
+      <!-- <h4 v-style="v?styleObj:styleObj1">测试</h4> -->
     </div>
   </body>
 </html>

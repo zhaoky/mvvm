@@ -160,6 +160,17 @@ function removeClass(node, classname) {
   }
 }
 /**
+ * 元素节点替换
+ * @param  {Element}  oldChild
+ * @param  {Element}  newChild
+ */
+function replaceNode(oldChild, newChild) {
+  const parent = oldChild.parentNode;
+  if (parent) {
+    parent.replaceChild(newChild, oldChild);
+  }
+}
+/**
  * 属性值是否是指令
  *
  * @param {Attribute} directive
@@ -339,7 +350,7 @@ class Compiler {
     }
 
     this.$fragment = nodeToFragment(this.$element);
-    this.collectDir(this.$fragment, true);
+    this.collectDir(this.$fragment, true, undefined, true);
   }
 
   /**
@@ -348,9 +359,10 @@ class Compiler {
    * @param {Object} element [要收集指令的dom节点]
    * @param {Boolean} root [是否是根节点]
    * @param {Object} scope [v-for作用域]
+   * @param {Boolean} isInit [首次加载]
    * @memberof Compiler
    */
-  collectDir(element, root, scope) {
+  collectDir(element, root, scope, isInit) {
     if (root && hasDirective(element)) {
       this.$queue.push([element, scope]);
     }
@@ -379,7 +391,7 @@ class Compiler {
         this.$queue.splice(i, 1);
         i--;
       }
-      this.completed(scope);
+      this.completed(isInit);
     }
   }
 
@@ -440,7 +452,7 @@ class Compiler {
     }
     const watcher = new Watcher(parser, scope);
 
-    parser.update(watcher.value);
+    parser.update(watcher.value, undefined, undefined, scope);
   }
 
   /**
@@ -470,6 +482,9 @@ class Compiler {
     if (/^on:.+$/.test(name)) {
       name = "on";
     }
+    if (["show", "hide"].indexOf(name) > -1) {
+      name = "display";
+    }
     switch (name) {
       case "text":
         parser = new TextParser({ node, dirValue, compilerScope });
@@ -486,6 +501,12 @@ class Compiler {
       case "on":
         parser = new OnParser({ node, dirName, dirValue, compilerScope });
         break;
+      case "display":
+        parser = new DisplayParser({ node, dirName, dirValue, compilerScope });
+        break;
+      case "if":
+        parser = new IfParser({ node, dirValue, compilerScope });
+        break;
       default:
         parser = new OtherParser({ node, dirName, dirValue, compilerScope });
     }
@@ -496,18 +517,18 @@ class Compiler {
   /**
    * 收集、编译，解析完成后
    *
-   * @param {Object} scope
+   * @param {Boolean} isInit
    * @memberof Compiler
    */
-  completed(scope) {
-    if (!!scope) {
+  completed(isInit) {
+    if (!isInit) {
       return;
     }
 
     this.$element.appendChild(this.$fragment);
     delete this.$fragment;
 
-    if (!scope && isFunction(this.$mounted)) {
+    if (isFunction(this.$mounted)) {
       this.$mounted();
     }
   }
@@ -594,8 +615,9 @@ class StyleParser extends BaseParser {
     if (oldValue) {
       const keys = Object.keys(oldValue);
       keys.map(item => {
-        keys[item] = "";
+        oldValue[item] = "";
       });
+      updateStyle(this.el, oldValue);
     }
     updateStyle(this.el, newValue);
   }
@@ -905,6 +927,85 @@ class OnParser extends BaseParser {
     el.addEventListener(handlerType, e => {
       handlerFn(scope, e);
     });
+  }
+}
+/**
+ * 派生类 DisplayParser
+ *
+ * @class DisplayParser
+ * @extends {BaseParser}
+ */
+class DisplayParser extends BaseParser {
+  /**
+   *Creates an instance of DisplayParser.
+   * @param {Element} node
+   * @param {String} dirName
+   * @memberof DisplayParser
+   */
+  constructor({ node, dirName, dirValue, compilerScope }) {
+    super({ node, dirName, dirValue, compilerScope });
+  }
+  /**
+   *  display更新函数
+   *
+   * @param {String} newValue
+   * @memberof DisplayParser
+   */
+  update(newValue) {
+    if (this.dirName === "show") {
+      this.el.style.display = !!newValue ? "block" : "none";
+    } else if (this.dirName === "hide") {
+      this.el.style.display = !!newValue ? "none" : "block";
+    }
+  }
+}
+/**
+ * 派生类 IfParser
+ *
+ * @class IfParser
+ * @extends {IfParser}
+ */
+class IfParser extends BaseParser {
+  /**
+   *Creates an instance of IfParser.
+   * @param {Element} node
+   * @memberof IfParser
+   */
+  constructor({ node, dirValue, compilerScope }) {
+    super({ node, dirValue, compilerScope });
+    this.$parent = this.el.parentNode;
+    this.elTpl = this.el.cloneNode(true);
+    this.emptyNode = document.createTextNode("");
+    replaceNode(this.el, this.emptyNode);
+  }
+  /**
+   * if更新函数
+   *
+   * @param {*} newValue
+   * @param {*} oldValue
+   * @param {*} args
+   * @param {*} scope
+   * @memberof IfParser
+   */
+  update(newValue, oldValue, args, scope) {
+    const tpl = this.elTpl.cloneNode(true);
+
+    if (newValue) {
+      this.vm.collectDir(tpl, true, scope);
+      this.$parent.insertBefore(tpl, this.emptyNode);
+
+      Object.defineProperty(tpl, "__vif__", {
+        value: true,
+        writable: true,
+        enumerable: false,
+        configurable: true
+      });
+    } else {
+      const el = this.emptyNode.previousSibling;
+      if (el && el.__vif__) {
+        this.$parent.removeChild(el);
+      }
+    }
   }
 }
 /**
