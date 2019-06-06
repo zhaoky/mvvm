@@ -246,13 +246,12 @@ function nodeToFragment(element) {
  * 处理 styleObject, 批量更新元素 style
  * @param  {Element}  element
  * @param  {String}   styleObject
- * @return {*}
  */
 function updateStyle(element, styleObject) {
   const style = element.style;
 
   if (!isObject(styleObject)) {
-    return warn("v-style for style must be a type of Object", styleObject);
+    return;
   }
   const styleList = Object.keys(styleObject);
   styleList.forEach(function(item) {

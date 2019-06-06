@@ -3,7 +3,8 @@ import { MVVM } from "./lib/mvvm";
 const data = {
   view: document.getElementById("app"),
   model: {
-    v: false,
+    a: {}
+    // v: false,
     // title: "标题",
     // styleObj: {
     //   "font-size": "24px",
@@ -15,7 +16,7 @@ const data = {
     // class1: "main",
     // src1: "www.baidu.com",
     // img: "666.png",
-    infoList: [{ name: "li", age: "12" }, { name: "wang", age: "24" }]
+    // infoList: [{ name: "li", age: "12" }, { name: "wang", age: "24" }]
     // // pageIndex: 1,
     // info: {
     //   he: {
@@ -73,13 +74,18 @@ setTimeout(() => {
   //   }
   // };
   setTimeout(() => {
-    data.model.v = false;
+    // data.model.v = false;
   }, 5000);
   // data.model.infoList = [{ name: "zhao", age: "27" }];
-  data.model.v = true;
-  data.model.infoList.push(
-    { name: "tr", age: "20" },
-    { name: "tr1", age: "200" },
-    { name: "tr2", age: "201" }
-  );
+  // data.model.v = true;
+  // data.model.infoList.push(
+  //   { name: "tr", age: "20" },
+  //   { name: "tr1", age: "200" },
+  //   { name: "tr2", age: "201" }
+  // );
+  data.model.a = {
+    color: {
+      color: "red"
+    }
+  };
 }, 3000);
