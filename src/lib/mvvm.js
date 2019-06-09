@@ -720,6 +720,10 @@ class ForParser extends BaseParser {
     const start = startIndex || 0;
     const tpl = this.el.cloneNode(true);
 
+    if (!newArray || !isArray(newArray)) {
+      return listFragment;
+    }
+
     newArray.map((item, i) => {
       const frag = tpl.cloneNode(true);
       const index = start + i;

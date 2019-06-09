@@ -3,7 +3,8 @@ import { MVVM } from "./lib/mvvm";
 const data = {
   view: document.getElementById("app"),
   model: {
-    a: {}
+    a: {},
+    info: {}
     // v: false,
     // title: "标题",
     // styleObj: {
@@ -76,16 +77,18 @@ setTimeout(() => {
   setTimeout(() => {
     // data.model.v = false;
   }, 5000);
-  // data.model.infoList = [{ name: "zhao", age: "27" }];
+  data.model.info = {
+    list: [{ name: "li", age: "12" }, { name: "wang", age: "24" }]
+  };
   // data.model.v = true;
   // data.model.infoList.push(
   //   { name: "tr", age: "20" },
   //   { name: "tr1", age: "200" },
   //   { name: "tr2", age: "201" }
   // );
-  data.model.a = {
-    color: {
-      color: "red"
-    }
-  };
+  // data.model.a = {
+  //   color: {
+  //     color: "red"
+  //   }
+  // };
 }, 3000);
