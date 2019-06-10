@@ -222,7 +222,7 @@ function _toString(value) {
  * @return {Object}
  */
 function cloneDeep(source) {
-  if (!isObject(source) || !isArray(source)) return source;
+  if (!(isObject(source) || isArray(source))) return source;
 
   const target = isArray(source) ? [] : {};
 
