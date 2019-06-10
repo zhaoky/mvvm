@@ -1,6 +1,6 @@
 {
   "name": "@fe_korey/mvvm",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "A simple mvvm library",
   "keywords": [
     "framework",

@@ -216,17 +216,26 @@ function _toString(value) {
   return value == null ? "" : value.toString();
 }
 /**
- * 结构化克隆算法
+ * 简易深拷贝
  *
- * @param {Object} obj
+ * @param {Object} source
  * @return {Object}
  */
-function structuralClone(obj) {
-  const oldState = history.state;
-  history.replaceState(obj, document.title);
-  const copy = history.state;
-  history.replaceState(oldState, document.title);
-  return copy;
+function cloneDeep(source) {
+  if (!isObject(source) || !isArray(source)) return source;
+
+  const target = isArray(source) ? [] : {};
+
+  for (const key in source) {
+    if (Object.prototype.hasOwnProperty.call(source, key)) {
+      if (isObject(source[key]) || isArray(source[key])) {
+        target[key] = cloneDeep(source[key]);
+      } else {
+        target[key] = source[key];
+      }
+    }
+  }
+  return target;
 }
 /**
  * 生成文档片段
@@ -1095,7 +1104,7 @@ class Watcher {
    * @memberof Watcher
    */
   beforeUpdate() {
-    this.oldVal = structuralClone(this.value);
+    this.oldVal = cloneDeep(this.value);
   }
   /**
    * 更新值之后
