@@ -15,7 +15,6 @@ const config = {
     library: "mvvm",
     libraryTarget: "umd"
   },
-  devtool: _DEV_ ? "cheap-eval-source-map" : "eval-source-map",
   resolve: {
     extensions: [".js"]
   },
@@ -33,6 +32,7 @@ const config = {
   ]
 };
 if (_DEV_) {
+  config.devtool = "eval-source-map";
   config.devServer = {
     stats: "errors-only",
     contentBase: path.join(__dirname, "dist"),
