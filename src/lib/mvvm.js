@@ -911,13 +911,15 @@ class OnParser extends BaseParser {
     } else {
       expression = `scope._eventHandler.${expression}()`;
     }
-
-    expression = expression.replace(/(?<=[(,])(\S+?)(?=[,)])/g, (match, $1) => {
-      if ($1 === "$event") {
-        return $1;
+    expression = expression.replace(
+      /([(,])(\S+?)(?=[,)])/g,
+      (match, $1, $2) => {
+        if ($2 === "$event") {
+          return `${$1}${$2}`;
+        }
+        return `${$1}scope.${$2}`;
       }
-      return `scope.${$1}`;
-    });
+    );
 
     try {
       return new Function("scope,$event", `${expression}`);
