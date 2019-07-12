@@ -692,6 +692,7 @@ class ForParser extends BaseParser {
     this.dirValue = match[2];
     this.scopes = [];
     this.partlyNewArray = [];
+    this.symbol = Symbol();
   }
   /**
    * for刷新视图函数
@@ -738,6 +739,7 @@ class ForParser extends BaseParser {
       const index = start + i;
       const scope = Object.create(this.vm.$data);
       const alias = this.alias;
+      const symbol = this.symbol;
 
       Observer.observe(scope, alias, item);
       Observer.observe(scope, "$index", index);
@@ -759,7 +761,7 @@ class ForParser extends BaseParser {
       }
 
       Object.defineProperty(frag, "__vfor__", {
-        value: alias,
+        value: symbol,
         writable: true,
         enumerable: false,
         configurable: true
@@ -799,7 +801,7 @@ class ForParser extends BaseParser {
     const childs = parent.childNodes;
 
     for (let i = 0; i < childs.length; i++) {
-      if (childs[i]["__vfor__"] == this.alias) {
+      if (childs[i]["__vfor__"] == this.symbol) {
         parent.removeChild(childs[i]);
         i--;
       }

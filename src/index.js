@@ -4,7 +4,10 @@ const data = {
   view: document.getElementById("app"),
   model: {
     a: {},
-    info: {}
+    info: {
+      list: [{ name: "li", age: "12" }, { name: "wang", age: "24" }],
+      list1: [1, 2, 3]
+    }
     // v: false,
     // title: "标题",
     // styleObj: {
@@ -77,8 +80,14 @@ setTimeout(() => {
   setTimeout(() => {
     // data.model.v = false;
   }, 5000);
+  console.log(1);
   data.model.info = {
-    list: [{ name: "li", age: "12" }, { name: "wang", age: "24" }]
+    list: [
+      { name: "li", age: "12" },
+      { name: "wang", age: "24" },
+      { name: "wang", age: "25" }
+    ],
+    list1: [1, 2, 3, 4]
   };
   // data.model.v = true;
   // data.model.infoList.push(

@@ -41,6 +41,7 @@
           <div v-text="item.name" v-class='$index===1?"a":"b"'></div>
           <div v-text="item.age" v-on:click="getIndex($index,$event)"></div>
         </div>
+        <div v-for="item in info.list" v-text="item"></div>
       </div>
       <!-- <h3 v-text="title" v-on:click="handler">888</h3> -->
       <!-- <div id="b">
