@@ -5,13 +5,14 @@ module.exports = {
       {
         targets: "> 1%, not dead"
       }
-    ]
+    ],
+    "@babel/preset-typescript"
   ],
   plugins: [
     [
       "@babel/plugin-transform-runtime",
       {
-        corejs: 2
+        corejs: 3
       }
     ]
   ]
