@@ -1,3 +1,4 @@
 module.exports = {
-  singleQuote: false
+  singleQuote: false,
+  parser: "typescript"
 };

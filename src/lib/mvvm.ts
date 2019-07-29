@@ -1,71 +1,73 @@
+interface HTMLElement {
+  [x: string]: any;
+}
 /**
  * 是否为数组
- * @param {Array} array
+ * @param {any} value
  * @return {Boolean}
  */
-function isArray(array) {
-  return Array.isArray(array);
+function isArray(value: any): boolean {
+  return Array.isArray(value);
 }
 /**
  * 是否为对象
- * @param {Obejct} obj
+ * @param {any} value
  * @return {Boolean}
  */
-function isObject(obj) {
-  return Object.prototype.toString.call(obj) === "[object Object]";
+function isObject(value: any): boolean {
+  return Object.prototype.toString.call(value) === "[object Object]";
 }
 /**
  * 是否为函数
- * @param {Obejct} obj
+ * @param {any} value
  * @return {Boolean}
  */
-function isFunction(obj) {
-  return Object.prototype.toString.call(obj) === "[object Function]";
+function isFunction(value: any): boolean {
+  return Object.prototype.toString.call(value) === "[object Function]";
 }
 /**
  * 是否是元素节点
  *
- * @param {Element} element
+ * @param {any} value
  * @return {Boolean}
  */
-function isElement(element) {
-  return element.nodeType === 1;
+function isElement(value: any): boolean {
+  return value.nodeType === 1;
 }
 /**
  * 是否是文本节点
  *
- * @param {*} element
+ * @param {any} value
  * @return {Boolean}
  */
-function isTextNode(element) {
-  return element.nodeType === 3;
+function isTextNode(value: any): boolean {
+  return value.nodeType === 3;
 }
 /**
  * 节点是否存在属性
- * @param   {Element}  node
+ * @param   {HTMLElement}  node
  * @param   {String}   name
  * @return  {Boolean}
  */
-function hasAttr(node, name) {
+function hasAttr(node: HTMLElement, name: string): boolean {
   return node.hasAttribute(name);
 }
 /**
  * 获取节点属性值
- * @param   {Element}  node
+ * @param   {HTMLElement}  node
  * @param   {String}   name
  * @return  {String}
  */
-function getAttr(node, name) {
+function getAttr(node: HTMLElement, name: string): string {
   return node.getAttribute(name) || "";
 }
 /**
  * 设置节点属性
- * @param  {Element}  node
+ * @param  {HTMLElement}  node
  * @param  {String}   name
- * @param  {String}   value
- * @return {*}
+ * @param  {any}   value
  */
-function setAttr(node, name, value) {
+function setAttr(node: HTMLElement, name: string, value: any): void {
   // 设为 null/undefined 和 false 移除该属性
   if (value == null || value === false) {
     return removeAttr(node, name);
@@ -74,8 +76,7 @@ function setAttr(node, name, value) {
   if (value === true) {
     node[name] = value;
 
-    // 有些浏览器/情况下用 node[name] = true
-    // 是无法添加自定义属性的，此时设置一个空字符串
+    // 有些浏览器/情况下用 node[name] = true 是无法添加自定义属性的，此时设置一个空字符串
     if (!hasAttr(node, name)) {
       node.setAttribute(name, "");
     }
@@ -86,19 +87,19 @@ function setAttr(node, name, value) {
 /**
  * 删除节点属性值
  *
- * @param {Element} node
+ * @param {HTMLElement} node
  * @param {String} name
  */
-function removeAttr(node, name) {
+function removeAttr(node: HTMLElement, name: string): void {
   node.removeAttribute(name);
 }
 /**
  * 节点是否存在 classname
- * @param   {Element}  node
+ * @param   {HTMLElement}  node
  * @param   {String}   classname
  * @return  {Boolean}
  */
-function hasClass(node, classname) {
+function hasClass(node: HTMLElement, classname: string): boolean {
   let current;
   const list = node.classList;
   if (list) {
@@ -110,10 +111,10 @@ function hasClass(node, classname) {
 }
 /**
  * 节点添加 classname
- * @param  {Element}  node
+ * @param  {HTMLElement}  node
  * @param  {String}   classname
  */
-function addClass(node, classname) {
+function addClass(node: HTMLElement, classname: string): void {
   let current;
   const list = node.classList;
 
@@ -133,10 +134,10 @@ function addClass(node, classname) {
 }
 /**
  * 节点删除 classname
- * @param  {Element}  node
+ * @param  {HTMLElement}  node
  * @param  {String}   classname
  */
-function removeClass(node, classname) {
+function removeClass(node: HTMLElement, classname: string): void {
   let current;
   let target;
   const list = node.classList;
@@ -161,10 +162,10 @@ function removeClass(node, classname) {
 }
 /**
  * 元素节点替换
- * @param  {Element}  oldChild
- * @param  {Element}  newChild
+ * @param  {HTMLElement}  oldChild
+ * @param  {HTMLElement}  newChild
  */
-function replaceNode(oldChild, newChild) {
+function replaceNode(oldChild: HTMLElement, newChild: HTMLElement): void {
   const parent = oldChild.parentNode;
   if (parent) {
     parent.replaceChild(newChild, oldChild);
@@ -173,19 +174,19 @@ function replaceNode(oldChild, newChild) {
 /**
  * 属性值是否是指令
  *
- * @param {Attribute} directive
+ * @param {String} directive
  * @return {Boolean}
  */
-function isDirective(directive) {
+function isDirective(directive: string): boolean {
   return directive.indexOf("v-") === 0;
 }
 /**
  * 节点是否含有指令
  *
- * @param {Element} node
+ * @param {HTMLElement} node
  * @return {Boolean}
  */
-function hasDirective(node) {
+function hasDirective(node: HTMLElement): boolean {
   if (isElement(node) && node.hasAttributes()) {
     const nodeAttrs = node.attributes;
 
@@ -201,27 +202,27 @@ function hasDirective(node) {
 /**
  * 是否含有延迟编译的节点
  *
- * @param {Element} node
+ * @param {HTMLElement} node
  * @return {Boolean}
  */
-function hasLateCompileChilds(node) {
+function hasLateCompileChilds(node: HTMLElement): boolean {
   return hasAttr(node, "v-if") || hasAttr(node, "v-for");
 }
 /**
  * 转换成字符串，null转换为空字符串
- * @param {*} value
+ * @param {any} value
  * @return {String}
  */
-function _toString(value) {
+function _toString(value: any): any {
   return value == null ? "" : value.toString();
 }
 /**
  * 简易深拷贝
  *
- * @param {Object} source
+ * @param {any} source
  * @return {Object}
  */
-function cloneDeep(source) {
+function cloneDeep(source: any): any {
   if (!(isObject(source) || isArray(source))) return source;
 
   const target = isArray(source) ? [] : {};
@@ -229,9 +230,9 @@ function cloneDeep(source) {
   for (const key in source) {
     if (Object.prototype.hasOwnProperty.call(source, key)) {
       if (isObject(source[key]) || isArray(source[key])) {
-        target[key] = cloneDeep(source[key]);
+        (target as any)[key] = cloneDeep(source[key]);
       } else {
-        target[key] = source[key];
+        (target as any)[key] = source[key];
       }
     }
   }
@@ -240,10 +241,10 @@ function cloneDeep(source) {
 /**
  * 生成文档片段
  *
- * @param {Element} element
+ * @param {HTMLElement} element
  * @return {Object}
  */
-function nodeToFragment(element) {
+function nodeToFragment(element: HTMLElement): HTMLElement {
   let child;
   const fragment = document.createDocumentFragment();
   while ((child = element.firstChild)) {
@@ -253,10 +254,10 @@ function nodeToFragment(element) {
 }
 /**
  * 处理 styleObject, 批量更新元素 style
- * @param  {Element}  element
- * @param  {String}   styleObject
+ * @param  {HTMLElement}  element
+ * @param  {any}   styleObject
  */
-function updateStyle(element, styleObject) {
+function updateStyle(element: HTMLElement, styleObject: any): void {
   const style = element.style;
 
   if (!isObject(styleObject)) {
@@ -274,7 +275,7 @@ function updateStyle(element, styleObject) {
  *
  * @return {Boolean}
  */
-function isPC() {
+function isPC(): boolean {
   const u = navigator.userAgent;
   const Agents = [
     "Android",
@@ -298,8 +299,44 @@ function isPC() {
 // --------------------------------------
 // --------------------------------------
 
-let curWatcher = null;
-let dependId = 0;
+interface parserInterface {
+  update?: (
+    newValue: string,
+    oldValue?: string,
+    args?: any,
+    scope?: any
+  ) => void;
+}
+interface TextParserInterface extends parserInterface {}
+interface StyleParserInterface extends parserInterface {}
+interface ClassParserInterface extends parserInterface {}
+interface ForParserInterface extends parserInterface {
+  buildList: (newArray: any, startIndex?: any, isPartly?: any) => void;
+  updatePartly: (newArray: any, args: any) => void;
+  recompileList: (newArray: any) => void;
+  push: (newArray: any, args: any) => void;
+  unshift: (newArray: any, args: any) => void;
+  pop: () => void;
+  shift: () => void;
+  spilce: () => void;
+}
+interface OnParserInterface {
+  parseEvent: (scope: any) => void;
+  getHandler: (expression: any) => void;
+  addEvent: () => void;
+}
+interface DisplayParserInterface extends parserInterface {}
+interface IfParserInterface extends parserInterface {}
+interface OtherParserInterface extends parserInterface {}
+interface MvvmOptions {
+  view: any;
+  model: any;
+  mounted?: any;
+  methods?: any;
+}
+
+let curWatcher: WatcherInterface = null;
+let dependId: number = 0;
 /**
  * MVVM入口
  *
@@ -312,7 +349,7 @@ export class MVVM {
    * @param {Obejct} option
    * @memberof MVVM
    */
-  constructor(option) {
+  constructor(option: MvvmOptions) {
     if (!isObject(option)) {
       throw Error("data must be object.");
     }
@@ -326,18 +363,43 @@ export class MVVM {
     new Compiler(option);
   }
 }
+interface CompilerInterface {
+  $queue: any[];
+  $element: any;
+  $data: any;
+  $context: any;
+  $mounted: any;
+  $fragment: any;
+  collectDir: (element: any, root: any, scope: any, isInit: any) => void;
+  compileNode: (item: any) => void;
+  parseAttr: (node: any, attr: any, scope: any) => void;
+  parseText: (node: any, scope: any) => void;
+  selectParsers: (
+    dirName: any,
+    node: any,
+    dirValue: any,
+    compilerScope: any
+  ) => void;
+}
+
 /**
  *
  *
  * @class Compiler
  */
-class Compiler {
+class Compiler implements CompilerInterface {
+  $queue: any[];
+  $element: any;
+  $data: any;
+  $context: any;
+  $mounted: any;
+  $fragment: any;
   /**
    * Creates an instance of Compiler.
    * @param {Object} option
    * @memberof Compiler
    */
-  constructor(option) {
+  constructor(option: MvvmOptions) {
     this.$queue = []; // 指令缓存队列
     this.$element = option.view; // 缓存根节点
     this.$data = option.model; // 数据模型对象
@@ -353,7 +415,7 @@ class Compiler {
       const keys = Object.keys(methods);
 
       keys.forEach(key => {
-        _eventHandler[key] = methods[key];
+        (_eventHandler as any)[key] = methods[key];
       });
     }
 
@@ -370,7 +432,7 @@ class Compiler {
    * @param {Boolean} isInit [首次加载]
    * @memberof Compiler
    */
-  collectDir(element, root, scope, isInit) {
+  collectDir(element: any, root: any, scope: any, isInit?: any) {
     if (root && hasDirective(element)) {
       this.$queue.push([element, scope]);
     }
@@ -409,7 +471,7 @@ class Compiler {
    * @param {Array} item
    * @memberof Compiler
    */
-  compileNode(item) {
+  compileNode(item: any) {
     const node = item[0];
     const scope = item[1];
 
@@ -446,7 +508,7 @@ class Compiler {
    * @param {Object} scope
    * @memberof Compiler
    */
-  parseAttr(node, attr, scope) {
+  parseAttr(node: any, attr: any, scope: any) {
     const { name, value: dirValue } = attr;
     const dirName = name.substr(2);
 
@@ -455,12 +517,17 @@ class Compiler {
     const parser = this.selectParsers(dirName, node, dirValue, this);
 
     if (/^on:.+$/.test(dirName)) {
-      parser.parseEvent(scope);
+      (parser as OnParserInterface).parseEvent(scope);
       return;
     }
     const watcher = new Watcher(parser, scope);
 
-    parser.update(watcher.value, undefined, undefined, scope);
+    (parser as parserInterface).update(
+      watcher.value,
+      undefined,
+      undefined,
+      scope
+    );
   }
 
   /**
@@ -470,7 +537,7 @@ class Compiler {
    * @param {Object} scope
    * @memberof Compiler
    */
-  parseText(node, scope) {
+  parseText(node: any, scope: any) {
     // TODO
   }
 
@@ -484,7 +551,7 @@ class Compiler {
    * @memberof Compiler
    * @return {Object}
    */
-  selectParsers(dirName, node, dirValue, compilerScope) {
+  selectParsers(dirName: any, node: any, dirValue: any, compilerScope: any) {
     let parser;
     let name = dirName;
     if (/^on:.+$/.test(name)) {
@@ -528,7 +595,7 @@ class Compiler {
    * @param {Boolean} isInit
    * @memberof Compiler
    */
-  completed(isInit) {
+  completed(isInit: any) {
     if (!isInit) {
       return;
     }
@@ -541,12 +608,22 @@ class Compiler {
     }
   }
 }
+interface parserOptions {
+  node: any;
+  dirName?: any;
+  dirValue: any;
+  compilerScope: any;
+}
 /**
  * 基类
  *
  * @class BaseParser
  */
 class BaseParser {
+  el: any;
+  dirName?: any;
+  dirValue?: any;
+  vm: any;
   /**
    * Creates an instance of BaseParser.
    * @param {Element} node
@@ -555,7 +632,7 @@ class BaseParser {
    * @param {Obejct} compilerScope
    * @memberof BaseParser
    */
-  constructor({ node, dirName, dirValue, compilerScope }) {
+  constructor({ node, dirName, dirValue, compilerScope }: parserOptions) {
     this.el = node;
     if (dirName) {
       this.dirName = dirName;
@@ -567,6 +644,7 @@ class BaseParser {
       this.vm = compilerScope;
     }
   }
+  // update() {}
 }
 /**
  * 派生类 TextParser
@@ -574,7 +652,7 @@ class BaseParser {
  * @class TextParser
  * @extends {BaseParser}
  */
-class TextParser extends BaseParser {
+class TextParser extends BaseParser implements TextParserInterface {
   /**
    * Creates an instance of TextParser.
    * @param {Element} node
@@ -582,7 +660,7 @@ class TextParser extends BaseParser {
    * @param {Obejct} compilerScope
    * @memberof TextParser
    */
-  constructor({ node, dirValue, compilerScope }) {
+  constructor({ node, dirValue, compilerScope }: parserOptions) {
     super({ node, dirValue, compilerScope });
   }
   /**
@@ -591,7 +669,7 @@ class TextParser extends BaseParser {
    * @param {String} newValue
    * @memberof TextParser
    */
-  update(newValue) {
+  update(newValue: any) {
     this.el.textContent = _toString(newValue);
   }
 }
@@ -601,7 +679,7 @@ class TextParser extends BaseParser {
  * @class StyleParser
  * @extends {BaseParser}
  */
-class StyleParser extends BaseParser {
+class StyleParser extends BaseParser implements StyleParserInterface {
   /**
    * Creates an instance of StyleParser.
    * @param {Element} node
@@ -609,7 +687,7 @@ class StyleParser extends BaseParser {
    * @param {Object} compilerScope
    * @memberof StyleParser
    */
-  constructor({ node, dirValue, compilerScope }) {
+  constructor({ node, dirValue, compilerScope }: parserOptions) {
     super({ node, dirValue, compilerScope });
   }
   /**
@@ -619,7 +697,7 @@ class StyleParser extends BaseParser {
    * @param {Object} oldValue
    * @memberof StyleParser
    */
-  update(newValue, oldValue) {
+  update(newValue: any, oldValue: any) {
     if (oldValue) {
       const keys = Object.keys(oldValue);
       keys.map(item => {
@@ -636,7 +714,7 @@ class StyleParser extends BaseParser {
  * @class ClassParser
  * @extends {BaseParser}
  */
-class ClassParser extends BaseParser {
+class ClassParser extends BaseParser implements ClassParserInterface {
   /**
    * Creates an instance of ClassParser.
    * @param {Element} node
@@ -644,7 +722,7 @@ class ClassParser extends BaseParser {
    * @param {Object} compilerScope
    * @memberof ClassParser
    */
-  constructor({ node, dirValue, compilerScope }) {
+  constructor({ node, dirValue, compilerScope }: parserOptions) {
     super({ node, dirValue, compilerScope });
   }
   /**
@@ -654,15 +732,15 @@ class ClassParser extends BaseParser {
    * @param {String} oldValue
    * @memberof ClassParser
    */
-  update(newValue, oldValue) {
+  update(newValue: any, oldValue: any) {
     if (oldValue) {
       const oldClassList = oldValue.split(" ");
-      oldClassList.map(item => {
+      oldClassList.map((item: any) => {
         removeClass(this.el, item);
       });
     }
     const classList = newValue.split(" ");
-    classList.map(item => {
+    classList.map((item: any) => {
       addClass(this.el, item);
     });
   }
@@ -673,7 +751,17 @@ class ClassParser extends BaseParser {
  * @class ForParser
  * @extends {BaseParser}
  */
-class ForParser extends BaseParser {
+class ForParser extends BaseParser implements ForParserInterface {
+  init: any;
+  alias: any;
+  symbol: any;
+  partlyNewArray: any;
+  scopes: any;
+  parent: any;
+  end: any;
+  start: any;
+  removeChild: any;
+  [x: string]: any;
   /**
    * Creates an instance of ForParser.
    * @param {Element} node
@@ -681,7 +769,7 @@ class ForParser extends BaseParser {
    * @param {Object} compilerScope
    * @memberof ForParser
    */
-  constructor({ node, dirValue, compilerScope }) {
+  constructor({ node, dirValue, compilerScope }: parserOptions) {
     super({ node, dirValue, compilerScope });
     this.init = true;
     this.parent = node.parentNode;
@@ -702,7 +790,7 @@ class ForParser extends BaseParser {
    * @param {Object} args
    * @memberof ForParser
    */
-  update(newValue, oldValue, args) {
+  update(newValue: any, oldValue: any, args: any) {
     if (this.init) {
       const parentNode = this.el.parentNode;
       parentNode.replaceChild(this.buildList(newValue), this.el);
@@ -725,7 +813,7 @@ class ForParser extends BaseParser {
    * @return {Object}
    * @memberof ForParser
    */
-  buildList(newArray, startIndex, isPartly) {
+  buildList(newArray: any, startIndex?: any, isPartly?: any) {
     const listFragment = document.createDocumentFragment();
     const start = startIndex || 0;
     const tpl = this.el.cloneNode(true);
@@ -734,7 +822,7 @@ class ForParser extends BaseParser {
       return listFragment;
     }
 
-    newArray.map((item, i) => {
+    newArray.map((item: any, i: any) => {
       const frag = tpl.cloneNode(true);
       const index = start + i;
       const scope = Object.create(this.vm.$data);
@@ -752,7 +840,7 @@ class ForParser extends BaseParser {
 
       if (this.init) {
         const $queue = this.vm.$queue;
-        $queue.find((item, index) => {
+        $queue.find((item: any, index: any) => {
           if (item[0] === this.el) {
             $queue.splice(index, 1);
             return true;
@@ -779,14 +867,14 @@ class ForParser extends BaseParser {
    * @param {Object} args
    * @memberof ForParser
    */
-  updatePartly(newArray, args) {
+  updatePartly(newArray: any, args: any) {
     // 更新处理 DOM 片段
     this[args.method].call(this, newArray, args.args);
 
     this.scopes[args.method](...this.partlyNewArray);
     this.partlyNewArray.length = 0;
 
-    this.scopes.map((item, index) => {
+    this.scopes.map((item: any, index: any) => {
       item.$index = index;
     });
   }
@@ -796,7 +884,7 @@ class ForParser extends BaseParser {
    * @param {Array} newArray
    * @memberof ForParser
    */
-  recompileList(newArray) {
+  recompileList(newArray: any) {
     const parent = this.parent;
     const childs = parent.childNodes;
 
@@ -819,7 +907,7 @@ class ForParser extends BaseParser {
    * @param {Object} args
    * @memberof ForParser
    */
-  push(newArray, args) {
+  push(newArray: any, args: any) {
     const newPartArray = this.buildList(args, newArray.length - 1, true);
 
     this.parent.insertBefore(newPartArray, this.end);
@@ -831,7 +919,7 @@ class ForParser extends BaseParser {
    * @param {Object} args
    * @memberof ForParser
    */
-  unshift(newArray, args) {
+  unshift(newArray: any, args: any) {
     const newPartArray = this.buildList(args, 0, true);
     this.parent.insertBefore(newPartArray, this.start);
   }
@@ -866,14 +954,17 @@ class ForParser extends BaseParser {
  * @class OnParser
  * @extends {BaseParser}
  */
-class OnParser extends BaseParser {
+class OnParser extends BaseParser implements OnParserInterface {
+  scope: any;
+  handlerType: any;
+  handlerFn: any;
   /**
    *Creates an instance of OnParser.
    * @param {Element} node
    * @param {String} dirName
    * @memberof OnParser
    */
-  constructor({ node, dirName, dirValue, compilerScope }) {
+  constructor({ node, dirName, dirValue, compilerScope }: parserOptions) {
     super({ node, dirName, dirValue, compilerScope });
   }
   /**
@@ -882,7 +973,7 @@ class OnParser extends BaseParser {
    * @param {Object} scope
    * @memberof OnParser
    */
-  parseEvent(scope) {
+  parseEvent(scope: any) {
     this.scope = scope;
 
     this.handlerType = this.dirName.substr(3);
@@ -902,7 +993,7 @@ class OnParser extends BaseParser {
    * @return {*}
    * @memberof OnParser
    */
-  getHandler(expression) {
+  getHandler(expression: any) {
     expression = expression.trim();
 
     if (/^(\S+?)\(.*\)$/g.test(expression)) {
@@ -915,7 +1006,7 @@ class OnParser extends BaseParser {
     }
     expression = expression.replace(
       /([(,])(\S+?)(?=[,)])/g,
-      (match, $1, $2) => {
+      (match: any, $1: any, $2: any) => {
         if ($2 === "$event") {
           return `${$1}${$2}`;
         }
@@ -940,7 +1031,7 @@ class OnParser extends BaseParser {
     const handlerFn = this.handlerFn;
     const scope = this.scope || this.vm.$data;
 
-    el.addEventListener(handlerType, e => {
+    el.addEventListener(handlerType, (e: any) => {
       handlerFn(scope, e);
     });
   }
@@ -951,14 +1042,14 @@ class OnParser extends BaseParser {
  * @class DisplayParser
  * @extends {BaseParser}
  */
-class DisplayParser extends BaseParser {
+class DisplayParser extends BaseParser implements DisplayParserInterface {
   /**
    *Creates an instance of DisplayParser.
    * @param {Element} node
    * @param {String} dirName
    * @memberof DisplayParser
    */
-  constructor({ node, dirName, dirValue, compilerScope }) {
+  constructor({ node, dirName, dirValue, compilerScope }: parserOptions) {
     super({ node, dirName, dirValue, compilerScope });
   }
   /**
@@ -967,7 +1058,7 @@ class DisplayParser extends BaseParser {
    * @param {String} newValue
    * @memberof DisplayParser
    */
-  update(newValue) {
+  update(newValue: any) {
     if (this.dirName === "show") {
       this.el.style.display = !!newValue ? "block" : "none";
     } else if (this.dirName === "hide") {
@@ -981,13 +1072,16 @@ class DisplayParser extends BaseParser {
  * @class IfParser
  * @extends {IfParser}
  */
-class IfParser extends BaseParser {
+class IfParser extends BaseParser implements IfParserInterface {
+  $parent: any;
+  elTpl: any;
+  emptyNode: any;
   /**
    *Creates an instance of IfParser.
    * @param {Element} node
    * @memberof IfParser
    */
-  constructor({ node, dirValue, compilerScope }) {
+  constructor({ node, dirValue, compilerScope }: parserOptions) {
     super({ node, dirValue, compilerScope });
     this.$parent = this.el.parentNode;
     this.elTpl = this.el.cloneNode(true);
@@ -1003,7 +1097,7 @@ class IfParser extends BaseParser {
    * @param {*} scope
    * @memberof IfParser
    */
-  update(newValue, oldValue, args, scope) {
+  update(newValue: any, oldValue: any, args: any, scope: any) {
     const tpl = this.elTpl.cloneNode(true);
 
     if (newValue) {
@@ -1030,14 +1124,14 @@ class IfParser extends BaseParser {
  * @class OtherParser
  * @extends {BaseParser}
  */
-class OtherParser extends BaseParser {
+class OtherParser extends BaseParser implements OtherParserInterface {
   /**
    *Creates an instance of OtherParser.
    * @param {Element} node
    * @param {String} dirName
    * @memberof OtherParser
    */
-  constructor({ node, dirName, dirValue, compilerScope }) {
+  constructor({ node, dirName, dirValue, compilerScope }: parserOptions) {
     super({ node, dirName, dirValue, compilerScope });
   }
   /**
@@ -1046,23 +1140,74 @@ class OtherParser extends BaseParser {
    * @param {String} newValue
    * @memberof OtherParser
    */
-  update(newValue) {
+  update(newValue: any) {
     setAttr(this.el, this.dirName, newValue);
   }
+}
+
+interface WatcherInterface {
+  watchers: any;
+  vm: any;
+  el: any;
+  dirValue: any;
+  callback: any;
+  depIds: any;
+  oldVal: any;
+  parser: any;
+  scope: any;
+  value: any;
+  /**
+   * 获取当前属性值
+   *
+   * @return {*}
+   * @memberof Watcher
+   */
+  get: () => String;
+  /**
+   * _getter实现
+   *
+   * @param {String} expression
+   * @return {Function}
+   * @memberof Watcher
+   */
+  _getter(expression: string): Function;
+  /**
+   * 更新值之前
+   *
+   * @memberof Watcher
+   */
+  beforeUpdate: () => void;
+  /**
+   * 更新值之后
+   * 触发回调列表
+   * @param {any} args
+   * @memberof Watcher
+   */
+  update: (args: any) => void;
 }
 /**
  * 给监听属性添加watcher
  *
  * @class Watcher
  */
-class Watcher {
+class Watcher implements WatcherInterface {
+  watchers: any;
+  vm: any;
+  el: any;
+  dirValue: any;
+  callback: any;
+  depIds: any;
+  oldVal: any;
+  parser: any;
+  scope: any;
+  value: any;
   /**
    *Creates an instance of Watcher.
    * @param {Object} parser
    * @param {Object} scope
    * @memberof Watcher
    */
-  constructor(parser, scope) {
+  constructor(parser: any, scope: any) {
     this.watchers = [];
     this.vm = parser.vm;
     this.el = parser.el;
@@ -1074,12 +1219,6 @@ class Watcher {
     this.scope = scope;
     this.value = this.get();
   }
-  /**
-   * 获取当前属性值
-   *
-   * @return {*}
-   * @memberof Watcher
-   */
   get() {
     curWatcher = this; // 当前节点装到watcher里,然后放到对应属性的通知列表里。
 
@@ -1088,35 +1227,17 @@ class Watcher {
     curWatcher = null;
     return value;
   }
-  /**
-   * _getter实现
-   *
-   * @param {String} expression
-   * @return {Function}
-   * @memberof Watcher
-   */
-  _getter(expression) {
+  _getter(expression: string) {
     try {
       return new Function("scope", `with(scope){return ${expression}};`);
     } catch {
       throw Error(`The attribute value:'${expression}' must be not keyword.`);
     }
   }
-  /**
-   * 更新值之前
-   *
-   * @memberof Watcher
-   */
   beforeUpdate() {
     this.oldVal = cloneDeep(this.value);
   }
-  /**
-   * 更新值之后
-   * 触发回调列表
-   * @param {Obejct} args
-   * @memberof Watcher
-   */
-  update(args) {
+  update(args: any) {
     const newVal = (this.value = this.get());
 
     this.callback.call(this.parser, newVal, this.oldVal, args);
@@ -1128,12 +1249,13 @@ class Watcher {
  * @class Observer
  */
 class Observer {
+  dependList: any[];
   /**
    * Creates an instance of Observer.
    * @param {Object} target
    * @memberof Observer
    */
-  constructor(target) {
+  constructor(target: any) {
     this.dependList = [];
 
     isArray(target) ? this.observeArray(target) : this.observeObject(target);
@@ -1151,7 +1273,7 @@ class Observer {
    * @param {Object} obj
    * @memberof Observer
    */
-  observeObject(obj) {
+  observeObject(obj: any) {
     const keys = Object.keys(obj);
 
     for (let i = 0; i < keys.length; i++) {
@@ -1165,10 +1287,10 @@ class Observer {
    * @param {Array} arr
    * @memberof Observer
    */
-  observeArray(arr) {
+  observeArray(arr: any) {
     this.extendArrayProto(arr);
 
-    arr.map(item => {
+    arr.map((item: any) => {
       Observer.createObserver(item);
     });
   }
@@ -1178,7 +1300,7 @@ class Observer {
    * @param {Array} arr
    * @memberof Observer
    */
-  extendArrayProto(arr) {
+  extendArrayProto(arr: any) {
     const arrayMethods = [
       "pop",
       "push",
@@ -1194,12 +1316,12 @@ class Observer {
 
     arrayMethods.map(method => {
       Object.defineProperty(extendProto, method, {
-        value(...args) {
+        value(...args: any[]) {
           const ob = this.__ob__;
-          ob.dependList.map(item => {
+          ob.dependList.map((item: any) => {
             item.beforeUpdate();
           });
-          const original = arrayProto[method];
+          const original = (arrayProto as any)[method];
           const result = original.apply(this, ...args);
           let inserts;
           switch (method) {
@@ -1216,7 +1338,7 @@ class Observer {
             _this.observeArray(inserts);
           }
 
-          ob.dependList.map(item => {
+          ob.dependList.map((item: any) => {
             item.update({ method, args, source: this });
           });
           return result;
@@ -1238,8 +1360,8 @@ class Observer {
    * @param {String} value
    * @memberof Observer
    */
-  static observe(obj, key, value) {
-    const dependList = []; // 该属性收集到的需要通知的watcher（节点）列表
+  static observe(obj: any, key: any, value: any) {
+    const dependList: any[] = []; // 该属性收集到的需要通知的watcher（节点）列表
     const curId = ++dependId;
     const childOb = Observer.createObserver(value);
 
@@ -1281,7 +1403,7 @@ class Observer {
    * @return {Object}
    * @memberof Observer
    */
-  static createObserver(target) {
+  static createObserver(target: any) {
     if (isArray(target) || isObject(target)) {
       return target.hasOwnProperty("__ob__")
         ? target.__ob__

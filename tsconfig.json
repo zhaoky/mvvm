@@ -1,14 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ESNext",
     "noImplicitAny": true,
-    "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": false,
-    "moduleResolution": "node"
-    // "outDir": "./lib",
-    // "lib": ["es6", "dom"]
+    "outDir": "./lib1"
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "exclude": ["node_modules"]
 }
