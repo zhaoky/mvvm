@@ -7,9 +7,7 @@ const _DEV_ = process.env.NODE_ENV === "development";
 
 const config = {
   mode: process.env.NODE_ENV || "production",
-  entry: _DEV_
-    ? path.resolve(__dirname, "./src/index.ts")
-    : path.resolve(__dirname, "./src/lib/mvvm.ts"),
+  entry: _DEV_ ? path.resolve(__dirname, "./src/index.ts") : path.resolve(__dirname, "./src/core/mvvm.ts"),
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "mvvm.js",
@@ -28,10 +26,7 @@ const config = {
       }
     ]
   },
-  plugins: [
-    new webpack.BannerPlugin(`${packageJson.name} v${packageJson.version}`),
-    new ForkTsCheckerWebpackPlugin()
-  ]
+  plugins: [new webpack.BannerPlugin(`${packageJson.name} v${packageJson.version}`), new ForkTsCheckerWebpackPlugin()]
 };
 if (_DEV_) {
   config.devtool = "eval-source-map";

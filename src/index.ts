@@ -1,15 +1,26 @@
-import { MVVM } from "./lib/mvvm";
+import MVVM from "./core/mvvm";
 
 const data = {
   view: document.getElementById("app"),
   model: {
-    a: {},
-    info: {
-      list: [{ name: "li", age: "12" }, { name: "wang", age: "24" }],
-      list1: [1, 2, 3]
-    }
+    // a: {
+    //   b: {
+    //     style: {
+    //       h: {
+    //         color: "yellow"
+    //       }
+    //     }
+    //   }
+    // }
+    // info: {
+    //   list: [{ name: "li", age: "12" }, { name: "wang", age: "24" }]
+    //   // list1: [1, 2, 3]
+    // }
     // v: false,
-    // title: "标题",
+    title: "标题"
+    // title: {
+    //   info: "baio"
+    // }
     // styleObj: {
     //   "font-size": "24px",
     //   color: "#999"
@@ -21,7 +32,7 @@ const data = {
     // src1: "www.baidu.com",
     // img: "666.png",
     // infoList: [{ name: "li", age: "12" }, { name: "wang", age: "24" }]
-    // // pageIndex: 1,
+    // pageIndex: 1,
     // info: {
     //   he: {
     //     body: {
@@ -34,6 +45,16 @@ const data = {
     //     }
     //   }
     // }
+    // L: [
+    //   {
+    //     name: "zky",
+    //     class: [[11], [33]]
+    //   },
+    //   {
+    //     name: "lr",
+    //     class: [[111], [333]]
+    //   }
+    // ]
   },
   methods: {
     // handler: function(e, title) {
@@ -46,14 +67,14 @@ const data = {
     //   console.log(666);
     // }
   },
-  mounted() {
+  mounted(): void {
     console.log("主程编译完成");
   }
 };
 new MVVM(data);
 
-setTimeout(() => {
-  // data.model.title = "新标题";
+setTimeout((): void => {
+  // data.model.title.info = "新标题";
   // data.model.style = {
   //   color: "red"
   // };
@@ -77,27 +98,36 @@ setTimeout(() => {
   //     }
   //   }
   // };
-  setTimeout(() => {
-    // data.model.v = false;
-  }, 5000);
-  console.log(1);
-  data.model.info = {
-    list: [
-      { name: "li", age: "12" },
-      { name: "wang", age: "24" },
-      { name: "wang", age: "25" }
-    ],
-    list1: [1, 2, 3, 4]
-  };
+  // setTimeout((): void => {
+  //   data.model.info.list[4].name = "zky1";
+  //   setTimeout((): void => {
+  //     data.model.info.list.splice(2, 2);
+  //     setTimeout((): void => {
+  //       data.model.info.list[2].name = "lr";
+  //     }, 5000);
+  //   }, 5000);
+  // }, 5000);
+  // console.log(1);
+  // data.model.info = {
+  //   list: [
+  //     { name: "li", age: "12" },
+  //     { name: "wang", age: "24" },
+  //     { name: "wang", age: "25" }
+  //   ],
+  //   list1: [1, 2, 3, 4]
+  // };
+  // data.model.info.list.push(1);
   // data.model.v = true;
-  // data.model.infoList.push(
-  //   { name: "tr", age: "20" },
-  //   { name: "tr1", age: "200" },
-  //   { name: "tr2", age: "201" }
-  // );
+  // data.model.info.list.push({ name: "tr", age: "20" }, { name: "tr1", age: "200" }, { name: "tr2", age: "201" });
   // data.model.a = {
   //   color: {
   //     color: "red"
   //   }
   // };
-}, 3000);
+  // data.model.a.b.style.h.color = "#333";
+  // data.model.info.list[1].name = "zky";
+  // data.model.info.list = [{ name: "tr", age: "20" }, { name: "tr1", age: "200" }];
+  // data.model.L[0].class = [[555], [666]];
+  // data.model.L[0].class.unshift([44]);
+  data.model.title = "xin";
+}, 5000);

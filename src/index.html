@@ -21,7 +21,9 @@
   </head>
   <body>
     <div id="app">
-      <!-- <h1 v-style="a.color">1</h1> -->
+        <h3>13{{title}}12{{title}}</h3>
+        <h3 v-text='title'></h3>
+      <!-- <h1 v-style="a.b.style.h" v-style='c.style' v-style='d.style'>1</h1> -->
       <!-- <h1 v-text="infoList[pageIndex].name"></h1>
       <h2
         style="color:red"
@@ -33,15 +35,15 @@
       >
         sss
       </h2>
-      <h3 v-text="info.title"></h2> -->
+      -->
       <!-- <h4 v-text="info.he.body.name" v-on:click="test"></h4> -->
       <!-- <h4 v-text="info.sex.she.asd.d" v-on:click="test"></h4> -->
-      <div a="1">
-        <div v-for="item in info.list" v-link="$index">
+      <div id ='666'>
+        <!-- <div v-for="item in info.list" v-link="$index" id='666-for'>
           <div v-text="item.name" v-class='$index===1?"a":"b"'></div>
           <div v-text="item.age" v-on:click="getIndex($index,$event)"></div>
-        </div>
-        <div v-for="item in info.list" v-text="item"></div>
+        </div> -->
+        <!-- <div v-for="item in info.list1" v-text="item"></div> -->
       </div>
       <!-- <h3 v-text="title" v-on:click="handler">888</h3> -->
       <!-- <div id="b">
@@ -56,6 +58,14 @@
       <h3 v-show="v">显示</h3>
       <h3 v-hide="v">隐藏</h3> -->
       <!-- <h4 v-style="v?styleObj:styleObj1">测试</h4> -->
+      <!-- <div>
+        <div v-for="(item,index) in L" v-link="index">
+          <div v-text='item.name'></div>
+          <div v-for='(it,i) in item.class'>
+            <div v-text='it' v-link ='i'></div>
+          </div>
+        </div>
+      </div> -->
     </div>
   </body>
 </html>

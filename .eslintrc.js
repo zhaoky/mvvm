@@ -21,6 +21,7 @@ module.exports = {
     sourceType: "module"
   },
   rules: {
-    noExplicitAny: "true"
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-use-before-define": 0
   }
 };
