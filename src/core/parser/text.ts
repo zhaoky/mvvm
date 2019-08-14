@@ -1,5 +1,5 @@
 import { ParserBaseInterface, ParserOptionInterface, ParseUpdateOptionInterface } from "./../interface";
-import { toString } from "./../utils";
+import { _toString } from "./../utils";
 import BaseParser from "./base";
 /**
  * 派生类 TextParser
@@ -23,6 +23,6 @@ export default class TextParser extends BaseParser implements ParserBaseInterfac
    * @memberof TextParser
    */
   public update({ newVal }: ParseUpdateOptionInterface): void {
-    this.el.textContent = toString(newVal);
+    this.el.textContent = _toString(newVal);
   }
 }

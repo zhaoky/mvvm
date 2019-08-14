@@ -8,29 +8,8 @@ import BaseParser from "./base";
  * @extends {IfParser}
  */
 export default class IfParser extends BaseParser implements ParserBaseInterface {
-  /**
-   *
-   *
-   * @private
-   * @type {Node & ParentNode | null}
-   * @memberof IfParser
-   */
   private $parent: Node & ParentNode | null;
-  /**
-   *
-   *
-   * @private
-   * @type {Node}
-   * @memberof IfParser
-   */
   private elTpl: Node;
-  /**
-   *
-   *
-   * @private
-   * @type {Text}
-   * @memberof IfParser
-   */
   private emptyNode: Text;
   /**
    *Creates an instance of IfParser.

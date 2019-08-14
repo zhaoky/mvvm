@@ -1,4 +1,4 @@
-import { CompilerInterface, MvvmOptionInterface, CollectDirOptionInterface, ParserBaseInterface, ParserOnInterface, ParserOptionInterface } from "./interface";
+import { CompilerInterface, MvvmOptionInterface, CollectDirOptionInterface, ParserBaseInterface, ParserOnInterface, ParserOptionInterface, WatcherInterface } from "./interface";
 import { isFunction, isObject, isElement, isDirective, isTextNode, removeAttr, nodeToFragment, hasDirective, hasLateCompileChilds } from "./utils";
 import Observer from "./observer";
 import TextParser from "./parser/text";
@@ -6,6 +6,7 @@ import StyleParser from "./parser/style";
 import ClassParser from "./parser/class";
 import ForParser from "./parser/for";
 import OnParser from "./parser/on";
+import ModelParser from "./parser/model";
 import DisplayParser from "./parser/display";
 import IfParser from "./parser/if";
 import OtherParser from "./parser/other";
@@ -49,6 +50,7 @@ export default class Compiler implements CompilerInterface {
    * @memberof Compiler
    */
   public $queue: [HTMLElement, Record<string, any>][] = [];
+  public watcher: WatcherInterface = null;
   /**
    * 缓存根节点
    *
@@ -167,9 +169,9 @@ export default class Compiler implements CompilerInterface {
    * @memberof Compiler
    */
   public parseAttr(node: HTMLElement, attr: Attr, scope: Record<string, any>): void {
-    const { name, value: dirValue }: { name: string; value: string } = attr;
+    const name: string = attr.name;
     const dirName: string = name.substr(2);
-
+    const dirValue: string = attr.value.replace(/\s+/g, "");
     removeAttr(node, name);
 
     const parser = this.selectParsers({ node, dirName, dirValue, cs: this });
@@ -178,7 +180,7 @@ export default class Compiler implements CompilerInterface {
       (parser as ParserOnInterface).parseEvent(scope);
       return;
     }
-    const watcher = new Watcher(parser as ParserBaseInterface, scope);
+    const watcher = (this.watcher = new Watcher(parser as ParserBaseInterface, scope));
 
     (parser as ParserBaseInterface).update({ newVal: watcher.value, scope });
   }
@@ -248,6 +250,9 @@ export default class Compiler implements CompilerInterface {
         break;
       case "if":
         parser = new IfParser({ node, dirValue, cs });
+        break;
+      case "model":
+        parser = new ModelParser({ node, dirValue, cs });
         break;
       default:
         parser = new OtherParser({ node, dirName, dirValue, cs });

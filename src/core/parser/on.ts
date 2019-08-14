@@ -8,29 +8,8 @@ import BaseParser from "./base";
  * @extends {BaseParser}
  */
 export default class OnParser extends BaseParser implements ParserOnInterface {
-  /**
-   *
-   *
-   * @private
-   * @type {Record<string, any>}
-   * @memberof OnParser
-   */
   private scope: Record<string, any>;
-  /**
-   *
-   *
-   * @private
-   * @type {string}
-   * @memberof OnParser
-   */
   private handlerType: string;
-  /**
-   *
-   *
-   * @private
-   * @type {OnHandlerInterface}
-   * @memberof OnParser
-   */
   private handlerFn: OnHandlerInterface;
   /**
    *Creates an instance of OnParser.

@@ -21,8 +21,8 @@
   </head>
   <body>
     <div id="app">
-        <h3>13{{title}}12{{title}}</h3>
-        <h3 v-text='title'></h3>
+        <!-- <h3>13{{title}}12{{title}}</h3> -->
+        <!-- <h3 v-text='title'></h3> -->
       <!-- <h1 v-style="a.b.style.h" v-style='c.style' v-style='d.style'>1</h1> -->
       <!-- <h1 v-text="infoList[pageIndex].name"></h1>
       <h2
@@ -66,6 +66,8 @@
           </div>
         </div>
       </div> -->
+      <input type="text" v-model='title.info[2]'>
+      <h3>{{title.info[2]}}</h3>
     </div>
   </body>
 </html>

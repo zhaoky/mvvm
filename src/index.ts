@@ -17,10 +17,10 @@ const data = {
     //   // list1: [1, 2, 3]
     // }
     // v: false,
-    title: "标题"
-    // title: {
-    //   info: "baio"
-    // }
+    // title: "标题"
+    title: {
+      info: [1, 2, 3]
+    }
     // styleObj: {
     //   "font-size": "24px",
     //   color: "#999"
@@ -129,5 +129,5 @@ setTimeout((): void => {
   // data.model.info.list = [{ name: "tr", age: "20" }, { name: "tr1", age: "200" }];
   // data.model.L[0].class = [[555], [666]];
   // data.model.L[0].class.unshift([44]);
-  data.model.title = "xin";
-}, 5000);
+  data.model.title.info[2] = 666;
+}, 8000);

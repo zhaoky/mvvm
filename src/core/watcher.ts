@@ -9,9 +9,10 @@ import Dep from "./dep";
  */
 export default class Watcher implements WatcherInterface {
   public oldVal: any = null;
-  public parser: ParserBaseInterface;
-  public scope: Record<string, any> = null;
   public value: any = null;
+  public scope: Record<string, any> = null;
+  public parser: ParserBaseInterface;
+
   /**
    *Creates an instance of Watcher.
    * @param {ParserBaseInterface} parser [解析器]
@@ -77,7 +78,37 @@ export default class Watcher implements WatcherInterface {
     Dep.curWatcher = null;
     return value;
   }
+  /**
+   * 设置双向绑定值
+   *
+   * @private
+   * @param {*} value
+   * @memberof Watcher
+   */
+  public set(value: any): void {
+    let pathList = this.parser.dirValue.split(/[\.\]\[]/g);
+    pathList = pathList.filter((item: string): boolean => {
+      return item !== "";
+    });
 
+    const key = pathList.pop();
+    const data = this.getDeepValue(this.parser.cs.$data, pathList);
+
+    data[key] = value;
+  }
+  /**
+   * 通过访问层级取值
+   *
+   * @param {*} target
+   * @param {*} paths
+   * @return {*}
+   */
+  private getDeepValue(target: any, paths: string[]): any {
+    while (paths.length) {
+      target = target[paths.shift()];
+    }
+    return target;
+  }
   /**
    * 更新前执行的函数（深拷贝得到原始值）
    *
@@ -86,7 +117,6 @@ export default class Watcher implements WatcherInterface {
   public beforeUpdate(): void {
     this.oldVal = cloneDeep(this.value);
   }
-
   /**
    * 更新函数
    *

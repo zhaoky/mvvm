@@ -19,7 +19,7 @@ export default class OtherParser extends BaseParser implements ParserBaseInterfa
   /**
    *  other更新函数
    *
-   * @param {any} newVal
+   * @param {ParseUpdateOptionInterface} { newVal }
    * @memberof OtherParser
    */
   public update({ newVal }: ParseUpdateOptionInterface): void {

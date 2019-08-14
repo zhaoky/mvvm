@@ -4,6 +4,7 @@ export interface Node {
 export interface CompilerInterface {
   $data: Record<string, any>;
   $queue: [HTMLElement, Record<string, any>][];
+  watcher: WatcherInterface;
   collectDir: ({ element, isRoot, scope, isInit }: CollectDirOptionInterface) => void;
   compileNode: (item: [HTMLElement, Record<string, any>]) => void;
   parseAttr: (node: HTMLElement, attr: Record<string, any>, scope: Record<string, any>) => void;
@@ -175,4 +176,12 @@ export interface WatcherInterface {
    * @memberof WatcherInterface
    */
   update(args?: any): void;
+
+  /**
+   * 设置双向绑定值
+   *
+   * @param {*} value
+   * @memberof WatcherInterface
+   */
+  set(value: any): void;
 }

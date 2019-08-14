@@ -55,7 +55,7 @@ function hasAttr(node: HTMLElement, name: string): boolean {
  * @param   {String}   name
  * @return  {String}
  */
-function getAttr(node: HTMLElement, name: string): string {
+export function getAttr(node: HTMLElement, name: string): string {
   return node.getAttribute(name) || "";
 }
 /**
@@ -211,7 +211,7 @@ export function hasLateCompileChilds(node: HTMLElement): boolean {
  * @param {String} value
  * @return {String}
  */
-export function toString(value: string): string {
+export function _toString(value: string): string {
   return value == null ? "" : value.toString();
 }
 /**
