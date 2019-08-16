@@ -61,11 +61,10 @@ export default class Watcher implements WatcherInterface {
   /**
    * 1.获取最新值
    * 2.把watcher与值绑定,通知到每一个相关属性，加入到对应的订阅列表
-   * @private
    * @return {any}
    * @memberof Watcher
    */
-  private get(): any {
+  public get(): any {
     Dep.curWatcher = this;
 
     const value = this._getter(this.parser.dirValue)(this.scope || this.parser.cs.$data);

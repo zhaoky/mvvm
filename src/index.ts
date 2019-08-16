@@ -3,6 +3,7 @@ import MVVM from "./core/mvvm";
 const data = {
   view: document.getElementById("app"),
   model: {
+    isCheck: true,
     // a: {
     //   b: {
     //     style: {
@@ -18,9 +19,9 @@ const data = {
     // }
     // v: false,
     // title: "标题"
-    title: {
-      info: [1, 2, 3]
-    }
+    // title: {
+    // info: [1, 2, 3]
+    // }
     // styleObj: {
     //   "font-size": "24px",
     //   color: "#999"
@@ -55,6 +56,11 @@ const data = {
     //     class: [[111], [333]]
     //   }
     // ]
+    // radio: "",
+    // radio1: "",
+    // checkbox: [],
+    // checkbox1: false,
+    selected: []
   },
   methods: {
     // handler: function(e, title) {
@@ -129,5 +135,5 @@ setTimeout((): void => {
   // data.model.info.list = [{ name: "tr", age: "20" }, { name: "tr1", age: "200" }];
   // data.model.L[0].class = [[555], [666]];
   // data.model.L[0].class.unshift([44]);
-  data.model.title.info[2] = 666;
+  // data.model.title.info[2] = 666;
 }, 8000);

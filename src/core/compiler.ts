@@ -1,4 +1,4 @@
-import { CompilerInterface, MvvmOptionInterface, CollectDirOptionInterface, ParserBaseInterface, ParserOnInterface, ParserOptionInterface, WatcherInterface } from "./interface";
+import { CompilerInterface, MvvmOptionInterface, CollectDirOptionInterface, ParserBaseInterface, ParserOnInterface, ParserOptionInterface } from "./interface";
 import { isFunction, isObject, isElement, isDirective, isTextNode, removeAttr, nodeToFragment, hasDirective, hasLateCompileChilds } from "./utils";
 import Observer from "./observer";
 import TextParser from "./parser/text";
@@ -50,7 +50,6 @@ export default class Compiler implements CompilerInterface {
    * @memberof Compiler
    */
   public $queue: [HTMLElement, Record<string, any>][] = [];
-  public watcher: WatcherInterface = null;
   /**
    * 缓存根节点
    *
@@ -180,7 +179,9 @@ export default class Compiler implements CompilerInterface {
       (parser as ParserOnInterface).parseEvent(scope);
       return;
     }
-    const watcher = (this.watcher = new Watcher(parser as ParserBaseInterface, scope));
+    const watcher = new Watcher(parser as ParserBaseInterface, scope);
+
+    (parser as ParserBaseInterface).watcher = watcher;
 
     (parser as ParserBaseInterface).update({ newVal: watcher.value, scope });
   }

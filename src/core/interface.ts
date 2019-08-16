@@ -4,7 +4,6 @@ export interface Node {
 export interface CompilerInterface {
   $data: Record<string, any>;
   $queue: [HTMLElement, Record<string, any>][];
-  watcher: WatcherInterface;
   collectDir: ({ element, isRoot, scope, isInit }: CollectDirOptionInterface) => void;
   compileNode: (item: [HTMLElement, Record<string, any>]) => void;
   parseAttr: (node: HTMLElement, attr: Record<string, any>, scope: Record<string, any>) => void;
@@ -107,6 +106,13 @@ export interface ParserBaseInterface {
    */
   cs: CompilerInterface;
   /**
+   * Watcher
+   *
+   * @type {WatcherInterface}
+   * @memberof ParserBaseInterface
+   */
+  watcher?: WatcherInterface;
+  /**
    * 是否为深度依赖
    *
    * @type {boolean}
@@ -184,4 +190,12 @@ export interface WatcherInterface {
    * @memberof WatcherInterface
    */
   set(value: any): void;
+
+  /**
+   * 获取最新值
+   *
+   * @returns {*}
+   * @memberof WatcherInterface
+   */
+  get(): any;
 }

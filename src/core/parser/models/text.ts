@@ -18,7 +18,7 @@ export default class ModelText {
     this.model = model;
     this.model.el.addEventListener("input", function(): void {
       // eslint-disable-next-line no-invalid-this
-      model.cs.watcher.set((this as HTMLInputElement).value);
+      model.watcher.set((this as HTMLInputElement).value);
     });
   }
   /**

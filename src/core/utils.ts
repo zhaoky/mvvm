@@ -7,6 +7,16 @@ export function isArray(value: any): boolean {
   return Array.isArray(value);
 }
 /**
+ * 是否是布尔值
+ *
+ * @export
+ * @param {*} value
+ * @return {boolean}
+ */
+export function isBoolean(value: any): boolean {
+  return Reflect.apply(Object.prototype.toString, value, []) === "[object Boolean]";
+}
+/**
  * 是否为对象
  * @param {any} value
  * @return {Boolean}
@@ -46,7 +56,7 @@ export function isTextNode(value: HTMLElement): boolean {
  * @param   {String}   name
  * @return  {Boolean}
  */
-function hasAttr(node: HTMLElement, name: string): boolean {
+export function hasAttr(node: HTMLElement, name: string): boolean {
   return node.hasAttribute(name);
 }
 /**

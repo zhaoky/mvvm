@@ -51,6 +51,9 @@ export default class Observer {
         // 订阅watcher到属性上
         const curWatcher = Dep.curWatcher;
         if (curWatcher) {
+          if (target["__isProxy"]) {
+            dep.addDep(`${path}____isProxy`, curWatcher);
+          }
           dep.addDep(`${path}__${property}`, curWatcher);
         }
 

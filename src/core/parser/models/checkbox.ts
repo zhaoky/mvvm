@@ -1,8 +1,9 @@
 import { ParseUpdateOptionInterface, ParserBaseInterface } from "./../../interface";
-import { _toString } from "./../../utils";
+import { isBoolean } from "./../../utils";
+import { isArray } from "util";
 /**
- * <input type='text/password'>
- * <textarea>
+ * <input type='checkbox>
+ * 只支持boolean和array
  * 双向绑定类
  * @export
  * @class ModelCheckbox
@@ -16,9 +17,19 @@ export default class ModelCheckbox {
    */
   public constructor(model: ParserBaseInterface) {
     this.model = model;
-    this.model.el.addEventListener("input", function(): void {
+    model.el.addEventListener("change", function(): void {
+      const data = model.watcher.get();
       // eslint-disable-next-line no-invalid-this
-      model.cs.watcher.set((this as HTMLInputElement).value);
+      const { checked, value } = this as HTMLInputElement;
+      if (isBoolean(data)) {
+        model.watcher.set(checked);
+      } else if (isArray(data)) {
+        if (checked && !data.includes(value)) {
+          data.push(value);
+        } else if (!checked && data.includes(value)) {
+          data.splice(data.indexOf(value), 1);
+        }
+      }
     });
   }
   /**
@@ -28,6 +39,10 @@ export default class ModelCheckbox {
    * @memberof ModelCheckbox
    */
   public update({ newVal }: ParseUpdateOptionInterface): void {
-    (this.model.el as HTMLInputElement).value = _toString(newVal);
+    if (!isArray(newVal) && !isBoolean(newVal)) {
+      throw Error("Checkbox v-model value must be a type of Boolean or Array");
+    }
+    const value = (this.model.el as HTMLInputElement).value;
+    (this.model.el as HTMLInputElement).checked = isBoolean(newVal) ? newVal : (newVal as any[]).includes(value);
   }
 }

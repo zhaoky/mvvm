@@ -3,8 +3,8 @@ import BaseParser from "./base";
 import { getAttr } from "./../utils";
 import ModelText from "./models/text";
 import ModelRadio from "./models/radio";
-import ModelCheckbox from "./models/select";
-import ModelSelect from "./models/checkbox";
+import ModelCheckbox from "./models/checkbox";
+import ModelSelect from "./models/select";
 
 const VAILD_MODEL_ELEMENT = ["input", "select", "textarea"];
 

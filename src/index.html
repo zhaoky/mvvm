@@ -66,8 +66,31 @@
           </div>
         </div>
       </div> -->
-      <input type="text" v-model='title.info[2]'>
-      <h3>{{title.info[2]}}</h3>
+      <!-- <input type="text" v-model='title.info[2]'>
+      <h3>{{title.info[2]}}</h3> -->
+      <!-- <div>
+        <input type="radio" value='me' v-model="radio">我
+        <input type="radio" value='you' v-model="radio">你
+        <div>{{radio}}</div>
+        <input type="radio" value='he'  v-model="radio1">他
+        <div>{{radio1}}</div>
+      </div> -->
+      <!-- <div>
+        <input type="checkbox" value='apple' v-model='checkbox'>苹果
+        <input type="checkbox" value='orange' v-model='checkbox'>橘子
+        <input type="checkbox" value='banana' v-model='checkbox'>香蕉
+        <div>{{checkbox}}</div>
+        <input type="checkbox"  v-model='checkbox1'>香蕉
+        <div>{{checkbox1}}</div>
+      </div> -->
+      <div>
+        <select v-model="selected" multiple>
+          <option value="apple">苹果</option>
+          <option value="orange">橘子</option>
+          <option value="banana">香蕉</option>
+        </select>
+      </div>
+      <div>{{selected}}</div>
     </div>
   </body>
 </html>
