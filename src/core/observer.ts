@@ -60,7 +60,6 @@ export default class Observer {
         return Reflect.get(target, property);
       },
       set(target: any, property: string, value: any): boolean {
-        console.log(path, property);
         let args = {};
         dep.beforeNotfiy(`${path}__${property}`);
 

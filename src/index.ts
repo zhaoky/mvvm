@@ -18,7 +18,7 @@ const data = {
     //   // list1: [1, 2, 3]
     // }
     // v: false,
-    // title: "标题"
+    title: "标题"
     // title: {
     // info: [1, 2, 3]
     // }
@@ -59,8 +59,8 @@ const data = {
     // radio: "",
     // radio1: "",
     // checkbox: [],
-    // checkbox1: false,
-    selected: []
+    // checkbox1: false
+    // selected: []
   },
   methods: {
     // handler: function(e, title) {
