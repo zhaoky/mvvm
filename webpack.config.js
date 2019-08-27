@@ -3,6 +3,7 @@ const webpack = require("webpack");
 const packageJson = require("./package.json");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const _DEV_ = process.env.NODE_ENV === "development";
 
 const config = {
@@ -41,5 +42,7 @@ if (_DEV_) {
     })
   );
 }
-
+if (process.env.MODE === "analysis") {
+  config.plugins.push(new BundleAnalyzerPlugin());
+}
 module.exports = config;

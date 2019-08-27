@@ -22,9 +22,8 @@ export default class ModelSelect {
     this.multi = hasAttr(model.el, "multiple");
     const selectScope = this;
 
-    model.el.addEventListener("change", function(): void {
-      // eslint-disable-next-line no-invalid-this
-      const value = selectScope.multi ? selectScope.getSelectValue(this as HTMLSelectElement) : (this as HTMLSelectElement).value;
+    model.el.addEventListener("change", function(e: Event): void {
+      const value = selectScope.multi ? selectScope.getSelectValue((e.target as HTMLSelectElement).options) : (e.target as HTMLSelectElement).value;
       model.watcher.set(value);
     });
   }
@@ -49,6 +48,7 @@ export default class ModelSelect {
     }
     for (let i = 0; i < optionList.length; i++) {
       const option = optionList[i];
+
       option.selected = this.multi ? (newVal as string[]).includes(option.value) : option.value === _toString(newVal);
     }
   }
@@ -56,16 +56,15 @@ export default class ModelSelect {
    * 多选结果
    *
    * @private
-   * @param {HTMLSelectElement} el
+   * @param {HTMLOptionsCollection} options
    * @return {string[]}
    * @memberof ModelSelect
    */
-  private getSelectValue(el: HTMLSelectElement): string[] {
-    const optionList: HTMLOptionsCollection = el.options;
+  private getSelectValue(options: HTMLOptionsCollection): string[] {
     const list: string[] = [];
-    for (let i = 0; i < optionList.length; i++) {
-      if (optionList[i].selected) {
-        list.push(optionList[i].value);
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].selected) {
+        list.push(options[i].value);
       }
     }
     return list;

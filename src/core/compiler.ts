@@ -1,5 +1,5 @@
 import { CompilerInterface, MvvmOptionInterface, CollectDirOptionInterface, ParserBaseInterface, ParserOnInterface, ParserOptionInterface } from "./interface";
-import { isFunction, isObject, isElement, isDirective, isTextNode, removeAttr, nodeToFragment, hasDirective, hasLateCompileChilds } from "./utils";
+import { isFunction, isObject, isElement, isDirective, removeAttr, nodeToFragment, hasDirective, hasLateCompileChilds } from "./utils";
 import Observer from "./observer";
 import TextParser from "./parser/text";
 import StyleParser from "./parser/style";
@@ -45,25 +45,16 @@ export default class Compiler implements CompilerInterface {
   /**
    * 指令缓存队列
    *
-   * @private
-   * @type {Array<[HTMLElement, Record<string, any>]>}
+   * @type {[HTMLElement, Record<string, any>][]}
    * @memberof Compiler
    */
   public $queue: [HTMLElement, Record<string, any>][] = [];
   /**
-   * 缓存根节点
-   *
-   * @private
-   * @type {HTMLElement}
-   * @memberof Compiler
-   */
-  /**
-   * Creates an instance of Compiler.
-   * @param {Object} option
+   *Creates an instance of Compiler.
+   * @param {MvvmOptionInterface} option
    * @memberof Compiler
    */
   public constructor(option: MvvmOptionInterface) {
-    this.$queue = [];
     this.$element = option.view;
     this.$mounted = option.mounted;
 
@@ -155,7 +146,7 @@ export default class Compiler implements CompilerInterface {
       attrs.map((at: Attr): void => {
         this.parseAttr(node, at, scope);
       });
-    } else if (isTextNode(node)) {
+    } else {
       this.parseText(node, scope);
     }
   }
@@ -170,7 +161,7 @@ export default class Compiler implements CompilerInterface {
   public parseAttr(node: HTMLElement, attr: Attr, scope: Record<string, any>): void {
     const name: string = attr.name;
     const dirName: string = name.substr(2);
-    const dirValue: string = attr.value.replace(/\s+/g, "");
+    const dirValue: string = attr.value.trim();
     removeAttr(node, name);
 
     const parser = this.selectParsers({ node, dirName, dirValue, cs: this });
@@ -197,7 +188,7 @@ export default class Compiler implements CompilerInterface {
     const text = node.textContent;
     let dirValue = "";
 
-    !(function a(preIndex: number): any {
+    !(function parse(preIndex: number): any {
       const result = reg.exec(text);
       if (result === null) {
         return;
@@ -207,7 +198,7 @@ export default class Compiler implements CompilerInterface {
       const str = text.substring(preIndex, index);
       dirValue = dirValue + `'${str}'+` + `( ${slot} )+`;
       const lastIndex = index + result[1].length;
-      a(lastIndex);
+      parse(lastIndex);
     })(0);
     dirValue = `${dirValue.substring(0, dirValue.length - 1)}`;
     const parser = new TextParser({ node, dirValue, cs: this });

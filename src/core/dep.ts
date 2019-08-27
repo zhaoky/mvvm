@@ -81,8 +81,10 @@ export default class Dep {
    */
   public copyArrayWatcherDep(arrayPath: string, path: string): void {
     const arrayDep = this.dependList[`${arrayPath}____isProxy`];
-    arrayDep.forEach((item: WatcherInterface): void => {
-      this.addDep(path, item);
-    });
+    if (arrayDep) {
+      arrayDep.forEach((item: WatcherInterface): void => {
+        this.addDep(path, item);
+      });
+    }
   }
 }

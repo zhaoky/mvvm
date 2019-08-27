@@ -46,7 +46,7 @@ export default class ModelParser extends BaseParser implements ParserBaseInterfa
     const type = tagName === "input" ? getAttr(this.el, "type") : tagName;
 
     if (!VAILD_MODEL_ELEMENT.includes(tagName)) {
-      throw Error(`v-model can only be used on ${VAILD_MODEL_ELEMENT.join(" ")}`);
+      throw Error(`v-model can only be used for ${VAILD_MODEL_ELEMENT.join(" ")}`);
     }
 
     switch (type) {

@@ -16,9 +16,8 @@ export default class ModelText {
    */
   public constructor(model: ParserBaseInterface) {
     this.model = model;
-    this.model.el.addEventListener("input", function(): void {
-      // eslint-disable-next-line no-invalid-this
-      model.watcher.set((this as HTMLInputElement).value);
+    this.model.el.addEventListener("input", function(e: UIEvent): void {
+      model.watcher.set((e.target as HTMLInputElement).value);
     });
   }
   /**

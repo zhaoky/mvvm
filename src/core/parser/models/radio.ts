@@ -15,9 +15,8 @@ export default class ModelRadio {
    */
   public constructor(model: ParserBaseInterface) {
     this.model = model;
-    this.model.el.addEventListener("change", function(): void {
-      // eslint-disable-next-line no-invalid-this
-      model.watcher.set((this as HTMLInputElement).value);
+    this.model.el.addEventListener("change", function(e: Event): void {
+      model.watcher.set((e.target as HTMLInputElement).value);
     });
   }
   /**

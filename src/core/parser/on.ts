@@ -53,7 +53,7 @@ export default class OnParser extends BaseParser implements ParserOnInterface {
     } else {
       expression = `scope._eventHandler.${expression}()`;
     }
-    expression = expression.replace(/([(,])(\S+?)(?=[,)])/g, (match: any, $1: any, $2: any): string => {
+    expression = expression.replace(/([(,])(\S+?)(?=[,)])/g, (_match: any, $1: any, $2: any): string => {
       if ($2 === "$event") {
         return `${$1}${$2}`;
       }

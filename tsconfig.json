@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "module": "commonjs",
     "noImplicitAny": true,
-    "preserveConstEnums": true,
     "sourceMap": false,
-    "outDir": "./lib1"
+    "declaration": true,
+    "declarationDir": "./dist"
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*"]
 }

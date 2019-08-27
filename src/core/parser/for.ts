@@ -30,6 +30,10 @@ export default class ForParser extends BaseParser {
     this.parseValue(dirValue);
 
     this.parent = node.parentNode;
+
+    if (this.parent.nodeType !== 1) {
+      throw Error("v-for can't used in the root element!");
+    }
     this.end = node.nextSibling;
   }
   /**
@@ -42,7 +46,7 @@ export default class ForParser extends BaseParser {
   public update({ newVal, args }: ParseUpdateOptionInterface): void {
     // 如果不是数组
     if (!newVal || !isArray(newVal)) {
-      return;
+      throw Error("v-for item type must be array!");
     }
     // 如果是首次渲染
     if (this.isInit) {
@@ -81,12 +85,12 @@ export default class ForParser extends BaseParser {
    */
   private parseValue(value: string): void {
     if (/\(.*\)/.test(value)) {
-      const match = value.match(/.*\((.*),(.*)\).*(?:in|of)(.*)/);
+      const match = value.match(/.*\((.*),(.*)\).*(?: in | of )(.*)/);
       this.alias = match[1].trim();
       this.$index = match[2].trim();
       this.dirValue = match[3].trim();
     } else {
-      const match = value.match(/(.*)(?:in|of)(.*)/);
+      const match = value.match(/(.*)(?: in | of )(.*)/);
       this.alias = match[1].trim();
       this.dirValue = match[2].trim();
     }
@@ -186,12 +190,7 @@ export default class ForParser extends BaseParser {
 
     if (this.isInit) {
       const $queue = this.cs.$queue;
-      $queue.find((item: any, index: any): boolean => {
-        if (item[0] === this.el) {
-          $queue.splice(index, 1);
-          return true;
-        }
-      });
+      $queue.splice(index, 1);
     }
 
     const symbol = this.symbol;

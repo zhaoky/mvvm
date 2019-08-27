@@ -24,7 +24,7 @@ export default class DisplayParser extends BaseParser implements ParserBaseInter
   public update({ newVal }: ParseUpdateOptionInterface): void {
     if (this.dirName === "show") {
       this.el.style.display = !!newVal ? "block" : "none";
-    } else if (this.dirName === "hide") {
+    } else {
       this.el.style.display = !!newVal ? "none" : "block";
     }
   }

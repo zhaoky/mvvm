@@ -19,6 +19,11 @@ export default class IfParser extends BaseParser implements ParserBaseInterface 
   public constructor({ node, dirValue, cs }: ParserOptionInterface) {
     super({ node, dirValue, cs });
     this.$parent = this.el.parentNode;
+
+    if (this.$parent.nodeType !== 1) {
+      throw Error("v-if can't used in the root element!");
+    }
+
     this.elTpl = this.el.cloneNode(true);
     this.emptyNode = document.createTextNode("");
     replaceNode(this.el, this.emptyNode);
