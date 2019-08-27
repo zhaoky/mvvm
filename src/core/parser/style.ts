@@ -9,13 +9,19 @@ import BaseParser from "./base";
  */
 export default class StyleParser extends BaseParser implements ParserBaseInterface {
   /**
+   * 是否为深度依赖
+   *
+   * @type {boolean}
+   * @memberof ParserBaseInterface
+   */
+  public deep = true;
+  /**
    *Creates an instance of StyleParser.
    * @param {ParserOptionInterface} { node, dirValue, cs }
    * @memberof StyleParser
    */
   public constructor({ node, dirValue, cs }: ParserOptionInterface) {
     super({ node, dirValue, cs });
-    this.deep = true;
   }
   /**
    * style刷新视图函数

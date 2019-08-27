@@ -6,6 +6,13 @@ import Dep from "./dep";
  * @class Observer
  */
 export default class Observer {
+  /**
+   * 数据值
+   *
+   * @private
+   * @type {*}
+   * @memberof Observer
+   */
   private data: any = undefined;
   /**
    *Creates an instance of Observer.

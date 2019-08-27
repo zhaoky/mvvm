@@ -10,8 +10,21 @@ import { _toString, hasAttr, isArray } from "./../../utils";
  * @class ModelSelect
  */
 export default class ModelSelect {
+  /**
+   * model解析器
+   *
+   * @private
+   * @type {ParserBaseInterface}
+   * @memberof ModelSelect
+   */
   private model: ParserBaseInterface = null;
-  private multi: boolean = false;
+  /**
+   * 是否是多选
+   *
+   * @private
+   * @memberof ModelSelect
+   */
+  private multi = false;
   /**
    *Creates an instance of ModelSelect.
    * @param {ParserBaseInterface} model
@@ -20,10 +33,9 @@ export default class ModelSelect {
   public constructor(model: ParserBaseInterface) {
     this.model = model;
     this.multi = hasAttr(model.el, "multiple");
-    const selectScope = this;
 
-    model.el.addEventListener("change", function(e: Event): void {
-      const value = selectScope.multi ? selectScope.getSelectValue((e.target as HTMLSelectElement).options) : (e.target as HTMLSelectElement).value;
+    model.el.addEventListener("change", (e: Event): void => {
+      const value = this.multi ? this.getSelectValue((e.target as HTMLSelectElement).options) : (e.target as HTMLSelectElement).value;
       model.watcher.set(value);
     });
   }

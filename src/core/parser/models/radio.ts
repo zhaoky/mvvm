@@ -7,6 +7,13 @@ import { _toString } from "./../../utils";
  * @class ModelRadio
  */
 export default class ModelRadio {
+  /**
+   * model解析器
+   *
+   * @private
+   * @type {ParserBaseInterface}
+   * @memberof ModelRadio
+   */
   private model: ParserBaseInterface = null;
   /**
    *Creates an instance of ModelRadio.
@@ -15,7 +22,7 @@ export default class ModelRadio {
    */
   public constructor(model: ParserBaseInterface) {
     this.model = model;
-    this.model.el.addEventListener("change", function(e: Event): void {
+    this.model.el.addEventListener("change", (e: Event): void => {
       model.watcher.set((e.target as HTMLInputElement).value);
     });
   }

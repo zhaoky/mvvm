@@ -8,11 +8,37 @@ import Dep from "./dep";
  * @class Watcher
  */
 export default class Watcher implements WatcherInterface {
-  public oldVal: any = null;
+  /**
+   * 旧值
+   *
+   * @private
+   * @type {*}
+   * @memberof Watcher
+   */
+  private oldVal: any = null;
+  /**
+   * 数组item的作用域
+   *
+   * @private
+   * @type {Record<string, any>}
+   * @memberof Watcher
+   */
+  private scope: Record<string, any> = null;
+  /**
+   * 对应指令的解析器
+   *
+   * @private
+   * @type {ParserBaseInterface}
+   * @memberof Watcher
+   */
+  private parser: ParserBaseInterface;
+  /**
+   * 通过getter获取到的最新值
+   *
+   * @type {*}
+   * @memberof Watcher
+   */
   public value: any = null;
-  public scope: Record<string, any> = null;
-  public parser: ParserBaseInterface;
-
   /**
    *Creates an instance of Watcher.
    * @param {ParserBaseInterface} parser [解析器]
@@ -59,6 +85,19 @@ export default class Watcher implements WatcherInterface {
     }
   }
   /**
+   * 通过访问层级取值
+   *
+   * @param {*} target
+   * @param {*} paths
+   * @return {*}
+   */
+  private getDeepValue(target: any, paths: string[]): any {
+    while (paths.length) {
+      target = target[paths.shift()];
+    }
+    return target;
+  }
+  /**
    * 1.获取最新值
    * 2.把watcher与值绑定,通知到每一个相关属性，加入到对应的订阅列表
    * @return {any}
@@ -80,7 +119,6 @@ export default class Watcher implements WatcherInterface {
   /**
    * 设置双向绑定值
    *
-   * @private
    * @param {*} value
    * @memberof Watcher
    */
@@ -94,19 +132,6 @@ export default class Watcher implements WatcherInterface {
     const data = this.getDeepValue(this.parser.cs.$data, pathList);
 
     data[key] = value;
-  }
-  /**
-   * 通过访问层级取值
-   *
-   * @param {*} target
-   * @param {*} paths
-   * @return {*}
-   */
-  private getDeepValue(target: any, paths: string[]): any {
-    while (paths.length) {
-      target = target[paths.shift()];
-    }
-    return target;
   }
   /**
    * 更新前执行的函数（深拷贝得到原始值）
@@ -125,6 +150,6 @@ export default class Watcher implements WatcherInterface {
   public update(args?: any): void {
     // 添加订阅列表
     const newVal = (this.value = this.get());
-    this.parser.update.call(this.parser, { newVal, oldVal: this.oldVal, args });
+    this.parser.update.call(this.parser, { newVal, oldVal: this.oldVal, args, scope: this.scope });
   }
 }

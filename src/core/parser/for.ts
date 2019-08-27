@@ -10,14 +10,57 @@ import Observer from "./../observer";
  * @extends {BaseParser}
  */
 export default class ForParser extends BaseParser {
-  private alias: string = "";
-  private symbol: symbol = Symbol();
+  /**
+   * item别名
+   *
+   * @private
+   * @memberof ForParser
+   */
+  private alias = "";
+  /**
+   * 独特的__vfor__
+   *
+   * @private
+   * @memberof ForParser
+   */
+  private symbol = Symbol();
+  /**
+   * 含有alias,$index对象的数组
+   *
+   * @private
+   * @type {Record<string, any>[]}
+   * @memberof ForParser
+   */
   private scopes: Record<string, any>[] = [];
+  /**
+   * 父节点
+   *
+   * @private
+   * @type {Node}
+   * @memberof ForParser
+   */
   private parent: Node = null;
   private end: Node = null;
-  private isInit: boolean = true;
-  private $index: string = "";
-  public deep: boolean = true;
+  /**
+   * 是否是首次渲染
+   *
+   * @private
+   * @memberof ForParser
+   */
+  private isInit = true;
+  /**
+   * 位置索引
+   *
+   * @private
+   * @memberof ForParser
+   */
+  private $index = "";
+  /**
+   * 是否为深度依赖
+   *
+   * @memberof ForParser
+   */
+  public deep = true;
 
   /**
    *Creates an instance of ForParser.
@@ -75,7 +118,6 @@ export default class ForParser extends BaseParser {
       this.recompileLength(args.value);
     }
   }
-
   /**
    * 解析value
    *
@@ -95,7 +137,6 @@ export default class ForParser extends BaseParser {
       this.dirValue = match[2].trim();
     }
   }
-
   /**
    * 得到强相关的节点列表
    *

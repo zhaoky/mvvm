@@ -8,8 +8,29 @@ import BaseParser from "./base";
  * @extends {BaseParser}
  */
 export default class OnParser extends BaseParser implements ParserOnInterface {
+  /**
+   * v-for作用域
+   *
+   * @private
+   * @type {Record<string, any>}
+   * @memberof OnParser
+   */
   private scope: Record<string, any>;
+  /**
+   * 事件类型
+   *
+   * @private
+   * @type {string}
+   * @memberof OnParser
+   */
   private handlerType: string;
+  /**
+   * 事件函数
+   *
+   * @private
+   * @type {OnHandlerInterface}
+   * @memberof OnParser
+   */
   private handlerFn: OnHandlerInterface;
   /**
    *Creates an instance of OnParser.
@@ -20,32 +41,14 @@ export default class OnParser extends BaseParser implements ParserOnInterface {
     super({ node, dirName, dirValue, cs });
   }
   /**
-   *  解析事件绑定函数
-   *
-   * @param {Object} scope
-   * @memberof OnParser
-   */
-  public parseEvent(scope: Record<string, any>): void {
-    this.scope = scope;
-
-    this.handlerType = this.dirName.substr(3);
-
-    if (this.handlerType === "click" && !isPC()) {
-      this.handlerType = "touchstart";
-    }
-
-    this.handlerFn = this.getHandler(this.dirValue);
-
-    this.addEvent();
-  }
-  /**
    * 生成事件处理函数
    *
-   * @param {String} expression
-   * @return {*}
+   * @private
+   * @param {string} expression
+   * @return {OnHandlerInterface}
    * @memberof OnParser
    */
-  public getHandler(expression: string): OnHandlerInterface {
+  private getHandler(expression: string): OnHandlerInterface {
     expression = expression.trim();
 
     if (/^(\S+?)\(.*\)$/g.test(expression)) {
@@ -69,9 +72,10 @@ export default class OnParser extends BaseParser implements ParserOnInterface {
   /**
    * 绑定事件
    *
+   * @private
    * @memberof OnParser
    */
-  public addEvent(): void {
+  private addEvent(): void {
     const el = this.el;
     const handlerType = this.handlerType;
     const handlerFn = this.handlerFn;
@@ -80,5 +84,24 @@ export default class OnParser extends BaseParser implements ParserOnInterface {
     el.addEventListener(handlerType, (e: Event): void => {
       handlerFn(scope, e);
     });
+  }
+  /**
+   * 解析事件绑定函数
+   *
+   * @param {Record<string, any>} scope
+   * @memberof OnParser
+   */
+  public parseEvent(scope: Record<string, any>): void {
+    this.scope = scope;
+
+    this.handlerType = this.dirName.substr(3);
+
+    if (this.handlerType === "click" && !isPC()) {
+      this.handlerType = "touchstart";
+    }
+
+    this.handlerFn = this.getHandler(this.dirValue);
+
+    this.addEvent();
   }
 }

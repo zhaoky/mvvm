@@ -9,6 +9,13 @@ import { isArray } from "util";
  * @class ModelCheckbox
  */
 export default class ModelCheckbox {
+  /**
+   * model解析器
+   *
+   * @private
+   * @type {ParserBaseInterface}
+   * @memberof ModelCheckbox
+   */
   private model: ParserBaseInterface = null;
   /**
    *Creates an instance of ModelCheckbox.
@@ -17,7 +24,7 @@ export default class ModelCheckbox {
    */
   public constructor(model: ParserBaseInterface) {
     this.model = model;
-    model.el.addEventListener("change", function(e: Event): void {
+    model.el.addEventListener("change", (e: Event): void => {
       const data = model.watcher.get();
       const { checked, value } = e.target as HTMLInputElement;
       if (isBoolean(data)) {

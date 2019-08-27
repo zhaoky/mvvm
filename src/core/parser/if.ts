@@ -8,8 +8,29 @@ import BaseParser from "./base";
  * @extends {IfParser}
  */
 export default class IfParser extends BaseParser implements ParserBaseInterface {
+  /**
+   * 指令父节点
+   *
+   * @private
+   * @type {(Node & ParentNode | null)}
+   * @memberof IfParser
+   */
   private $parent: Node & ParentNode | null;
+  /**
+   * 克隆的节点
+   *
+   * @private
+   * @type {Node}
+   * @memberof IfParser
+   */
   private elTpl: Node;
+  /**
+   * 空文本节点
+   *
+   * @private
+   * @type {Text}
+   * @memberof IfParser
+   */
   private emptyNode: Text;
   /**
    *Creates an instance of IfParser.

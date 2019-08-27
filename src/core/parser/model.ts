@@ -17,6 +17,13 @@ const VAILD_MODEL_ELEMENT = ["input", "select", "textarea"];
  * @implements {ParserBaseInterface}
  */
 export default class ModelParser extends BaseParser implements ParserBaseInterface {
+  /**
+   * model中不同类型的解析器
+   *
+   * @protected
+   * @type {*}
+   * @memberof ModelParser
+   */
   protected type: any = null;
   /**
    *Creates an instance of ModelParser.

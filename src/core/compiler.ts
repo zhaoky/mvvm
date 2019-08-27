@@ -18,6 +18,13 @@ import Watcher from "./watcher";
  * @class Compiler
  */
 export default class Compiler implements CompilerInterface {
+  /**
+   * 编译根节点
+   *
+   * @private
+   * @type {HTMLElement}
+   * @memberof Compiler
+   */
   private $element: HTMLElement = null;
   /**
    * 编译完成后的回调
@@ -33,7 +40,7 @@ export default class Compiler implements CompilerInterface {
    * @type {DocumentFragment}
    * @memberof Compiler
    */
-  private $fragment: DocumentFragment;
+  private $fragment: DocumentFragment = null;
   /**
    * 数据模型对象
    *

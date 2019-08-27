@@ -5,11 +5,34 @@ import { CompilerInterface, ParserOptionInterface, ParserBaseInterface } from ".
  * @class BaseParser
  */
 export default class BaseParser implements ParserBaseInterface {
+  /**
+   * 包含指令的节点
+   *
+   * @type {HTMLElement}
+   * @memberof BaseParser
+   */
   public el: HTMLElement;
+  /**
+   * 指令名称
+   *
+   * @type {string}
+   * @memberof BaseParser
+   */
   public dirName?: string;
+  /**
+   * 指令值
+   *
+   * @type {string}
+   * @memberof BaseParser
+   */
   public dirValue?: string;
+  /**
+   * Compiler
+   *
+   * @type {CompilerInterface}
+   * @memberof BaseParser
+   */
   public cs: CompilerInterface;
-  public deep?: boolean;
   /**
    * Creates an instance of BaseParser.
    * @param {HTMLElement} node
