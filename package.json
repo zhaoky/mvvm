@@ -1,6 +1,6 @@
 {
   "name": "@fe_korey/mvvm",
-  "version": "1.0.20",
+  "version": "2.0.0",
   "description": "A simple mvvm library",
   "keywords": [
     "framework",
@@ -8,17 +8,19 @@
     "template",
     "modular",
     "frontend",
-    "component"
+    "component",
+    "similar vue"
   ],
   "main": "dist/mvvm.js",
   "scripts": {
-    "build": "tsc && cross-env NODE_ENV=production webpack",
+    "build": "cross-env NODE_ENV=production webpack",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot",
-    "lint": "eslint src && eclint check",
-    "fix": "eslint src --fix && eclint fix",
+    "lint": "eslint 'src/**/*.ts' && eclint check",
+    "fix": "eslint 'src/**/*.ts' --fix && eclint fix",
     "test": "jest --coverage",
     "analyze": "cross-env NODE_ENV=production MODE=analysis webpack",
-    "debug": "node --inspect-brk=5858 ./node_modules/.bin/webpack"
+    "debug": "node --inspect-brk=5858 ./node_modules/.bin/webpack",
+    "ts": "tsc"
   },
   "jest": {
     "transform": {
@@ -40,7 +42,7 @@
       "eclint fix",
       "git add"
     ],
-    "src/**/*.js": [
+    "src/**/*.ts": [
       "eslint --fix",
       "git add"
     ]
@@ -58,6 +60,7 @@
     "@babel/plugin-transform-runtime": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
+    "@babel/runtime-corejs3": "^7.5.5",
     "@types/jest": "^24.0.18",
     "@types/node": "^12.6.8",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
@@ -82,8 +85,5 @@
     "webpack-bundle-analyzer": "^3.4.1",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.7.2"
-  },
-  "dependencies": {
-    "@babel/runtime-corejs3": "^7.5.5"
   }
 }
