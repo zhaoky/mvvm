@@ -1,6 +1,6 @@
-import { ParserBaseInterface, ParserOptionInterface, ParseUpdateOptionInterface } from "./../interface";
-import { removeClass, addClass } from "./../utils";
-import BaseParser from "./base";
+import { ParserBaseInterface, ParserOptionInterface, ParseUpdateOptionInterface } from "@interface";
+import { removeClass, addClass } from "@utils";
+import BaseParser from "@parser/base";
 /**
  * 派生类 ClassParser
  *

@@ -1,4 +1,4 @@
-import { CompilerInterface, ParserOptionInterface, ParserBaseInterface } from "./../interface";
+import { CompilerInterface, ParserOptionInterface, ParserBaseInterface } from "@interface";
 /**
  * 基类
  *

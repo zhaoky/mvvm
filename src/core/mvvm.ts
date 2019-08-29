@@ -1,6 +1,6 @@
-import { MvvmOptionInterface } from "./interface";
-import { isObject, isElement } from "./utils";
-import Compiler from "./compiler";
+import { MvvmOptionInterface } from "@interface";
+import { isObject, isElement } from "@utils";
+import Compiler from "@compiler";
 
 /**
  * MVVM入口

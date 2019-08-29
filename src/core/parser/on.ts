@@ -1,6 +1,6 @@
-import { ParserOptionInterface, ParserOnInterface, OnHandlerInterface } from "./../interface";
-import { isPC } from "./../utils";
-import BaseParser from "./base";
+import { ParserOptionInterface, ParserOnInterface, OnHandlerInterface } from "@interface";
+import { isPC } from "@utils";
+import BaseParser from "@parser/base";
 /**
  * 派生类 OnParser
  *

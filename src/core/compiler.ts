@@ -1,16 +1,16 @@
-import { CompilerInterface, MvvmOptionInterface, CollectDirOptionInterface, ParserBaseInterface, ParserOnInterface, ParserOptionInterface } from "./interface";
-import { isFunction, isObject, isElement, isDirective, removeAttr, nodeToFragment, hasDirective, hasLateCompileChilds } from "./utils";
-import Observer from "./observer";
-import TextParser from "./parser/text";
-import StyleParser from "./parser/style";
-import ClassParser from "./parser/class";
-import ForParser from "./parser/for";
-import OnParser from "./parser/on";
-import ModelParser from "./parser/model";
-import DisplayParser from "./parser/display";
-import IfParser from "./parser/if";
-import OtherParser from "./parser/other";
-import Watcher from "./watcher";
+import { CompilerInterface, MvvmOptionInterface, CollectDirOptionInterface, ParserBaseInterface, ParserOnInterface, ParserOptionInterface } from "@interface";
+import { isFunction, isObject, isElement, isDirective, removeAttr, nodeToFragment, hasDirective, hasLateCompileChilds } from "@utils";
+import TextParser from "@parser/text";
+import StyleParser from "@parser/style";
+import ClassParser from "@parser/class";
+import ForParser from "@parser/for";
+import OnParser from "@parser/on";
+import ModelParser from "@parser/model";
+import DisplayParser from "@parser/display";
+import IfParser from "@parser/if";
+import OtherParser from "@parser/other";
+import Observer from "@observer";
+import Watcher from "@watcher";
 
 /**
  * 编译器

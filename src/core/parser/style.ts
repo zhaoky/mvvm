@@ -1,6 +1,6 @@
-import { ParserBaseInterface, ParserOptionInterface, ParseUpdateOptionInterface } from "./../interface";
-import { updateStyle } from "./../utils";
-import BaseParser from "./base";
+import { ParserBaseInterface, ParserOptionInterface, ParseUpdateOptionInterface } from "@interface";
+import { updateStyle } from "@utils";
+import BaseParser from "@parser/base";
 /**
  * 派生类 StyleParser
  *

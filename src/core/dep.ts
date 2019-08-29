@@ -1,4 +1,4 @@
-import { WatcherInterface } from "./interface";
+import { WatcherInterface } from "@interface";
 /**
  * 发布订阅中心
  *

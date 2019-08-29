@@ -1,6 +1,5 @@
-import { ParseUpdateOptionInterface, ParserBaseInterface } from "./../../interface";
-import { isBoolean } from "./../../utils";
-import { isArray } from "util";
+import { ParseUpdateOptionInterface, ParserBaseInterface } from "@interface";
+import { isBoolean, isArray } from "@utils";
 /**
  * <input type='checkbox>
  * 只支持boolean和array

@@ -1,5 +1,5 @@
-import { isArray, isObject } from "./utils";
-import Dep from "./dep";
+import { isArray, isObject } from "@utils";
+import Dep from "@dep";
 /**
  * 监测数据模型
  *

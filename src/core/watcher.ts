@@ -1,6 +1,6 @@
-import { cloneDeep } from "./utils";
-import { ParserBaseInterface, WatcherInterface } from "./interface";
-import Dep from "./dep";
+import { cloneDeep } from "@utils";
+import { ParserBaseInterface, WatcherInterface } from "@interface";
+import Dep from "@dep";
 
 /**
  * 给监听属性添加watcher

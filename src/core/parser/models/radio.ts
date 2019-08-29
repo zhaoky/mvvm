@@ -1,5 +1,5 @@
-import { ParseUpdateOptionInterface, ParserBaseInterface } from "./../../interface";
-import { _toString } from "./../../utils";
+import { ParseUpdateOptionInterface, ParserBaseInterface } from "@interface";
+import { _toString } from "@utils";
 /**
  * <input type='radio'>
  * 双向绑定类
