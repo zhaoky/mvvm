@@ -198,16 +198,16 @@ export default class Compiler implements CompilerInterface {
     !(function parse(preIndex: number): any {
       const result = reg.exec(text);
       if (result === null) {
+        dirValue = `${dirValue}'${text.substr(preIndex)}'`;
         return;
       }
       const index = result.index;
       const slot = result[1].substr(2, result[1].length - 4);
       const str = text.substring(preIndex, index);
-      dirValue = dirValue + `'${str}'+` + `( ${slot} )+`;
+      dirValue = `${dirValue}'${str}'+( ${slot} )+`;
       const lastIndex = index + result[1].length;
       parse(lastIndex);
     })(0);
-    dirValue = `${dirValue.substring(0, dirValue.length - 1)}`;
     const parser = new TextParser({ node, dirValue, cs: this });
     const watcher = new Watcher(parser as ParserBaseInterface, scope);
     (parser as ParserBaseInterface).update({ newVal: watcher.value, scope });

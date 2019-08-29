@@ -205,7 +205,7 @@ export interface ParserBaseInterface {
    *
    * @memberof ParserBaseInterface
    */
-  update?: ({ newVal, oldVal, args, scope }: ParseUpdateOptionInterface) => void;
+  update?: ({ newVal, oldVal, arrArgs, scope }: ParseUpdateOptionInterface) => void;
 }
 export interface ParserOnInterface {
   /**
@@ -247,7 +247,7 @@ export interface ParseUpdateOptionInterface {
    * @type {*}
    * @memberof ParseUpdateOptionInterface
    */
-  args?: any;
+  arrArgs?: any;
 }
 export interface WatcherInterface {
   /**

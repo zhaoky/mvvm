@@ -7,7 +7,7 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPl
 const _DEV_ = process.env.NODE_ENV === "development";
 
 const config = {
-  mode: process.env.NODE_ENV || "production",
+  mode: "development" || "production",
   entry: _DEV_ ? path.resolve(__dirname, "./src/index.ts") : path.resolve(__dirname, "./src/core/mvvm.ts"),
   output: {
     path: path.resolve(__dirname, "./dist"),

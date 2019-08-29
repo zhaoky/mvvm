@@ -63,17 +63,13 @@ export default class Observer {
         }
         return Reflect.get(target, property);
       },
-      set(target: any, property: string, value: any): boolean {
-        let args = {};
+      set(target: any, property: string, value: any, receiver: any): boolean {
+        let arrArgs = {};
         dep.beforeNotfiy(`${path}__${property}`);
-
-        if (isArray(value)) {
-          args = { isBuildIntegral: 1 };
-        }
 
         // 目标是数组的handler
         if (isArray(target)) {
-          args = { ...args, property, value };
+          arrArgs = { receiver, property, value };
           // 如果数组里的元素是新加入的，就把数组上的所有订阅分发给新元素
           if (!target[property]) {
             dep.copyArrayWatcherDep(`${path}`, `${path}__${property}`);
@@ -84,7 +80,7 @@ export default class Observer {
 
         Reflect.set(target, property, target[property]);
 
-        dep.notfiy(`${path}__${property}`, args);
+        dep.notfiy(`${path}__${property}`, arrArgs);
 
         return true;
       }

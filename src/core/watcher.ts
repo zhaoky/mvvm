@@ -109,7 +109,7 @@ export default class Watcher implements WatcherInterface {
     const value = this._getter(this.parser.dirValue)(this.scope || this.parser.cs.$data);
 
     // 深度订阅，将目标属性值的订阅列表递归分发给所有子元素
-    if (this.parser.deep) {
+    if (value && this.parser.deep) {
       this._walkThrough(value);
     }
 
@@ -144,12 +144,13 @@ export default class Watcher implements WatcherInterface {
   /**
    * 更新函数
    *
-   * @param {*} [args]
+   * @param {*} [arrArgs]
    * @memberof Watcher
    */
-  public update(args?: any): void {
+  public update(arrArgs?: any): void {
     // 添加订阅列表
     const newVal = (this.value = this.get());
-    this.parser.update.call(this.parser, { newVal, oldVal: this.oldVal, args, scope: this.scope });
+
+    this.parser.update.call(this.parser, { newVal, oldVal: this.oldVal, scope: this.scope, arrArgs });
   }
 }

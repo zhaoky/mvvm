@@ -30,6 +30,13 @@ describe("Test MVVM", () => {
             <div v-text='index'></div>
           </div>
         </div>
+        <div>
+          <div v-for='(item,index) in list2'>
+            <div v-for='i in item'>
+              <div v-text='i'></div>
+            </div>
+          </div>
+        </div>
         <!-- comment -->
         <input type='text' v-model='input.title' id="input" />
         <div>
@@ -68,6 +75,7 @@ describe("Test MVVM", () => {
           main: "main",
           styleObj: { color: "red" },
           list: [1, 2, 3],
+          list2: [[1], [2], [3]],
           input: {
             text: ""
           },
@@ -105,6 +113,7 @@ describe("Test MVVM", () => {
         data.model.list.push(1);
         data.model.list[2] = 5;
         data.model.list.length = 1;
+        data.model.list2[2].push(3);
         data.model.input = data.model.newInput;
         data.model.radio = "me";
         data.model.checkboxBool = true;

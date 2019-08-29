@@ -60,16 +60,16 @@ export default class Dep {
    * 通知订阅者
    *
    * @param {string} key
-   * @param {*} args
+   * @param {*} arrArgs
    * @return {void}
    * @memberof Dep
    */
-  public notfiy(key: string, args: any): void {
+  public notfiy(key: string, arrArgs: any): void {
     if (!this.dependList[key]) {
       return;
     }
     this.dependList[key].forEach((item: WatcherInterface): void => {
-      item.update(args);
+      item.update(arrArgs);
     });
   }
   /**

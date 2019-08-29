@@ -40,6 +40,13 @@ export default class ForParser extends BaseParser {
    * @memberof ForParser
    */
   private parent: Node = null;
+  /**
+   * 终止节点
+   *
+   * @private
+   * @type {Node}
+   * @memberof ForParser
+   */
   private end: Node = null;
   /**
    * 是否是首次渲染
@@ -86,9 +93,13 @@ export default class ForParser extends BaseParser {
    * @return {void}
    * @memberof ForParser
    */
-  public update({ newVal, args }: ParseUpdateOptionInterface): void {
-    // 如果不是数组
-    if (!newVal || !isArray(newVal)) {
+  public update({ newVal, arrArgs }: ParseUpdateOptionInterface): void {
+    // 如果没有值
+    if (!newVal) {
+      return;
+    }
+    // 如果有值但不是数组
+    if (newVal && !isArray(newVal)) {
       throw Error("v-for item type must be array!");
     }
     // 如果是首次渲染
@@ -98,14 +109,18 @@ export default class ForParser extends BaseParser {
       this.isInit = false;
       return;
     }
+    // 如果雨女无瓜
+    if (arrArgs.receiver && newVal !== arrArgs.receiver) {
+      return;
+    }
     // 如果是整体构建
-    if (args.isBuildIntegral === 1) {
+    if (!arrArgs.property) {
       this.recompileList(newVal);
       return;
     }
     // 如果是某一项改变
-    if (args.property !== "length") {
-      const index: number = +args.property;
+    if (arrArgs.property !== "length") {
+      const index: number = +arrArgs.property;
       const frag: any = this.buildItem(index, newVal);
       const children = this.getChlids();
       if (children.length < index + 1) {
@@ -115,7 +130,7 @@ export default class ForParser extends BaseParser {
       }
     } else {
       // 如果是长度改变
-      this.recompileLength(args.value);
+      this.recompileLength(arrArgs.value);
     }
   }
   /**
