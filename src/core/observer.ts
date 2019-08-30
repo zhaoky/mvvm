@@ -21,7 +21,7 @@ export default class Observer {
    * @memberof Observer
    */
   public constructor(data: any, path: string) {
-    if (data.__isProxy === 1) {
+    if (data.__proxy === 1) {
       this.data = data;
       return;
     }
@@ -58,7 +58,7 @@ export default class Observer {
         // 订阅watcher到属性上
         const curWatcher = Dep.curWatcher;
         if (curWatcher) {
-          dep.addDep(`${path}____isProxy`, curWatcher); // 订阅到上层__isProxy以备用
+          dep.addDep(`${path}____proxy`, curWatcher); // 订阅到上层__proxy以备用
           dep.addDep(`${path}__${property}`, curWatcher);
         }
         return Reflect.get(target, property);
@@ -88,7 +88,7 @@ export default class Observer {
 
     const proxy = new Proxy(data, handler);
     // 添加proxy对象标志属性
-    Reflect.defineProperty(data, "__isProxy", {
+    Reflect.defineProperty(data, "__proxy", {
       value: 1,
       writable: false,
       enumerable: false,

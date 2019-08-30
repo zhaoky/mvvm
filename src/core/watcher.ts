@@ -75,7 +75,7 @@ export default class Watcher implements WatcherInterface {
    * @memberof Watcher
    */
   private _walkThrough(target: any): void {
-    if (target.__isProxy !== 1) {
+    if (target.__proxy !== 1) {
       return;
     }
     const keys = Object.getOwnPropertyNames(target);
