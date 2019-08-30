@@ -8,14 +8,9 @@ stages:
     if: NOT tag =~ /^v\d+\.\d+$/
   - name: build
     if: branch = master OR tag = /^v\d+\.\d+$/
-  - name: test
-    if: branch = master
-
 jobs:
   include:
     - stage: lint
       script: yarn run lint
     - stage: build
       script: yarn run build
-    - stage: test
-      script: jest --coverage && cat ./coverage/lcov.info | coveralls
