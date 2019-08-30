@@ -1,5 +1,5 @@
-import { ParseUpdateOptionInterface, ParserBaseInterface } from "@interface";
-import { _toString, hasAttr, isArray } from "@utils";
+import { ParseUpdateOptionInterface, ParserBaseInterface } from "@/interface";
+import { _toString, hasAttr, isArray } from "@/utils";
 /**
  * <select multiple>
  *  <option></option>

@@ -1,6 +1,6 @@
-import { ParserBaseInterface, ParserOptionInterface, ParseUpdateOptionInterface, Node } from "@interface";
-import { replaceNode } from "@utils";
-import BaseParser from "@parser/base";
+import { ParserBaseInterface, ParserOptionInterface, ParseUpdateOptionInterface, Node } from "@/interface";
+import { replaceNode } from "@/utils";
+import BaseParser from "@/parser/base";
 /**
  * 派生类 IfParser
  *

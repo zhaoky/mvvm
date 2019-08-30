@@ -27,6 +27,9 @@
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest"
     },
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/core/$1"
+    },
     "collectCoverageFrom": [
       "src/core/**",
       "!src/core/utils.ts",

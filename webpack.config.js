@@ -17,14 +17,14 @@ const config = {
   },
   resolve: {
     alias: {
-      "@utils$": path.resolve(__dirname, "./src/core/utils.ts"),
-      "@interface$": path.resolve(__dirname, "./src/core/interface.ts"),
-      "@dep$": path.resolve(__dirname, "./src/core/dep.ts"),
-      "@compiler$": path.resolve(__dirname, "./src/core/compiler.ts"),
-      "@observer$": path.resolve(__dirname, "./src/core/observer.ts"),
-      "@watcher$": path.resolve(__dirname, "./src/core/watcher.ts"),
-      "@mvvm$": path.resolve(__dirname, "./src/core/mvvm.ts"),
-      "@parser": path.resolve(__dirname, "./src/core/parser/")
+      "@/utils$": path.resolve(__dirname, "./src/core/utils.ts"),
+      "@/interface$": path.resolve(__dirname, "./src/core/interface.ts"),
+      "@/dep$": path.resolve(__dirname, "./src/core/dep.ts"),
+      "@/compiler$": path.resolve(__dirname, "./src/core/compiler.ts"),
+      "@/observer$": path.resolve(__dirname, "./src/core/observer.ts"),
+      "@/watcher$": path.resolve(__dirname, "./src/core/watcher.ts"),
+      "@/mvvm$": path.resolve(__dirname, "./src/core/mvvm.ts"),
+      "@/parser": path.resolve(__dirname, "./src/core/parser/")
     },
     extensions: [".js", ".ts"]
   },

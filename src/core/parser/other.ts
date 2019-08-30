@@ -1,6 +1,6 @@
-import { ParserBaseInterface, ParserOptionInterface, ParseUpdateOptionInterface } from "@interface";
-import { setAttr } from "@utils";
-import BaseParser from "@parser/base";
+import { ParserBaseInterface, ParserOptionInterface, ParseUpdateOptionInterface } from "@/interface";
+import { setAttr } from "@/utils";
+import BaseParser from "@/parser/base";
 /**
  * 派生类 OtherParser
  *

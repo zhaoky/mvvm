@@ -1,10 +1,10 @@
-import { ParserBaseInterface, ParserOptionInterface, ParseUpdateOptionInterface } from "@interface";
-import BaseParser from "@parser/base";
-import { getAttr } from "@utils";
-import ModelText from "@parser/models/text";
-import ModelRadio from "@parser/models/radio";
-import ModelCheckbox from "@parser/models/checkbox";
-import ModelSelect from "@parser/models/select";
+import { ParserBaseInterface, ParserOptionInterface, ParseUpdateOptionInterface } from "@/interface";
+import BaseParser from "@/parser/base";
+import { getAttr } from "@/utils";
+import ModelText from "@/parser/models/text";
+import ModelRadio from "@/parser/models/radio";
+import ModelCheckbox from "@/parser/models/checkbox";
+import ModelSelect from "@/parser/models/select";
 
 const VAILD_MODEL_ELEMENT = ["input", "select", "textarea"];
 

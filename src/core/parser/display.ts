@@ -1,5 +1,5 @@
-import { ParserBaseInterface, ParserOptionInterface, ParseUpdateOptionInterface } from "@interface";
-import BaseParser from "@parser/base";
+import { ParserBaseInterface, ParserOptionInterface, ParseUpdateOptionInterface } from "@/interface";
+import BaseParser from "@/parser/base";
 /**
  * 派生类 DisplayParser
  *

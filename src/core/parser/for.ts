@@ -1,7 +1,7 @@
-import { ParserOptionInterface, ParseUpdateOptionInterface, Node } from "@interface";
-import { isArray } from "@utils";
-import BaseParser from "@parser/base";
-import Observer from "@observer";
+import { ParserOptionInterface, ParseUpdateOptionInterface, Node } from "@/interface";
+import { isArray } from "@/utils";
+import BaseParser from "@/parser/base";
+import Observer from "@/observer";
 
 /**
  * 派生类 ForParser

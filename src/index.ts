@@ -1,4 +1,4 @@
-import MVVM from "@mvvm";
+import MVVM from "@/mvvm";
 
 const data = {
   view: document.getElementById("app"),
