@@ -18,4 +18,6 @@ jobs:
     - stage: build
       script: yarn run build
     - stage: test
-      script: yarn run coveralls
+      script:
+        - bash sed.sh
+        - yarn run coveralls
