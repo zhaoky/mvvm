@@ -1,3 +1,5 @@
 module.exports = {
-  singleQuote: false
+  singleQuote: false,
+  printWidth: 200,
+  parser: "typescript"
 };

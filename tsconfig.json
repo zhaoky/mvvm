@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "sourceMap": false,
+    "declaration":true,
+    "declarationDir": "dist/",
+    "baseUrl":".",
+    "paths":{
+      "@parser/*":["./src/core/parser/*"],
+      "@interface":["./src/core/interface.ts"],
+      "@dep":["./src/core/dep.ts"],
+      "@compiler":["./src/core/compiler.ts"],
+      "@observer":["./src/core/observer.ts"],
+      "@watcher":["./src/core/watcher.ts"],
+      "@utils":["./src/core/utils.ts"],
+      "@mvvm":["./src/core/mvvm.ts"],
+    }
+  },
+  "include": ["src/**/*"]
+}

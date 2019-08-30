@@ -1,6 +1,6 @@
 {
   "name": "@fe_korey/mvvm",
-  "version": "1.0.20",
+  "version": "2.0.0",
   "description": "A simple mvvm library",
   "keywords": [
     "framework",
@@ -8,14 +8,29 @@
     "template",
     "modular",
     "frontend",
-    "component"
+    "component",
+    "similar vue"
   ],
   "main": "dist/mvvm.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --hot",
-    "lint": "eslint src && eclint check",
-    "fix": "eslint src --fix && eclint fix"
+    "lint": "eslint 'src/**/*.ts' && eclint check",
+    "fix": "eslint 'src/**/*.ts' --fix && eclint fix",
+    "test": "jest --coverage",
+    "analyze": "cross-env NODE_ENV=production MODE=analysis webpack",
+    "debug": "node --inspect-brk=5858 ./node_modules/.bin/webpack",
+    "ts": "tsc"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    },
+    "collectCoverageFrom": [
+      "src/core/**",
+      "!src/core/utils.ts",
+      "!src/core/interface.ts"
+    ]
   },
   "husky": {
     "hooks": {
@@ -27,7 +42,7 @@
       "eclint fix",
       "git add"
     ],
-    "src/**/*.js": [
+    "src/**/*.ts": [
       "eslint --fix",
       "git add"
     ]
@@ -40,30 +55,36 @@
   "author": "Korey <keyu.zhao@foxmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.4.4",
-    "@babel/plugin-transform-runtime": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-typescript": "^7.3.3",
+    "@babel/runtime-corejs3": "^7.5.5",
     "@types/jest": "^24.0.18",
-    "babel-eslint": "^10.0.1",
+    "@types/node": "^12.6.8",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "babel-eslint": "^10.0.2",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
     "coveralls": "^3.0.6",
     "cross-env": "^5.2.0",
     "eclint": "^2.8.1",
-    "eslint": "^5.16.0",
+    "eslint": "^6.1.0",
     "eslint-config-google": "^0.13.0",
-    "eslint-config-prettier": "^4.3.0",
+    "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
+    "fork-ts-checker-webpack-plugin": "^1.4.3",
     "html-webpack-plugin": "^3.2.0",
-    "husky": "^2.3.0",
+    "husky": "^3.0.1",
     "jest": "^24.9.0",
-    "lint-staged": "^8.1.7",
-    "prettier": "^1.17.1",
-    "webpack": "^4.31.0",
-    "webpack-cli": "^3.3.2",
-    "webpack-dev-server": "^3.3.1"
-  },
-  "dependencies": {
-    "@babel/runtime-corejs2": "^7.4.4"
+    "lint-staged": "^9.2.1",
+    "prettier": "^1.18.2",
+    "typescript": "^3.5.3",
+    "webpack": "^4.37.0",
+    "webpack-bundle-analyzer": "^3.4.1",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2"
   }
 }
