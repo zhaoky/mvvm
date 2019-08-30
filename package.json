@@ -20,6 +20,7 @@
     "test": "jest --coverage",
     "analyze": "cross-env NODE_ENV=production MODE=analysis webpack",
     "debug": "node --inspect-brk=5858 ./node_modules/.bin/webpack",
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "ts": "tsc"
   },
   "jest": {
