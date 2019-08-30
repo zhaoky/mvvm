@@ -18,4 +18,4 @@ jobs:
     - stage: build
       script: yarn run build
     - stage: test
-      script: yarn jest --coverage --coverageReporters=text-lcov | coveralls
+      script: jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
