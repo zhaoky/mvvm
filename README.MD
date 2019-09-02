@@ -86,9 +86,21 @@ new MVVM({
 
 ### Directive System
 
-#### v-text & {{}}
+List of supported directive
 
-- text interpolation
+- [v-text](#v-text)
+- [v-class](#v-class)
+- [v-show](#v-show)
+- [v-if](#v-if)
+- [v-style](#v-style)
+- [v-on](#v-on)
+- [v-model](#v-model)
+- [v-for](#v-for)
+- [v-&#91;other&#93;](#v-other)
+
+#### v-text
+
+- text interpolation, support `{{}}`
 - model type：`string`
 - eg:
 
@@ -328,6 +340,29 @@ new MVVM({
   ```html
   <div link='https://www.flqin.com'>hello!</div>
   ```
+
+## Related Tech
+
+- typescript
+- webpack
+- jest & coveralls
+- babel
+- prettier
+- eslint
+- eclint
+- travis ci
+
+## Npm Scripts
+
+- `build`: create an online package
+- `dev`: create a test server that can be hot updated
+- `lint`: code review
+- `fix`: fix code errors
+- `test`: jest generates code test coverage
+- `analyze`: analyze package size
+- `debug`: debugging code in vscode
+- `coveralls`: send test report to coveralls
+- `ts`: run typescript
 
 ## Maintainers
 
