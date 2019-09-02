@@ -19,5 +19,5 @@ jobs:
       script: yarn run build
     - stage: test
       script:
-        - bash sed.sh
+        - sed -i "s/COVERALLS_TOKEN/$COVERALLS_TOKEN/" .coveralls.yml
         - yarn run coveralls
