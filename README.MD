@@ -17,7 +17,7 @@
 
 `mvvm.js` is inspired by the implementation of [vue.js](https://github.com/vuejs/vue), on my own idea to implement the simple mvvm library, it is only for learning and communication. Please do not use it in production environment.
 
-<!-- `mvvm.js`采用`proxy`进行数据劫持，如有兼容性问题可以采用defineproperty的版本。 -->
+`mvvm.js` uses `proxy` for data hijacking, used `defineproperty` [click here](https://github.com/zhaoky/mvvm/tree/v1.0.0).
 
 `mvvm.js` currently only implements data-binding and view-refresh, and more features are still being updated.
 
@@ -323,11 +323,11 @@ new MVVM({
   }
   ```
 
- Render result:
+  Render result:
 
- ```html
- <div link='https://www.flqin.com'>hello!</div>
- ```
+  ```html
+  <div link='https://www.flqin.com'>hello!</div>
+  ```
 
 ## Maintainers
 
