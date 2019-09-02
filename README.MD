@@ -57,7 +57,29 @@ new MVVM({
 
 ```
 
-Refer to `Documentation` for more usage.
+Refer to [Documentation](#documentation) for more usage.
+
+## Related Tech
+
+- typescript
+- webpack
+- jest & coveralls
+- babel
+- prettier
+- eslint & eclint
+- travis ci
+
+## Npm Scripts
+
+- `build`: create an online package
+- `dev`: create a test server that can be hot updated
+- `lint`: code review
+- `fix`: fix code errors
+- `test`: jest generates code test coverage
+- `analyze`: analyze package size
+- `debug`: debugging code in vscode
+- `coveralls`: send test report to coveralls
+- `ts`: run typescript
 
 ## Documentation
 
@@ -340,29 +362,6 @@ List of supported directive
   ```html
   <div link='https://www.flqin.com'>hello!</div>
   ```
-
-## Related Tech
-
-- typescript
-- webpack
-- jest & coveralls
-- babel
-- prettier
-- eslint
-- eclint
-- travis ci
-
-## Npm Scripts
-
-- `build`: create an online package
-- `dev`: create a test server that can be hot updated
-- `lint`: code review
-- `fix`: fix code errors
-- `test`: jest generates code test coverage
-- `analyze`: analyze package size
-- `debug`: debugging code in vscode
-- `coveralls`: send test report to coveralls
-- `ts`: run typescript
 
 ## Maintainers
 
