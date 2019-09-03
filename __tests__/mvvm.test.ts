@@ -1,4 +1,3 @@
-/* eslint-disable */
 import MVVM from "../src/core/mvvm";
 
 describe("Test MVVM", () => {
@@ -67,7 +66,9 @@ describe("Test MVVM", () => {
       const data = {
         view: document.getElementById("app"),
         methods: {
-          getIndex: () => {}
+          getIndex: (): void => {
+            console.log(1);
+          }
         },
         model: {
           title: "title",
@@ -88,7 +89,9 @@ describe("Test MVVM", () => {
           selected: "",
           selectedMult: []
         },
-        mounted() {}
+        mounted(): void {
+          console.log("hello!");
+        }
       };
 
       new MVVM(data);

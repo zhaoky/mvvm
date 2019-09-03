@@ -1,4 +1,3 @@
-/* eslint-disable */
 import MVVM from "../src/core/mvvm";
 
 describe("Test IfParser", () => {

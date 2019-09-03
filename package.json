@@ -1,6 +1,6 @@
 {
   "name": "@fe_korey/mvvm",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A simple mvvm library",
   "keywords": [
     "framework",
@@ -24,9 +24,6 @@
     "ts": "tsc"
   },
   "jest": {
-    "transform": {
-      "^.+\\.[t|j]sx?$": "babel-jest"
-    },
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/core/$1"
     },
@@ -69,8 +66,6 @@
     "@types/node": "^12.6.8",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
-    "babel-eslint": "^10.0.2",
-    "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
     "coveralls": "^3.0.6",
     "cross-env": "^5.2.0",

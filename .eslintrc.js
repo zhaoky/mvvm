@@ -6,12 +6,7 @@ module.exports = {
     browser: true,
     es6: true
   },
-  extends: [
-    "plugin:@typescript-eslint/recommended",
-    "google",
-    "prettier",
-    "prettier/@typescript-eslint"
-  ],
+  extends: ["plugin:@typescript-eslint/recommended", "google", "prettier", "prettier/@typescript-eslint"],
   globals: {
     Atomics: "readonly",
     SharedArrayBuffer: "readonly"
@@ -22,6 +17,7 @@ module.exports = {
   },
   rules: {
     "@typescript-eslint/no-explicit-any": 0,
-    "@typescript-eslint/no-use-before-define": 0
+    "@typescript-eslint/no-use-before-define": 0,
+    "@typescript-eslint/ban-ts-ignore": 0
   }
 };
