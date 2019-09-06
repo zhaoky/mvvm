@@ -28,7 +28,7 @@
 mvvm.js uses node and npm/yarn. Go check them out if you don't have them locally installed.
 
 ```bash
-yarn add @korey/mvvm
+yarn add @fe_korey/mvvm
 ```
 
 ## Usage
@@ -46,7 +46,7 @@ both support `UMD` (Universal Module Definition)
 ```
 
 ```javascript
-import MVVM from "@korey/mvvm";
+import MVVM from "@fe_korey/mvvm";
 new MVVM({
   view: document.getElementById("app"),
   model: {
