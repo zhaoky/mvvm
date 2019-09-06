@@ -21,6 +21,8 @@
 
 `mvvm.js` currently only implements data-binding and view-refresh, and more features are still being updated.
 
+![mvvm.js](http://cdn.flqin.com/mvvm.jpeg)
+
 ## Install
 
 mvvm.js uses node and npm/yarn. Go check them out if you don't have them locally installed.

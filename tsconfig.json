@@ -15,7 +15,7 @@
       "@/observer":["./src/core/observer.ts"],
       "@/watcher":["./src/core/watcher.ts"],
       "@/utils":["./src/core/utils.ts"],
-      "@/mvvm":["./src/core/mvvm.ts"],
+      "@/mvvm":["./src/core/mvvm.ts"]
     }
   },
   "include": ["src/**/*"]

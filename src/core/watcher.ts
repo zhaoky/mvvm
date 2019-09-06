@@ -50,7 +50,6 @@ export default class Watcher implements WatcherInterface {
     this.scope = scope;
     this.value = this.get();
   }
-
   /**
    * getter 函数
    *
