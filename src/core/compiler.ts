@@ -159,7 +159,6 @@ export default class Compiler implements CompilerInterface {
   }
   /**
    * 解析元素节点收集到的每个指令
-   * 解析器只做好两件事：1.将刷新函数订阅到 Model 的变化监测中；2.初始状态更新
    * @param {HTMLElement} node [node节点]
    * @param {Attr} attr [属性]
    * @param {Record<string, any>} scope [数组item作用域]
@@ -170,17 +169,18 @@ export default class Compiler implements CompilerInterface {
     const dirName: string = name.substr(2);
     const dirValue: string = attr.value.trim();
     removeAttr(node, name);
-
+    // 根据不同指令选择不同的解析器
     const parser = this.selectParsers({ node, dirName, dirValue, cs: this });
 
     if (/^on:.+$/.test(dirName)) {
       (parser as ParserOnInterface).parseEvent(scope);
       return;
     }
+    // 建立解析器与数据模型的关系
     const watcher = new Watcher(parser as ParserBaseInterface, scope);
 
     (parser as ParserBaseInterface).watcher = watcher;
-
+    // 初始化视图更新
     (parser as ParserBaseInterface).update({ newVal: watcher.value, scope });
   }
   /**

@@ -37,7 +37,6 @@ export interface CompilerInterface {
   compileNode: (item: [HTMLElement, Record<string, any>]) => void;
   /**
    * 解析元素节点收集到的每个指令
-   * 解析器只做好两件事：1.将刷新函数订阅到 Model 的变化监测中；2.初始状态更新
    * @param {HTMLElement} node [node节点]
    * @param {Attr} attr [属性]
    * @param {Record<string, any>} scope [数组item作用域]
