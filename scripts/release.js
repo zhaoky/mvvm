@@ -77,12 +77,11 @@ function updateVersions(version) {
 
 async function publishPackage(version) {
   try {
-    await run("yarn", ["publish", "--new-version", "--tag", "next", "--access", "public"], {
+    await run("yarn", ["publish", "--new-version", version, "--tag", "next", "--access", "public"], {
       stdio: "pipe",
     });
     console.log(chalk.green(`Successfully published ${currentName}@${version}`));
   } catch (e) {
-    console.log(e);
     if (e.stderr.match(/previously published/)) {
       console.log(chalk.red(`Skipping already published: ${currentName}`));
     } else {
