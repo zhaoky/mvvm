@@ -4,7 +4,7 @@
   <a href='https://www.npmjs.com/package/@fe_korey/mvvm'><img src='https://img.shields.io/npm/l/@fe_korey/mvvm' alt='NPM' /></a>
   <a href='https://github.com/zhaoky/mvvm/blob/master/dist/mvvm.esm.prod.js'><img src='https://img.shields.io/github/size/zhaoky/mvvm/dist/mvvm.esm.prod.js' alt='GitHub file size in bytes' /></a>
   <a href='https://www.npmjs.com/package/@fe_korey/mvvm'><img src='https://img.shields.io/npm/v/@fe_korey/mvvm' alt='npm (scoped)' /></a>
-  <a href="https://github.com/zhaoky/mvvm/actions"><img src="https://github.com/zhaoky/mvvm/workflows/Github Action CI/badge.svg" alt="Actions Status"></a>
+  <a href="https://github.com/zhaoky/mvvm/actions"><img src="https://github.com/zhaoky/mvvm/workflows/Action CI/badge.svg" alt="Actions Status"></a>
   <a href="https://codecov.io/gh/zhaoky/mvvm"><img src="https://codecov.io/gh/zhaoky/mvvm/branch/master/graph/badge.svg" /></a>
 <p>
 
