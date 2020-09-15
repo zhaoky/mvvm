@@ -1,5 +1,5 @@
 /*!
-  * MVVM v3.0.0-rc.1
+  * MVVM v3.0.0-rc.2
   * https://github.com/zhaoky/mvvm
   * (c) 2019-present korey zhao
   * @license MIT
