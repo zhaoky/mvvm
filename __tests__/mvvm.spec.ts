@@ -71,9 +71,7 @@ describe("Test MVVM", () => {
       const data = {
         view: document.getElementById("app"),
         methods: {
-          getIndex: () => {
-            console.log("test");
-          },
+          getIndex: () => {},
         },
         model: {
           title: "标题",
