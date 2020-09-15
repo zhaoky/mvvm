@@ -1,4 +1,7 @@
 node_modules/*
 dist/*
+demo/*
+scripts/
 webpack.config.js
 coverage/*
+__tests__/**

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>mvvm demo</title>
+  <link rel="shortcut icon" type="image/ico" href="data:;" />
+</head>
+
+<body>
+  <div id='app'>
+    <div>
+      textParser：
+      <span v-text='title'></span>
+      <span>{{title}}</span>
+    </div>
+    <div>
+      displayParser:
+      <span v-show='isShow'>show</span>
+      <span v-hide='isShow'>hide</span>
+    </div>
+    <div>
+      ifParser:
+      <span v-if='isShow'>if</span>
+      <span v-if='!isShow'>notif</span>
+    </div>
+    <div>
+      classParser:
+      <span v-class='main'>main</span>
+    </div>
+    <div>
+      styleParser:
+      <span v-style='styleObj'>styleObj</span>
+    </div>
+    <div>
+      onParser:
+      <span v-on:click='getIndex($event)' id='on'>点击($event)</span>
+      <span v-on:click='getIndex'>点击(无参数)</span>
+      <span v-on:click='getIndex(title)'>点击(title)</span>
+    </div>
+    <div>
+      forParser & otherParser:
+      <span v-for='item in list' v-link='title'>
+        <span v-text='item'></span>
+      </span>
+      <span v-for='(item,index) in list'>{{item}}|{{index}}|{{item+index}} </span>
+    </div>
+    <div>
+      多维 forParser：
+      <div v-for='(item,index) in list2'>
+        <span v-for='(i,ii) in item'>{{ii}} {{i.name}} {{i.age}} </span>
+      </div>
+    </div>
+    <div>
+      modelParser-text:
+      <input type='text' v-model='inputText.title' id="input" />{{inputText.title}}
+    </div>
+    <div>
+      modelParser-radio:
+      <input type="radio" value='me' v-model="radio" id='radioMe'>我
+      <input type="radio" value='you' v-model="radio">你
+      <span>{{radio}}</span>
+    </div>
+    <div>
+      modelParser-checkbox(单):
+      <input type="checkbox" value='apple' v-model='checkboxBool' id="checkboxBool">苹果
+      <span>{{checkboxBool}}</span>
+    </div>
+    <div>
+      modelParser-checkbox(多):
+      <input type="checkbox" value='apple' v-model='checkboxArray' id='checkboxArray'>苹果
+      <input type="checkbox" value='orange' checked="true" v-model='checkboxArray'>橘子
+      <input type="checkbox" value='banana' v-model='checkboxArray'>香蕉
+      <span>{{checkboxArray}}</span>
+    </div>
+    <div>
+      modelParser-select(单):
+      <select v-model="selected" id='selected'>
+        <option value="apple">苹果</option>
+        <option value="orange">橘子</option>
+        <option value="banana">香蕉</option>
+      </select>
+      <span>{{selected}}</span>
+    </div>
+    <div>
+      modelParser-select(多):
+      <select v-model="selectedMult" multiple id='selectedMult'>
+        <option value="apple">苹果</option>
+        <option value="orange">橘子</option>
+        <option value="banana">香蕉</option>
+      </select>
+      <span>{{selectedMult}}</span>
+    </div>
+    <div>
+      <button v-on:click='update'>更新</button>
+    </div>
+  </div>
+</body>
+<script src='../../dist/mvvm.umd.js'></script>
+<script>
+  const data = {
+    view: document.getElementById("app"),
+    methods: {
+      getIndex(e) {
+        if (e) console.log(e);
+        console.log('点击了');
+      },
+      update() {
+        this.title = "newTitle1";
+        this.title = "newTitle";
+        this.isShow = !this.isShow;
+        this.main = "main1";
+        this.styleObj = { color: "#fff" };
+        this.styleObj.color = "#eee";
+        this.list = [2, 3, 4];
+        this.list.push(1);
+        this.list[2] = 5;
+        this.list.length = 1;
+        this.list2[2].push({ name: 'qq', age: '88' });
+        this.inputText = this.newInput;
+        this.radio = "me";
+        this.checkboxBool = true;
+        this.checkboxArray = ["apple"];
+        this.selected = "apple";
+        this.selectedMult = ["apple"];
+      }
+    },
+    model: {
+      title: "标题",
+      isShow: true,
+      main: "mainClass",
+      styleObj: { color: "red" },
+      list: [1, 2, 3],
+      list2: [
+        [{ name: "z1", age: 11 }, { name: "z2", age: 22 }],
+        [{ name: "k1", age: 33 }, { name: "k2", age: 44 }],
+        [{ name: "y1", age: 55 }, { name: "y2", age: 66 }],
+      ],
+      inputText: {
+        title: "",
+      },
+      newInput: {
+        title: "1111",
+      },
+      radio: "",
+      checkboxBool: false,
+      checkboxArray: [],
+      selected: "",
+      selectedMult: [],
+    },
+    mounted() {
+      console.log('mounted!');
+    },
+  };
+  new MVVM(data);
+</script>
+
+</html>

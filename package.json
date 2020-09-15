@@ -1,6 +1,6 @@
 {
   "name": "@fe_korey/mvvm",
-  "version": "2.0.1",
+  "version": "3.0.0-rc.1",
   "description": "A simple mvvm library",
   "keywords": [
     "framework",
@@ -11,26 +11,22 @@
     "component",
     "similar vue"
   ],
-  "main": "dist/mvvm.js",
+  "main": "dist/mvvm.umd.js",
+  "module": "dist/mvvm.esm.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot",
-    "lint": "eslint 'src/**/*.ts' && eclint check",
-    "fix": "eslint 'src/**/*.ts' --fix && eclint fix",
-    "test": "jest --coverage",
-    "analyze": "cross-env NODE_ENV=production MODE=analysis webpack",
-    "debug": "node --inspect-brk=5858 ./node_modules/.bin/webpack",
-    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
-    "ts": "tsc"
+    "build": "node scripts/build.js",
+    "dev": "node scripts/dev.js",
+    "release": "node scripts/release.js",
+    "lint": "eslint 'src/**/*.ts'",
+    "fix": "eslint 'src/**/*.ts' --fix && prettier --write --parser typescript \"src/**/*.ts\" ",
+    "test": "jest",
+    "codecov": "codecov"
   },
   "jest": {
-    "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/core/$1"
-    },
     "collectCoverageFrom": [
-      "src/core/**",
-      "!src/core/utils.ts",
-      "!src/core/interface.ts"
+      "src/**",
+      "!src/utils.ts"
     ]
   },
   "husky": {
@@ -39,14 +35,7 @@
     }
   },
   "lint-staged": {
-    "*": [
-      "eclint fix",
-      "git add"
-    ],
-    "src/**/*.ts": [
-      "eslint --fix",
-      "git add"
-    ]
+    "src/**/*.ts": "eslint --fix && prettier --parser=typescript --write"
   },
   "repository": {
     "type": "git",
@@ -56,34 +45,39 @@
   "author": "Korey <keyu.zhao@foxmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-transform-runtime": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-typescript": "^7.3.3",
-    "@babel/runtime-corejs3": "^7.5.5",
-    "@types/jest": "^24.0.18",
-    "@types/node": "^12.6.8",
-    "@typescript-eslint/eslint-plugin": "^2.0.0",
-    "@typescript-eslint/parser": "^2.0.0",
-    "babel-loader": "^8.0.6",
-    "coveralls": "^3.0.6",
-    "cross-env": "^5.2.0",
-    "eclint": "^2.8.1",
-    "eslint": "^6.1.0",
-    "eslint-config-google": "^0.13.0",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "fork-ts-checker-webpack-plugin": "^1.4.3",
-    "html-webpack-plugin": "^3.2.0",
-    "husky": "^3.0.1",
-    "jest": "^24.9.0",
-    "lint-staged": "^9.2.1",
-    "prettier": "^1.18.2",
-    "typescript": "^3.5.3",
-    "webpack": "^4.37.0",
-    "webpack-bundle-analyzer": "^3.4.1",
-    "webpack-cli": "^3.3.6",
-    "webpack-dev-server": "^3.7.2"
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
+    "@babel/runtime-corejs3": "^7.11.2",
+    "@microsoft/api-extractor": "^7.9.11",
+    "@rollup/plugin-babel": "^5.2.0",
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@types/jest": "^26.0.13",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/parser": "^4.0.1",
+    "babel-loader": "^8.1.0",
+    "brotli": "^1.3.2",
+    "chalk": "^4.1.0",
+    "codecov": "^3.7.2",
+    "coveralls": "^3.1.0",
+    "eslint": "^7.8.1",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "execa": "^4.0.3",
+    "fs-extra": "^9.0.1",
+    "html-webpack-plugin": "^4.4.1",
+    "husky": "^4.2.5",
+    "jest": "^26.4.2",
+    "lint-staged": "^10.3.0",
+    "prettier": "^2.1.1",
+    "rollup": "^2.26.10",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.27.2",
+    "typescript": "^4.0.2",
+    "zlib": "^1.0.5"
   }
 }

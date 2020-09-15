@@ -4,6 +4,7 @@ logs
 npm-debug.log*
 .history
 .DS_Store
+*/.DS_Store
 
 # Dependency directories
 node_modules
@@ -18,9 +19,5 @@ jspm_packages
 .idea
 .sencha
 .build
-node_modules
 package-lock.json
-
-coverage
-src/**/*.js
-dist/**/*.d.ts
+temp

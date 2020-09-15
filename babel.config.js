@@ -3,18 +3,18 @@ module.exports = {
     [
       "@babel/env",
       {
-        targets: "> 1%, not dead"
-      }
+        targets: "> 1%, not dead",
+      },
     ],
-    "@babel/preset-typescript"
+    "@babel/preset-typescript",
   ],
   plugins: [
     [
       "@babel/plugin-transform-runtime",
       {
-        corejs: 3
-      }
+        corejs: 3,
+      },
     ],
-    "@babel/plugin-proposal-class-properties"
-  ]
+    "@babel/plugin-proposal-class-properties",
+  ],
 };

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>mvvm demo</title>
+  <link rel="shortcut icon" type="image/ico" href="data:;" />
+</head>
+
+<body>
+  <div id='app'>{{title}}</div>
+</body>
+<script type="module">
+  import MVVM from "../../dist/mvvm.esm.js";
+  const data = {
+    view: document.getElementById("app"),
+    model: {
+      title: "标题",
+    },
+  };
+  new MVVM(data);
+
+</script>
+
+</html>

@@ -1,14 +1,13 @@
+# abc
 
 <h2 align="center">A Simple MVVM Library</h2>
 <p align="center">
-  <a href='https://www.typescriptlang.org/docs/home.html'><img src='https://img.shields.io/badge/language-TypeScript-blue.svg' alt='language type' /></a>
-  <a href='https://travis-ci.com/zhaoky/mvvm'><img src='https://travis-ci.com/zhaoky/mvvm.svg?branch=master' alt='Build Status' /></a>
-  <a href='https://coveralls.io/github/zhaoky/mvvm?branch=master'><img src='https://coveralls.io/repos/github/zhaoky/mvvm/badge.svg?branch=master' alt='Coverage Status' /></a>
   <a href='https://github.com/zhaoky/mvvm'><img src='https://img.shields.io/github/last-commit/zhaoky/mvvm' alt='GitHub last commit' /></a>
   <a href='https://www.npmjs.com/package/@fe_korey/mvvm'><img src='https://img.shields.io/npm/l/@fe_korey/mvvm' alt='NPM' /></a>
-  <a href='https://github.com/zhaoky/mvvm/blob/master/dist/mvvm.js'><img src='https://img.shields.io/github/size/zhaoky/mvvm/dist/mvvm.js' alt='GitHub file size in bytes' /></a>
+  <a href='https://github.com/zhaoky/mvvm/blob/master/dist/mvvm.esm.prod.js'><img src='https://img.shields.io/github/size/zhaoky/mvvm/dist/mvvm.esm.prod.js' alt='GitHub file size in bytes' /></a>
   <a href='https://www.npmjs.com/package/@fe_korey/mvvm'><img src='https://img.shields.io/npm/v/@fe_korey/mvvm' alt='npm (scoped)' /></a>
-  <a href='https://prettier.io/'><img src='https://img.shields.io/badge/code%20style-prettier-ff69b4.svg' alt='code formatter' /></a>
+  <a href="https://github.com/zhaoky/mvvm/actions"><img src="https://github.com/zhaoky/mvvm/workflows/CI/badge.svg" alt="Actions Status"></a>
+  <a href="https://codecov.io/gh/zhaoky/mvvm"><img src="https://img.shields.io/codecov/c/github/zhaoky/mvvm.svg" alt="Coverage Status"></a>
 <p>
 
 ---
@@ -33,55 +32,85 @@ yarn add @fe_korey/mvvm
 
 ## Usage
 
-both support `UMD` (Universal Module Definition)
+both support `UMD` (Universal Module Definition),`ESM` (ES6 module),`CJS` (common JS)，
+
+### UMD
 
 ```html
 <html>
-<body>
-  <div id='app'>
-    <div>{{title}}</div>
-  </div>
+  <script src="dist/mvvm.umd.js"></script>
+  <body>
+    <div id="app">
+      <div>{{title}}</div>
+    </div>
   </body>
+  <script>
+    new MVVM({
+      view: document.getElementById("app"),
+      model: {
+        title: "hello mvvm!",
+      },
+      mounted() {
+        console.log("主程编译完成,欢迎使用MVVM！");
+      },
+    });
+  </script>
 </html>
 ```
 
-```javascript
-import MVVM from "@fe_korey/mvvm";
-new MVVM({
-  view: document.getElementById("app"),
-  model: {
-    title: "hello mvvm!"
-  },
-  mounted() {
-    console.log("主程编译完成,欢迎使用MVVM！")
-  }
-});
+### ESM
 
+```html
+<body>
+  <div id="app">{{title}}</div>
+</body>
+<script type="module">
+  import MVVM from "../../dist/mvvm.esm.js";
+  const data = {
+    view: document.getElementById("app"),
+    model: {
+      title: "标题",
+    },
+  };
+  new MVVM(data);
+</script>
 ```
 
-Refer to [Documentation](#documentation) for more usage.
+### CJS
+
+```js
+const MVVM = require("../../dist/mvvm.cjs");
+
+const data = {
+  view: document.getElementById("app"),
+  model: {
+    title: "标题",
+  },
+};
+new MVVM(data);
+```
+
+Refer to [DEMO](https://github.com/zhaoky/mvvm/demo/) for more usage.
 
 ## Related Tech
 
 - typescript
-- webpack
-- jest & coveralls
+- rollup
+- jest & codecov
 - babel
 - prettier
-- eslint & eclint
-- travis ci
+- eslint & stylelint
+- action
 
 ## Npm Scripts
 
-- `build`: create an online package
+- `build`: create an all package
 - `dev`: create a test server that can be hot updated
+- `release`: publish mvvm to npm
 - `lint`: code review
-- `fix`: fix code errors
-- `test`: jest generates code test coverage
-- `analyze`: analyze package size
-- `debug`: debugging code in vscode
-- `coveralls`: send test report to coveralls
-- `ts`: run typescript
+- `fix`: fix code errors and format
+- `test`: nnit testing by jest
+- `codecov`: test coverage
 
 ## Documentation
 
@@ -96,16 +125,16 @@ Refer to [Documentation](#documentation) for more usage.
  */
 new MVVM({
   view: el,
-  model:{
-    title: "hello mvvm!"
+  model: {
+    title: "hello mvvm!",
   },
-  methods:{
-    getIndex:()=>{}
+  methods: {
+    getIndex: () => {},
   },
-  mounted(){
+  mounted() {
     console.log("主程编译完成,欢迎使用MVVM！");
-  }
-})
+  },
+});
 ```
 
 ### Directive System
@@ -134,8 +163,8 @@ List of supported directive
   ```
 
   ```javascript
-  model:{
-    title:'hello mvvm!'
+  model: {
+    title: "hello mvvm!";
   }
   ```
 
@@ -150,8 +179,8 @@ List of supported directive
   ```
 
   ```javascript
-  model:{
-    main:'a b'
+  model: {
+    main: "a b";
   }
   ```
 
@@ -166,8 +195,8 @@ List of supported directive
   ```
 
   ```javascript
-  model:{
-    show:true
+  model: {
+    show: true;
   }
   ```
 
@@ -182,8 +211,8 @@ List of supported directive
   ```
 
   ```javascript
-  model:{
-    show:true
+  model: {
+    show: true;
   }
   ```
 
@@ -198,9 +227,9 @@ List of supported directive
   ```
 
   ```javascript
-  model:{
-    styleObj:{
-      color: "red"
+  model: {
+    styleObj: {
+      color: "red";
     }
   }
   ```
@@ -211,25 +240,25 @@ List of supported directive
 - directive syntax:
 
   ```html
-    <p v-for='item in list'></p>
-    <p v-for='item of list'></p>
-    <p v-for='(item,index) in list'></p>
-    <!-- item为数组项，index为数组项的索引 -->
+  <p v-for="item in list"></p>
+  <p v-for="item of list"></p>
+  <p v-for="(item,index) in list"></p>
+  <!-- item为数组项，index为数组项的索引 -->
   ```
 
 - model type: `array`
 - eg:
 
   ```html
-  <div v-for='(item,index) in list'>
+  <div v-for="(item,index) in list">
     <div>{{item}}</div>
     <div>{{index}}</div>
   </div>
   ```
 
   ```javascript
-  model:{
-    list:[1,2,3]
+  model: {
+    list: [1, 2, 3];
   }
   ```
 
@@ -240,8 +269,8 @@ List of supported directive
 - eg:
 
   ```html
-  <div v-on:click='getIndex'></div>
-  <div v-on:click='getIndex($event,title)'></div>
+  <div v-on:click="getIndex"></div>
+  <div v-on:click="getIndex($event,title)"></div>
   ```
 
   ```javascript
@@ -266,14 +295,14 @@ List of supported directive
 - eg:
 
   ```html
-  <input type='text' v-model="title" />
+  <input type="text" v-model="title" />
   <textarea v-model="title" />
   <p>{{title}}</p>
   ```
 
   ```javascript
-  model:{
-    title:'title'
+  model: {
+    title: "title";
   }
   ```
 
@@ -283,15 +312,12 @@ List of supported directive
 - eg:
 
   ```html
-  <div>
-    <input type="radio" value='me' v-model="radio">我
-    <input type="radio" value='you' v-model="radio">你
-  </div>
+  <div><input type="radio" value="me" v-model="radio" />我 <input type="radio" value="you" v-model="radio" />你</div>
   ```
 
   ```javascript
-  model:{
-    radio: ""
+  model: {
+    radio: "";
   }
   ```
 
@@ -301,13 +327,10 @@ List of supported directive
 - eg:
 
   ```html
+  <div><input type="checkbox" value="apple" v-model="checkboxBool" />苹果</div>
   <div>
-    <input type="checkbox" value='apple' v-model='checkboxBool'>苹果
-  </div>
-  <div>
-    <input type="checkbox" value='apple' v-model='checkboxArray'>苹果
-    <input type="checkbox" value='orange' v-model='checkboxArray'>橘子
-    <input type="checkbox" value='banana' v-model='checkboxArray'>香蕉
+    <input type="checkbox" value="apple" v-model="checkboxArray" />苹果 <input type="checkbox" value="orange" v-model="checkboxArray" />橘子
+    <input type="checkbox" value="banana" v-model="checkboxArray" />香蕉
   </div>
   ```
 
@@ -350,28 +373,24 @@ List of supported directive
 - eg:
 
   ```html
-  <div v-link='link'>hello!</div>
+  <div v-link="link">hello!</div>
   ```
 
   ```javascript
-  model:{
-    link:'https://www.flqin.com'
+  model: {
+    link: "https://www.flqin.com";
   }
   ```
 
   Render result:
 
   ```html
-  <div link='https://www.flqin.com'>hello!</div>
+  <div link="https://www.flqin.com">hello!</div>
   ```
 
 ## Maintainers
 
 [@korey](https://github.com/zhaoky)
-
-## Contributors
-
-This project exists thanks to all the people who contribute.
 
 ## License
 
