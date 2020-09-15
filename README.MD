@@ -107,7 +107,7 @@ Refer to [DEMO](https://github.com/zhaoky/mvvm/demo/) for more usage.
 - `release`: publish mvvm to npm
 - `lint`: code review
 - `fix`: fix code errors and format
-- `test`: nnit testing by jest
+- `test`: unit testing by jest
 - `codecov`: test coverage
 
 ## Documentation
