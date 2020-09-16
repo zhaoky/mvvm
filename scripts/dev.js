@@ -11,7 +11,7 @@ async function main() {
     });
     deleteDefinitionFile(distDir);
   } else {
-    console.log('请具体选择一个打包方式进行dev操作\n选项:["esm", "cjs", "umd"]\neg：`yarn dev -- --package=esm`');
+    console.log('请具体选择一个打包方式进行dev操作\n选项:["esm", "cjs", "umd"]\neg：`yarn dev --package=esm`');
   }
 }
 

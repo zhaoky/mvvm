@@ -101,7 +101,7 @@ export default class ForParser extends BaseParser {
    * @return {void}
    * @memberof ForParser
    */
-  public update({ newVal, oldVal, arrArgs }: ParseUpdateOption): void {
+  public update({ newVal, arrArgs }: ParseUpdateOption): void {
     // 如果没有值
     if (!newVal) {
       return;
@@ -119,9 +119,6 @@ export default class ForParser extends BaseParser {
     }
     // 如果雨女无瓜
     if (arrArgs!.receiver && newVal !== arrArgs!.receiver) {
-      return;
-    }
-    if (newVal.length === oldVal.length && !arrArgs!.property) {
       return;
     }
     // 如果是整体构建

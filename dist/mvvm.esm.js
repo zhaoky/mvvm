@@ -743,7 +743,7 @@ class ForParser extends BaseParser {
      * @return {void}
      * @memberof ForParser
      */
-    update({ newVal, oldVal, arrArgs }) {
+    update({ newVal, arrArgs }) {
         // 如果没有值
         if (!newVal) {
             return;
@@ -761,9 +761,6 @@ class ForParser extends BaseParser {
         }
         // 如果雨女无瓜
         if (arrArgs.receiver && newVal !== arrArgs.receiver) {
-            return;
-        }
-        if (newVal.length === oldVal.length && !arrArgs.property) {
             return;
         }
         // 如果是整体构建
